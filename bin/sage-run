@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Sage writes generated import caches to DOT_SAGE. Use a stable writable cache
+# when the caller has not selected one explicitly (notably in sandboxed runs).
+if [[ -z "${DOT_SAGE:-}" ]]; then
+    export DOT_SAGE="${TMPDIR:-/tmp}/simpler-massive-modes-sage-${UID:-default}"
+fi
+mkdir -p "$DOT_SAGE"
+
+# Prefer the environment's Sage executable directly to avoid Conda startup cost.
+sage_executable=""
+if command -v sage >/dev/null 2>&1; then
+    sage_executable="$(command -v sage)"
+elif [[ -x /home/chris/miniforge3/envs/sage/bin/sage ]]; then
+    sage_executable=/home/chris/miniforge3/envs/sage/bin/sage
+elif [[ -x /opt/conda/envs/sage/bin/sage ]]; then
+    sage_executable=/opt/conda/envs/sage/bin/sage
+fi
+
+if [[ -n "$sage_executable" ]]; then
+    # These project scripts are valid Python and accept their own CLI options.
+    # Running them with the environment's Python prevents Sage's CLI parser from
+    # consuming options such as --max-level.
+    if [[ ${1:-} == *.py || ${1:-} == -m ]]; then
+        python_executable="${sage_executable%/sage}/python"
+        if [[ -x "$python_executable" ]]; then
+            exec "$python_executable" "$@"
+        fi
+    fi
+    exec "$sage_executable" "$@"
+fi
+
+# Fall back to Conda environment activation if Sage is not directly available.
+if command -v conda >/dev/null 2>&1; then
+    conda_executable="$(command -v conda)"
+elif [[ -x /home/chris/miniforge3/bin/conda ]]; then
+    conda_executable=/home/chris/miniforge3/bin/conda
+elif [[ -x /opt/conda/bin/conda ]]; then
+    conda_executable=/opt/conda/bin/conda
+else
+    echo "sage-run: could not find Sage or a Conda installation" >&2
+    exit 127
+fi
+
+if [[ ${1:-} == *.py || ${1:-} == -m ]]; then
+    exec "$conda_executable" run -n sage python "$@"
+fi
+exec "$conda_executable" run -n sage sage "$@"
