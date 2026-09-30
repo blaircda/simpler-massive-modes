@@ -30,3 +30,9 @@ Do not use \begin{aligned} ... \end{aligned}, instead just use individual equati
    Do not patch failing algorithms with ground-truth lookups to make milestone checks pass. If an algorithm encounters an infinite loop, negative multiplicities, or algebraic non-divisibility, stop and document the mathematical obstruction. Discovering why an uplift fails algebraically is just as valuable as a successful proof.
 3. **No Dead-Code Claims:**
    Never declare a milestone passed based on a function that is bypassed or commented out in the actual execution flow. Every claimed computation must be actively executed in the script.
+
+# Tracking updates
+
+We maintain a central STATUS.md which should be regularly updated.
+
+For individual research directions, create a subdirectory with its own STATUS.md. 
