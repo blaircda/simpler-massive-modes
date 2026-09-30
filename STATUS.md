@@ -29,6 +29,7 @@ Pipeline `baseline_SO8_to_SO10.py` (runtime ~55 s, passes):
 ## Open / next
 
 - No all-orders argument yet (see `uplift_structure/STATUS.md` for ideas).
+- First-pass literature search: [`LITERATURE_SEARCH.md`](LITERATURE_SEARCH.md). Key lead: Beisert–Bianchi–Morales–Samtleben (hep-th/0310292) independently observed the III.B partial-sum SO(10) structure. They give an SO(10)×SO(2)$_\Delta$ grading, and an SO(10,2) match to free N=4 SYM (Pólya counting) up to $\Delta=10$.
 
 ## Minor code notes
 
