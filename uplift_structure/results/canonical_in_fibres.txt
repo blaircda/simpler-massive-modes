@@ -1,0 +1,84 @@
+(1) position of the fibre along each non-degenerate box direction (fraction of mass)
+  n= 8 canonical  | a: top 0.15, bottom 0.69, between 0.16 | b: top 0.18, bottom 0.82, between 0.00
+  n= 8 min_height | a: top 0.17, bottom 0.64, between 0.19 | b: top 0.47, bottom 0.53, between 0.00
+  n=10 canonical  | a: top 0.16, bottom 0.66, between 0.18 | b: top 0.21, bottom 0.79, between 0.00
+  n=10 min_height | a: top 0.18, bottom 0.60, between 0.22 | b: top 0.51, bottom 0.49, between 0.00
+  n=12 canonical  | a: top 0.16, bottom 0.64, between 0.21 | b: top 0.19, bottom 0.81, between 0.00
+  n=12 min_height | a: top 0.18, bottom 0.57, between 0.25 | b: top 0.48, bottom 0.51, between 0.00
+  n=16 canonical  | a: top 0.16, bottom 0.60, between 0.24 | b: top 0.22, bottom 0.78, between 0.00
+  n=16 min_height | a: top 0.18, bottom 0.54, between 0.28 | b: top 0.45, bottom 0.52, between 0.03
+  n=20 canonical  | a: top 0.16, bottom 0.57, between 0.27 | b: top 0.23, bottom 0.76, between 0.01
+  n=20 min_height | a: top 0.18, bottom 0.51, between 0.31 | b: top 0.48, bottom 0.47, between 0.06
+  n=24 canonical  | a: top 0.16, bottom 0.55, between 0.30 | b: top 0.24, bottom 0.74, between 0.02
+  n=24 min_height | a: top 0.18, bottom 0.48, between 0.34 | b: top 0.47, bottom 0.44, between 0.08
+(2) label moments of canonical vs [min, max] over all uplifts
+  n= 6 | l1: 47 [47,47] | l2: 15 [15,15] | l3: 9 [9,9] | l4: 7 [7,7] | l5: 7 [7,7]
+  n= 7 | l1: 99 [95,99] | l2: 33 [33,33] | l3: 19 [17,19] | l4: 13 [13,13] | l5: 11 [9,11]
+  n= 8 | l1: 199 [189,199] | l2: 69 [69,69] | l3: 39 [35,39] | l4: 27 [27,27] | l5: 23 [19,23]
+  n= 9 | l1: 410 [384,410] | l2: 148 [148,148] | l3: 84 [74,84] | l4: 54 [54,54] | l5: 46 [36,46]
+  n=10 | l1: 817 [759,817] | l2: 305 [305,305] | l3: 171 [151,173] | l4: 115 [115,115] | l5: 91 [71,93]
+  n=11 | l1: 1627 [1489,1627] | l2: 615 [615,615] | l3: 361 [311,363] | l4: 227 [227,227] | l5: 185 [135,187]
+  n=12 | l1: 3174 [2920,3174] | l2: 1226 [1226,1226] | l3: 720 [624,720] | l4: 450 [450,450] | l5: 368 [276,368]
+  n=13 | l1: 6170 [5648,6170] | l2: 2420 [2420,2420] | l3: 1412 [1228,1412] | l4: 872 [872,872] | l5: 682 [516,682]
+  n=14 | l1: 11764 [10810,11764] | l2: 4678 [4678,4678] | l3: 2744 [2390,2744] | l4: 1686 [1686,1686] | l5: 1298 [990,1298]
+  n=15 | l1: 22358 [20472,22358] | l2: 8982 [8982,8982] | l3: 5288 [4578,5288] | l4: 3210 [3210,3210] | l5: 2424 [1836,2424]
+  n=16 | l1: 41916 [38374,41916] | l2: 17022 [17022,17022] | l3: 10090 [8666,10090] | l4: 6062 [6062,6062] | l5: 4572 [3404,4572]
+  n=17 | l1: 77928 [71198,77928] | l2: 31910 [31910,31910] | l3: 18914 [16212,18914] | l4: 11290 [11290,11290] | l5: 8438 [6222,8438]
+  n=18 | l1: 143467 [130897,143467] | l2: 59211 [59211,59211] | l3: 35181 [30085,35331] | l4: 20891 [20891,20891] | l5: 15407 [11305,15633]
+  n=19 | l1: 261973 [238369,261973] | l2: 108887 [108887,108887] | l3: 64723 [55113,65265] | l4: 38241 [38241,38241] | l5: 27891 [20251,28561]
+  n=20 | l1: 474140 [430492,474140] | l2: 198342 [198342,198342] | l3: 118430 [100302,119308] | l4: 69464 [69464,69464] | l5: 50344 [36054,51492]
+  n=21 | l1: 852377 [771113,852377] | l2: 358377 [358377,358377] | l3: 214875 [181161,216261] | l4: 125077 [125077,125077] | l5: 90059 [63897,91609]
+  n=22 | l1: 1520383 [1370795,1520383] | l2: 642115 [642115,642115] | l3: 386767 [324759,388925] | l4: 223545 [223545,223545] | l5: 160333 [112545,161993]
+  n=23 | l1: 2691885 [2418697,2691885] | l2: 1141771 [1141771,1141771] | l3: 689183 [577547,693619] | l4: 396403 [396403,396403] | l5: 282699 [196795,283665]
+  n=24 | l1: 4732254 [4238248,4732254] | l2: 2015212 [2015212,2015212] | l3: 1216564 [1019902,1227862] | l4: 698098 [698098,698098] | l5: 489244 [342446,494044]
+(3) is the max sum c*l1 uplift unique?
+  n= 1 True
+  n= 2 True
+  n= 3 True
+  n= 4 True
+  n= 5 True
+  n= 6 True
+  n= 7 True
+  n= 8 True
+  n= 9 True
+  n=10 True
+  n=11 False
+  n=12 False
+  n=13 False
+  n=14 False
+  n=15 False
+  n=16 False
+  n=17 False
+  n=18 False
+  n=19 False
+  n=20 False
+  n=21 False
+  n=22 False
+  n=23 False
+  n=24 False
+(4) lex (sum c*l1, sum c*l3, sum c*l5): unique? equals canonical?
+  n= 1 unique=True equals canonical=True  [0.0s]
+  n= 2 unique=True equals canonical=True  [0.0s]
+  n= 3 unique=True equals canonical=True  [0.0s]
+  n= 4 unique=True equals canonical=True  [0.0s]
+  n= 5 unique=True equals canonical=True  [0.0s]
+  n= 6 unique=True equals canonical=True  [0.0s]
+  n= 7 unique=True equals canonical=True  [0.0s]
+  n= 8 unique=True equals canonical=True  [0.1s]
+  n= 9 unique=True equals canonical=True  [0.1s]
+  n=10 unique=True equals canonical=True  [0.3s]
+  n=11 unique=True equals canonical=True  [0.6s]
+  n=12 unique=False  [0.1s]
+  n=13 unique=False  [0.2s]
+  n=14 unique=False  [0.2s]
+  n=15 unique=False  [0.7s]
+  n=16 unique=False  [1.8s]
+  n=17 unique=False  [2.6s]
+  n=18 unique=False  [6.4s]
+  n=19 unique=False  [12.5s]
+  n=20 unique=False  [10.6s]
+  n=21 unique=False  [21.0s]
+  n=22 unique=False  [46.3s]
+  n=23 unique=False  [197.7s]
+  n=24 unique=False  [152.4s]
+EXIT 0

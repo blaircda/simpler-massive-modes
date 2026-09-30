@@ -1,0 +1,6 @@
+(a) unique f on 196 B4 weights (all D5 classes with l1 <= 5): f = indicator of mu1 = mu2, mu3 = mu4
+(b) all-ones in row space of restriction on candidates, n = 1..24
+(c) fibre sizes = m_n(a,a,b,b) for all stored uplifts (n <= 24) and all 6145 enumerated uplifts (n <= 10)
+N_n = 1, 1, 2, 3, 6, 11, 21, 39, 75, 141, 266, 495, 921, 1688, 3086, 5587, 10048, 17925, 31779, 55921, 97804, 169904, 293400, 503579
+ALL OK
+EXIT 0

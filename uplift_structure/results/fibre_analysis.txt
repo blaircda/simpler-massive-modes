@@ -1,0 +1,25 @@
+n= 1 fibres=  1 components=1 shared-mu=0/1 mass-on-shared=0.00 kernel full=0 fibre-local=0 | #uplifts=1 product-of-fibre-choices=1 PRODUCT
+n= 2 fibres=  1 components=1 shared-mu=0/2 mass-on-shared=0.00 kernel full=0 fibre-local=0 | #uplifts=1 product-of-fibre-choices=1 PRODUCT
+n= 3 fibres=  2 components=2 shared-mu=0/4 mass-on-shared=0.00 kernel full=0 fibre-local=0 | #uplifts=1 product-of-fibre-choices=1 PRODUCT
+n= 4 fibres=  3 components=2 shared-mu=1/7 mass-on-shared=0.25 kernel full=0 fibre-local=0 | #uplifts=1 product-of-fibre-choices=1 PRODUCT
+n= 5 fibres=  3 components=2 shared-mu=2/11 mass-on-shared=0.24 kernel full=0 fibre-local=0 | #uplifts=1 product-of-fibre-choices=1 PRODUCT
+n= 6 fibres=  5 components=2 shared-mu=5/17 mass-on-shared=0.40 kernel full=1 fibre-local=0 | #uplifts=1 product-of-fibre-choices=1 PRODUCT
+n= 7 fibres=  6 components=2 shared-mu=9/24 mass-on-shared=0.55 kernel full=2 fibre-local=0 | #uplifts=2 product-of-fibre-choices=8 COUPLED
+n= 8 fibres=  6 components=2 shared-mu=13/33 mass-on-shared=0.60 kernel full=3 fibre-local=0 | #uplifts=8 product-of-fibre-choices=512 COUPLED
+n= 9 fibres=  8 components=2 shared-mu=20/44 mass-on-shared=0.67 kernel full=5 fibre-local=0 | #uplifts=72 product-of-fibre-choices=295488 COUPLED
+n=10 fibres= 10 components=2 shared-mu=29/57 mass-on-shared=0.73 kernel full=8 fibre-local=0 | #uplifts=6057 product-of-fibre-choices=95506236540 COUPLED
+n=11 fibres= 10 components=2 shared-mu=38/73 mass-on-shared=0.76 kernel full=11 fibre-local=0
+n=12 fibres= 12 components=2 shared-mu=51/92 mass-on-shared=0.78 kernel full=16 fibre-local=0
+n=13 fibres= 14 components=2 shared-mu=67/113 mass-on-shared=0.80 kernel full=22 fibre-local=0
+n=14 fibres= 15 components=2 shared-mu=84/139 mass-on-shared=0.82 kernel full=30 fibre-local=0
+n=15 fibres= 17 components=2 shared-mu=105/168 mass-on-shared=0.83 kernel full=40 fibre-local=0
+n=16 fibres= 19 components=2 shared-mu=130/200 mass-on-shared=0.84 kernel full=52 fibre-local=0
+n=17 fibres= 20 components=2 shared-mu=157/238 mass-on-shared=0.85 kernel full=66 fibre-local=0
+n=18 fibres= 22 components=2 shared-mu=189/280 mass-on-shared=0.86 kernel full=83 fibre-local=0
+n=19 fibres= 25 components=2 shared-mu=227/326 mass-on-shared=0.87 kernel full=104 fibre-local=0
+n=20 fibres= 26 components=2 shared-mu=267/380 mass-on-shared=0.88 kernel full=129 fibre-local=0
+n=21 fibres= 28 components=2 shared-mu=312/438 mass-on-shared=0.88 kernel full=157 fibre-local=0
+n=22 fibres= 31 components=2 shared-mu=365/501 mass-on-shared=0.89 kernel full=190 fibre-local=0
+n=23 fibres= 32 components=2 shared-mu=421/573 mass-on-shared=0.89 kernel full=227 fibre-local=0
+n=24 fibres= 35 components=2 shared-mu=484/651 mass-on-shared=0.90 kernel full=271 fibre-local=0
+EXIT 0

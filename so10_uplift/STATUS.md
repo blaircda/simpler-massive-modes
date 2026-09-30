@@ -39,13 +39,10 @@ Derivation scripts never import baseline files; comparisons live only in the `ve
    Kernel sources include $\lambda\leftrightarrow\bar\lambda$ and $\sum_k(-1)^k\Lambda^k(10)\otimes V$. For example, $2(1+45+210)$ and $2(10+120)+126+\overline{126}$ restrict identically.
 4. **Canonical uplift.** The hardcoded baseline $R^{10}_n$ ($n\le10$) is the *unique* maximiser of $H=\sum_\lambda c_\lambda(10l_1+3l_2+2l_3+l_4)$ ("most top-heavy"). This holds for $n\le 11$. From $n=12$ onward the max-$H$ face is not a point. The canonical choice stored is therefore max-$H$ first, then the lex-max over classes ordered by $(\mathrm{height}, l_5)$ descending. This reproduces the baseline exactly for $n\le10$.
 5. **Greedy lifts fail.** Top-down greedy with $l_5$ maximal fails for every $n\ge 7$. With $l_5$ minimal it fails at $n=6$ and for every $n\ge8$. A constructive proof therefore cannot be this naive greedy.
-6. **Invariant.** The total class multiplicity $\sum_\lambda c_\lambda$ takes the same value for *every* uplift (even rational ones) at each $n\le24$. This is proved per level: the all-ones vector lies in the rational row space of the restriction matrix on candidates, checked by exact rank computation. It is also confirmed by enumeration for $n\le11$. The sequence is 1, 1, 2, 3, 6, 11, 21, 39, 75, 141, 266, 495, 921, 1688, 3086, 5587, 10048, 17925, 31779, 55921, 97804, 169904, 293400, 503579. The explicit universal functional on B4 irreps is not yet identified (open).
 
-## Open / next ideas
+Structural explorations of this output (invariants, fibres, kernel moves) live separately in [`../uplift_structure/`](../uplift_structure/STATUS.md).
 
-- Identify the linear functional behind the $\sum c$ invariant. It may give an explicit formula for the number of SO(10) irreps.
-- Understand the structure of the canonical (or any) uplift well enough to state an all-orders construction. Possible routes:
-  - generating function $\sum_n R^9_n q^n = (1-q)^{-1}\sum_n r^9_n q^n$;
-  - an SO(10)-covariant formula for $(1-q)^{-1}\times$(light-cone character);
-  - a smarter greedy with provable success.
-- Push beyond level 24. Fock + SO(9) is cheap; the canonical-uplift sequential ILP is the bottleneck (~110 s at n=24, growing ×1.5/level). Existence alone (single ILP) is much cheaper.
+## Open / next (computational)
+
+- Push beyond level 24. Fock + SO(9) is cheap. The canonical-uplift sequential ILP is the bottleneck (~110 s at n=24, growing ×1.5/level). Existence alone (single ILP) is much cheaper.
+- A smarter greedy with provable success (item 5 rules out the naive ones).

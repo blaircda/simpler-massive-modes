@@ -16,14 +16,19 @@ Pipeline `baseline_SO8_to_SO10.py` (runtime ~55 s, passes):
 
 ## Research directions
 
-- [`so10_uplift/`](so10_uplift/STATUS.md): independent Sage-based pipeline Fock → $r^9_n$ → SO(10) uplifts, through level 24. Stored data: `so10_uplift/data/{r9,R10,R10_all_uplifts}.json`; loader `so10_uplift/repdata.py`.
-  - Non-negative uplift exists for all $n\le24$.
+- [`so10_uplift/`](so10_uplift/STATUS.md): independent Sage-based pipeline Fock → $r^9_n$ → SO(10) uplifts, through level 24. This is the hard computational evidence. Stored data: `so10_uplift/data/{r9,R10,R10_all_uplifts}.json`; loader `so10_uplift/repdata.py`.
+  - A non-negative uplift exists for all $n\le24$.
   - The uplift is unique for $n\le6$, then has rapidly growing multiplicity (6 722 076 at $n=11$).
   - The baseline $R^{10}_n$ ($n\le10$) is the unique "max-height" uplift. That uplift stays unique through $n=11$ but not from $n=12$; the stored canonical choice adds a lex tie-break.
+- [`uplift_structure/`](uplift_structure/STATUS.md): exploratory analysis of that output (reads it, never modifies it).
+  - The SO(10) irrep count is uplift-invariant; the $(l_2,l_4)$ fibre sizes are fixed by $R^9_n$.
+  - Fibres are coupled, but restriction is injective within each fibre.
+  - The canonical uplift maximises $\sum c\,l_1$.
+  - The uplift kernel is generated over $\mathbb Z$ by Euler-class moves $e\otimes V_\nu$ (halved when $l_5(\nu)=0$, checked $n\le16$), with $e=\sum(-1)^k\Lambda^k(10)$.
 
 ## Open / next
 
-- No all-orders argument yet (see `so10_uplift/STATUS.md` for ideas).
+- No all-orders argument yet (see `uplift_structure/STATUS.md` for ideas).
 
 ## Minor code notes
 
