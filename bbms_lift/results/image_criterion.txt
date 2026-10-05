@@ -1,0 +1,15 @@
+phi(10 + 1 - 1/x - x) = 8v + 1: True
+phi(16 x^1/2 + 16bar x^1/2) = (1+x)(8s+8c): True
+phi(16 x^1/2 - 16bar x^1/2) = (1-x)(8s-8c): True
+level  1: r_n(+1) SO(9)-covariant True; r_n(-1) twisted-covariant True
+level  2: r_n(+1) SO(9)-covariant True; r_n(-1) twisted-covariant True
+level  3: r_n(+1) SO(9)-covariant True; r_n(-1) twisted-covariant True
+level  4: r_n(+1) SO(9)-covariant True; r_n(-1) twisted-covariant True
+level  5: r_n(+1) SO(9)-covariant True; r_n(-1) twisted-covariant True
+level  6: r_n(+1) SO(9)-covariant True; r_n(-1) twisted-covariant True
+level  7: r_n(+1) SO(9)-covariant True; r_n(-1) twisted-covariant True
+level  8: r_n(+1) SO(9)-covariant True; r_n(-1) twisted-covariant True
+level  9: r_n(+1) SO(9)-covariant True; r_n(-1) twisted-covariant True
+level 10: r_n(+1) SO(9)-covariant True; r_n(-1) twisted-covariant True
+level 11: r_n(+1) SO(9)-covariant True; r_n(-1) twisted-covariant True
+level 12: r_n(+1) SO(9)-covariant True; r_n(-1) twisted-covariant True
