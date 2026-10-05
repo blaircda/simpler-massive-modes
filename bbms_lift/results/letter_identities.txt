@@ -1,0 +1,3 @@
+(a) phi(lambda_-x(10)) = 0: True
+(b) phi(10x - 1 - x^2) = 8v x: True
+(c) phi(1 - 10x + 16 x^3/2 - 16bar x^5/2 + 10x^3 - x^4) = x(x^2-1)(8v - 8s): True
