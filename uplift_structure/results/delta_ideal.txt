@@ -1,0 +1,24 @@
+delta restricts to 0: True
+e = sum (-1)^k Lambda^k(10) = 2*D5(0,0,0,0,0) - 2*D5(1,0,0,0,0) + 2*D5(0,1,0,0,0) - 2*D5(0,0,1,0,0) + 2*D5(0,0,0,1,1) - D5(0,0,0,2,0) - D5(0,0,0,0,2)
+e == -delta^2: True
+e restricts to 0: True
+Lambda^1(10)|B4 == Lambda^1(9) + Lambda^0(9): True
+Lambda^2(10)|B4 == Lambda^2(9) + Lambda^1(9): True
+Lambda^3(10)|B4 == Lambda^3(9) + Lambda^2(9): True
+Lambda^4(10)|B4 == Lambda^4(9) + Lambda^3(9): True
+S+|B4 == S-|B4 == spinor 16: True
+level-6 BBMS - baseline difference == delta*(10+2): True
+  ... and sigma-merged it is zero: True
+V(0, 0, 0, 1, 0) - sigma: anti-invariant True; delta*(V - Vbar) sigma-invariant True; restricts to 0 True
+V(1, 0, 0, 1, 0) - sigma: anti-invariant True; delta*(V - Vbar) sigma-invariant True; restricts to 0 True
+V(0, 0, 0, 2, 0) - sigma: anti-invariant True; delta*(V - Vbar) sigma-invariant True; restricts to 0 True
+V(0, 1, 0, 1, 0) - sigma: anti-invariant True; delta*(V - Vbar) sigma-invariant True; restricts to 0 True
+V(1, 0, 0, 3, 0) - sigma: anti-invariant True; delta*(V - Vbar) sigma-invariant True; restricts to 0 True
+z from V(0, 0, 0, 0, 0): pi(delta S+ z) == -pi(e z)/2: True; pi(e V) even: True
+z from V(1, 0, 0, 0, 0): pi(delta S+ z) == -pi(e z)/2: True; pi(e V) even: True
+z from V(0, 1, 0, 0, 0): pi(delta S+ z) == -pi(e z)/2: True; pi(e V) even: True
+z from V(2, 0, 1, 0, 0): pi(delta S+ z) == -pi(e z)/2: True; pi(e V) even: True
+z from V(0, 0, 0, 1, 0): pi(delta S+ z) == -pi(e z)/2: True; pi(e V) even: False
+z from V(1, 0, 0, 1, 0): pi(delta S+ z) == -pi(e z)/2: True; pi(e V) even: False
+z from V(0, 0, 1, 2, 0): pi(delta S+ z) == -pi(e z)/2: True; pi(e V) even: False
+z from V(1, 1, 0, 0, 3): pi(delta S+ z) == -pi(e z)/2: True; pi(e V) even: False

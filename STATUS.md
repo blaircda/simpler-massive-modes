@@ -25,6 +25,7 @@ Pipeline `baseline_SO8_to_SO10.py` (runtime ~55 s, passes):
   - Fibres are coupled, but restriction is injective within each fibre.
   - The canonical uplift maximises $\sum c\,l_1$.
   - The uplift kernel is generated over $\mathbb Z$ by Euler-class moves $e\otimes V_\nu$ (halved when $l_5(\nu)=0$, checked $n\le16$), with $e=\sum(-1)^k\Lambda^k(10)$.
+  - **Proved at all levels (S4):** the kernel of restriction is the principal ideal $(\delta)$, with $\delta=S^+-S^-$ and $e=-\delta^2$. On conjugation classes this gives exactly the halved Euler moves above. So existence is a class-level question, and chirality is purely a selection question.
 
 ## Open / next
 
