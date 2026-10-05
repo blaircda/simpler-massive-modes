@@ -1,0 +1,5 @@
+level  4: G=8: nullity 0, solvable True; G=10: nullity 0, solvable True; G=12: nullity 0, solvable True; G=16: nullity 0, solvable True; G=20: nullity 0, solvable True
+level  6: G=8: nullity 0, solvable True; G=10: nullity 1, solvable True; G=12: nullity 3, solvable True; G=16: nullity 7, solvable True; G=20: nullity 11, solvable True
+level 10: G=8: nullity 0, solvable True; G=10: nullity 9, solvable True; G=12: nullity 27, solvable True; G=16: nullity 63, solvable True; G=20: nullity 99, solvable True
+level 13: G=8: nullity 0, solvable True; G=10: nullity 27, solvable True; G=12: nullity 81, solvable True; G=16: nullity 189, solvable True; G=20: nullity 297, solvable True
+level 14: G=8: nullity 0, solvable True; G=10: nullity 38, solvable True; G=12: nullity 114, solvable True; G=16: nullity 266, solvable True; G=20: nullity 418, solvable True

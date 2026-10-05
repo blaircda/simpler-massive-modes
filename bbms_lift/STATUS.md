@@ -11,14 +11,16 @@ Derivation scripts here never import baseline files. Comparison with `so10_uplif
 | script | what | output | runtime |
 |---|---|---|---|
 | `graded.py` | library: ν-graded Fock space, $r_n(x)$, the map $\varphi$, linear system | — | — |
-| `derive_graded.py` | solve the graded lift level by level; cumulative checks | `data/*.json` | ~35 s to $n=9$ |
+| `derive_graded.py` | solve the graded lift level by level; cumulative checks | `data/*.json` | ~20 s to $n=12$, ~11 min to $n=18$ |
 | `compare_uplifts.py` | verification: compare with `so10_uplift/data/R10*.json` | stdout | ~2 s |
 | `letter_identities.py` | exact identities for $\varphi$ | `results/letter_identities.txt` | ~3 s |
+| `window_width.py` | nullity versus window width $G$ | `results/window_width.txt` | ~10 min |
+| `fundamental_domain.py` | window as normal form for $(K)$: single-term tests | `results/fundamental_domain.txt` | ~2 min ($L=4,5$) |
 | `image_criterion.py` | B5: generator identities, and the $x=\pm1$ conditions for $r_n(x)$ | `results/image_criterion.txt` | ~10 s |
 
 Data:
 - `data/bbms_graded.json`: `--max-level 7 --slack 1` (ν-window domain). It shows the kernel at $n=7$.
-- `data/bbms_unitarity_g8.json`: `--max-level 12 --gmax 8` (unitarity-window domain). This is the main dataset.
+- `data/bbms_unitarity_g8.json`: `--max-level 18 --gmax 8` (unitarity-window domain). This is the main dataset.
 
 ## Set-up
 
@@ -48,18 +50,40 @@ $$X_2=[1,0,0,0,0]_2-[0,0,0,0,0]_3,\qquad X_3=[2,0,0,0,0]_3-[1,0,0,0,0]_4+[0,0,0,
   - It leaves exactly the Euler-class ($e$-move) freedom of `../uplift_structure/` S3b/S4.
   - "Unique in a finite domain" (as in `previous_efforts.md`) is a statement about the Δ-window. $K$ spans 10 units of Δ.
 
-### B3. The unitarity window gives a unique, non-negative lift (empirical, $n\le12$)
+### B3. The unitarity window gives a unique, non-negative lift (empirical, $n\le18$)
 - **The domain.** BBMS's SO(10) bound (their eq. 2.15) is
   $$b(\lambda)=1+k+2l+3m+\tfrac52p+\tfrac32q\qquad(\lambda=[k,l,m,p,q]).$$
   Restrict to $0\le\Delta-b(\lambda)\le G$, with λ among the class candidates of $R^9_n,R^9_{n-1}$ in both chiralities. The bound is chirality-asymmetric, consistent with B1.
-- **Results.**
-  - With $G=8$ the graded system has nullity 0 and is solvable at every $n\le12$. With $G=4$ the same holds for $n\le9$ (the window is too narrow from $n=10$). Where both apply the solutions coincide, since the $G=4$ domain is inside the $G=8$ one.
-  - The cumulative sums $R_n$ are **non-negative** and restrict exactly to $R^9_n$ for all $n\le12$. Level 12 took ~5 min.
-  - All gaps $\Delta-b(\lambda)$ are even. The positive terms are mostly on the bound.
-- **Risk.** The maximal gap grows slowly with $n$: 0, 0, 2, 2, 2, 4, 4, 4, 4, 6, 6, 6 for $n=1..12$. $K$ spans 10 units of Δ. If gaps keep growing, the window must widen, and it may then admit multiples of $K$ (non-uniqueness) or need a sharper normalisation. Uniqueness is only established for windows narrower than that.
+- **In ambient coordinates.** $b(\lambda)=1+l_1+l_2+l_3+l_4-l_5=1+\langle\lambda,\xi\rangle$ with $\xi=(1,1,1,1,-1)=2\omega_{\overline{16}}$.
+  - So the bound is 1 + the maximal $U(1)$ charge for $SO(10)\supset U(5)$.
+  - $g'=\Delta-\langle\lambda,\xi\rangle$ (= gap + 1) is superadditive under tensor products.
+- **Results ($G=8$).**
+  - The graded system has nullity 0 and is solvable at every $n\le18$.
+  - The cumulative sums $R_n$ are **non-negative** and restrict exactly to $R^9_n$ for all $n\le18$.
+  - Every class has multiplicity $\ge1$.
+  - The total irrep count equals the uplift invariant $N_n$ of `../uplift_structure/` S1 (a consistency check).
+  - All gaps are even.
+- **Window width (from `gw` test, $n=4,6,10,13,14$).**
+  - $G=8$ (equivalently 9) is exactly the widest window with nullity 0.
+  - At $G=10$ multiples of $K$ enter. For example the nullity at $n=14$ is 38, 114, 266, 418 for $G=10,12,16,20$.
+  - This matches $K$'s profile: its terms have $g'\in\{0,2,4,6,8,10\}$, with the top $g'=10$ part being the single term $1\cdot x^{10}$.
+- **Maximal gap used,** $n=1..18$: 0, 2, 2, 2, 2, 4, 4, 4, 4, 6, 6, 6, 8, 8, 8, 8, 8, 8.
+  - It reaches the largest kernel-free value at $n=13$ and has stayed there through 18.
+- **Normal-form structure** (`fundamental_domain.py`; probe of high even gaps in the 2026-10-05 session).
+  - **Parity grading.** Roots pair with $\xi$ in $\{0,\pm2\}$, so $g'$ is additive mod 2 under tensor products. Every term of $K$ has even $g'$ (0, 2, …, 10). So $(K)$ respects the $g'$-parity grading, and the problem splits into an even-gap sector and an odd-gap sector.
+  - **Uniqueness.** No non-zero element of $(K)$ lies in the window: nullity 0 for all window terms with $\lambda_1\le5$, both sectors.
+  - **Even-gap sector** (odd $g'$, where every string-level term found so far lies). The window has $g'\in\{1,3,5,7,9\}$: five values, matching $K$'s even-$g'$ span.
+    - Single terms $V_\mu x^\Delta$ with gaps 10, 12, 14 (and 16 for small $\mu$) all have window representatives.
+    - The failures start at gap 18–22, and the threshold drops as $\mu$ grows. This is consistent with truncation at $\lambda_1\le5$: from gap 20, about six nested reductions are needed, and each can raise $\lambda_1$ by one.
+  - **Odd-gap sector.** The window has only four $g'$ values, so gaps 9 and 11 have no representative, as the parity count predicts.
+  - **Below the window.** No term with gap $<0$ has a representative.
+  - **Conjecture (refined).** In the even-gap sector, every element supported at gaps $\ge0$ is congruent mod $K$ to a unique element supported in $\{0\le\Delta-b(\lambda)\le8\}$.
+  - **What would then remain.** Existence and uniqueness of the BBMS normal form at all $n$ would further need the class of $r_n$ to have a preimage supported at even gaps $\ge0$.
+    - The natural letter preimages sit at gap $\ge-1$: $10x-1-x^2$ has gaps $\{-1,-1,1\}$, and the numerator $N$ has gaps $\{-1,-1,-1,-1,1,3\}$.
+    - So this is a genuine constraint, presumably the PSU(2,2|4) unitarity bound that BBMS's window encodes. It is empirically true through $n=18$.
 - **Comparison with `so10_uplift/`** (`compare_uplifts.py`):
   - At class level, $R_n$ equals the canonical (= baseline) uplift for $n\le8$.
-  - For $n=9..12$ it is a *different* non-negative uplift. At $n=9,10$ it is among the enumerated ones. At $n=9$ the difference is a single Euler-type move that lowers top-heaviness: $+[0]-[3,0,0,0,0]+[2,1,0,0,0]-[2,0,1,0,0]+[2,0,0,1,1]-[2,0,0,0,2]$.
+  - For $n=9..18$ it is a *different* non-negative uplift. At $n=9,10$ it is among the enumerated ones. At $n=9$ the difference is a single Euler-type move that lowers top-heaviness: $+[0]-[3,0,0,0,0]+[2,1,0,0,0]-[2,0,1,0,0]+[2,0,0,1,1]-[2,0,0,0,2]$.
   - So BBMS is not the max-height uplift: it is less top-heavy.
   - The level-6 and level-7 differences from the "protected continuation" in `previous_efforts.md` are pure chirality, invisible on classes; for example $\delta(10+2)$ at $n=6$.
 
@@ -120,7 +144,10 @@ Here $W(B_4)/W(D_4)$ is generated by $\sigma_4: w_4\mapsto w_4^{-1}$, which swap
 
 ## Open / next
 
-1. Push the unitarity-window solve beyond $n=12$, watching the maximal gap against the width-10 span of $K$. The bottleneck is the exact sparse solve over $\mathbb Q$; a triangular solve by highest weight should be much faster.
-2. Prove that the unitarity window contains no non-zero element of $(K)$, which would give uniqueness at all $n$. Also find out why solutions exist there, i.e. why the gaps stay small.
+1. ~~Faster solver~~ Done (2026-10-05).
+   - D5 weights now come from a dominant-weight Freudenthal recursion with cached $(J,w_4)$ slices; it is validated against Sage on 13 irreps.
+   - The linear algebra is dense GF(p) with a CRT lift, followed by an exact integer check of $Ax=b$.
+   - It gives identical output for $n\le12$ and is about 15× faster. The remaining cost is dense linear algebra; at $n=18$ the system is 20707×4959.
+2. Prove the refined normal-form conjecture of B3, for the even-gap sector, gaps $\ge0$. A plausible route is top-down division by $K$, whose top $g'$ part is the single monic term $x^{10}$, controlled by superadditivity of $g'$. Separately, show that $r_n$ has a preimage at even gaps $\ge0$ (unitarity).
 3. ~~Check the closed formula of B4~~ It is automatically true (see the B4 assessment). Replacement: build a *computational* closed formula from letters satisfying B5. For example, use an NSR-type grading in which every letter is $8_v=\varphi(10x-1-x^2)$, following Hanany–Forcella–Troost. This would be a different refinement from BBMS's, but any graded lift serves for existence.
 4. **Existence.** Positivity of $R_n=\sum_{i\le n}X_i$ is the real content. Look for a manifestly positive rewriting of $(1-q)^{-1}X(q,x)$ at $x=1$ after reduction. Literature to check: pure-spinor partition functions and characters (Berkovits; Berkovits–Nekrasov; Movshev–Schwarz; Eager–Noja–Senghaas–Walcher [arXiv:2404.07167](https://arxiv.org/abs/2404.07167), which also cites Pengpan–Ramond).

@@ -2,9 +2,11 @@
 Library for the BBMS-graded lift (see derive_graded.py for the method).
 
     levels_data(N)            -> r[n][nu] (D4 dominant arrays), R9[n] (B4 dicts), T
-    build_system(n, r, R9, T, slack, lams=None)
-                              -> (A sparse QQ matrix, b, cols, rows)
+    build_system(n, r, R9, T, slack, lams=None, gmax=None)
+                              -> (sparse integer entries, b, cols, rows)
+    solve_exact(entries, b, nrows, ncols) -> (nullity, integer solution or None)
     phi(lam, D2)              -> image of V_lam x^Delta as {(nu, w4): mult}
+    d5_slices(lam)            -> {(J2, D4-dominant w4): mult}  (fast Freudenthal)
 """
 
 import os
@@ -112,17 +114,127 @@ def levels_data(N):
     return r, R9, T
 
 
+# ------------------------------------------------------------------
+# Fast D5 weight data: Freudenthal on dominant weights only
+# ------------------------------------------------------------------
+
+_POS_ROOTS = []
+for _i in range(5):
+    for _j in range(_i + 1, 5):
+        for _sg in (1, -1):
+            _r = [0] * 5
+            _r[_i], _r[_j] = 2, 2 * _sg
+            _POS_ROOTS.append(tuple(_r))
+_RHO2 = (8, 6, 4, 2, 0)
+
+
+def _dom5(v):
+    a = sorted((abs(t) for t in v), reverse=True)
+    if a[4] and sum(1 for t in v if t < 0) % 2:
+        a[4] = -a[4]
+    return tuple(a)
+
+
+def _simple_coeffs2(v):
+    """Doubled simple-root coefficients x2 of a doubled D5 vector (D5 simple roots)."""
+    c1 = v[0]
+    c2 = v[0] + v[1]
+    c3 = c2 + v[2]
+    c4 = (c3 + v[3] - v[4]) // 2
+    c5 = (c3 + v[3] + v[4]) // 2
+    return (c1, c2, c3, c4, c5)
+
+
+_DOMM = {}
+
+
+def d5_dominant_mults(lam):
+    """{dominant doubled weight: multiplicity} for the D5 irrep lam (Freudenthal)."""
+    if lam in _DOMM:
+        return _DOMM[lam]
+    n2 = sum(a * a for a in lam)
+    # all dominant mu <= lam: lam - mu a non-negative integer combination of simple roots
+    doms = []
+    B = lam[0]
+    def rec(prefix):
+        k = len(prefix)
+        if k == 5:
+            mu = tuple(prefix)
+            diff = tuple(lam[i] - mu[i] for i in range(5))
+            c = _simple_coeffs2(diff)
+            if all(t >= 0 and t % 2 == 0 for t in c):
+                doms.append(mu)
+            return
+        hi = prefix[-1] if prefix else B
+        lo = -prefix[-1] if k == 4 else 0
+        for a in range(hi, lo - 1, -1):
+            if (a - lam[0]) % 2 == 0 and sum(t * t for t in prefix) + a * a <= n2:
+                rec(prefix + [a])
+    rec([])
+    doms.sort(key=lambda mu: sum(_simple_coeffs2(tuple(lam[i] - mu[i] for i in range(5)))))
+    LP = [lam[i] + _RHO2[i] for i in range(5)]
+    LP2 = sum(t * t for t in LP)
+    m = {lam: 1}
+    for mu in doms[1:]:
+        MP = [mu[i] + _RHO2[i] for i in range(5)]
+        den = LP2 - sum(t * t for t in MP)
+        tot = 0
+        for al in _POS_ROOTS:
+            k = 1
+            while True:
+                v = tuple(mu[i] + k * al[i] for i in range(5))
+                mv = m.get(_dom5(v), 0)
+                if not mv:
+                    break
+                tot += mv * sum(v[i] * al[i] for i in range(5))
+                k += 1
+        val, rem = divmod(2 * tot, den)
+        assert rem == 0, "Freudenthal not integral"
+        if val:
+            m[mu] = val
+    _DOMM[lam] = m
+    return m
+
+
+_SLICES = {}
+
+
+def d5_slices(lam):
+    """{(J2, D4-dominant w4): mult} over all weights (w4, J) of V_lam (J = x5)."""
+    if lam in _SLICES:
+        return _SLICES[lam]
+    out = {}
+    for nu, mult in d5_dominant_mults(lam).items():
+        absn = [abs(t) for t in nu]
+        haszero = 0 in absn
+        par = 1 if nu[4] < 0 else 0
+        seen = set()
+        for i in range(5):
+            for s in ((1, -1) if absn[i] else (1,)):
+                J = s * absn[i]
+                rest = sorted(absn[:i] + absn[i + 1:], reverse=True)
+                if haszero:  # a zero coordinate makes every sign pattern reachable
+                    forms = {tuple(rest), tuple(rest[:3] + [-rest[3]])}
+                else:
+                    neg = (par - (1 if s < 0 else 0)) % 2
+                    forms = {tuple(rest[:3] + [-rest[3]]) if neg else tuple(rest)}
+                for w4 in forms:
+                    key = (J, w4)
+                    if key not in seen:
+                        seen.add(key)
+                        out[key] = out.get(key, 0) + mult
+    _SLICES[lam] = out
+    return out
+
+
 def phi(lam, D2):
     """V_lam x^Delta  ->  {(nu, D4-dominant w): mult}, nu = Delta - J, J = x5."""
     out = {}
-    for wt, m in d5_weights(lam).items():
-        w4, J2 = wt[:4], wt[4]
-        if not (w4[0] >= w4[1] >= w4[2] >= abs(w4[3])):
-            continue  # W(D4)-invariant: compare at D4-dominant weights only
+    for (J2, w4), m in d5_slices(lam).items():
         nu2 = D2 - J2
         if nu2 % 2:
             continue
-        key = (nu2 // 2, tuple(w4))
+        key = (nu2 // 2, w4)
         out[key] = out.get(key, 0) + m
     return out
 
@@ -168,9 +280,52 @@ def build_system(n, r, R9, T, slack, lams=None, gmax=None):
             if key not in rows:
                 rows[key] = len(rows)
             entries[(rows[key], j)] = m
-    A = matrix(QQ, len(rows), len(cols), entries, sparse=True)
     b = [0] * len(rows)
     for (nu, w), i in rows.items():
         if nu in r[n] and w in T.index:
             b[i] = int(r[n][nu][T.index[w]])
-    return A, vector(QQ, b), cols, rows
+    return entries, b, cols, rows
+
+
+PRIMES = [8388593, 8388587, 8388581, 8388571, 8388547, 8388539]  # < 2^23: fast LinBox path
+
+
+def solve_exact(entries, b, nrows, ncols):
+    """
+    Integer solution of A x = b (A given by sparse integer entries), via dense
+    solves over GF(p) for word-size primes, CRT to symmetric residues, and an
+    exact integer check of A x = b.  Returns (nullity, x or None); nullity is
+    computed mod PRIMES[0]; it equals the rational nullity unless p divides
+    every maximal non-zero minor (then it would be an over-estimate).
+    """
+    from sage.all import CRT_list
+    sols, mods, nullity = [], [], None
+    for p in PRIMES:
+        F = GF(p)
+        A = matrix(F, nrows, ncols, entries, sparse=False)
+        if nullity is None:
+            nullity = int(ncols - A.rank())
+        try:
+            xp = A.solve_right(vector(F, b))
+        except ValueError:
+            return nullity, None
+        sols.append([int(t) for t in xp])
+        mods.append(p)
+        M = 1
+        for q in mods:
+            M *= q
+        x = []
+        for j in range(ncols):
+            v = CRT_list([s[j] for s in sols], mods) if len(mods) > 1 else sols[0][j]
+            v = int(v) % M
+            x.append(v - M if v > M // 2 else v)
+        Ax = [0] * nrows
+        for (i, j), a in entries.items():
+            if x[j]:
+                Ax[i] += a * x[j]
+        if Ax == list(b):
+            return nullity, x
+        if nullity:
+            # with a kernel, independent mod-p solves need not be compatible
+            return nullity, None
+    raise RuntimeError("no exact solution reconstructed; add primes")

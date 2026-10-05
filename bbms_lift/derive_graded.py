@@ -23,6 +23,8 @@ Reference: Beisert, Bianchi, Morales, Samtleben, hep-th/0310292, sec. 2
 4. Report the nullity of the graded system.  If it is zero, the graded
    solution is unique in the domain; otherwise the level is flagged and the
    solution returned by the solver is an arbitrary representative.
+   Linear algebra: dense solves over GF(p) (word-size primes), CRT lift to
+   symmetric residues, then an exact integer check of A x = b.
    Forget Delta, form cumulative sums R_n = X_1 + ... + X_n, and check
    (i) non-negativity and (ii) R_n|_{B4} = R^9_n (computed here).
 
@@ -40,7 +42,7 @@ import sys
 import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from graded import GF, HERE, build_system, dynkin_D5, levels_data
+from graded import HERE, build_system, dynkin_D5, levels_data, solve_exact
 from uplift import restrict
 
 
@@ -60,13 +62,9 @@ def main():
 
     levels, cum = {}, {}
     for n in range(1, N + 1):
-        A, b, cols, rows = build_system(n, r, R9, T, args.slack, gmax=args.gmax)
-        nullity = len(cols) - A.change_ring(GF(1000003)).rank()
-        try:
-            x = A.solve_right(b)
-            solvable = True
-        except ValueError:
-            solvable = False
+        entries, b, cols, rows = build_system(n, r, R9, T, args.slack, gmax=args.gmax)
+        nullity, x = solve_exact(entries, b, len(rows), len(cols))
+        solvable = x is not None
         rec = {"n_unknowns": len(cols), "n_equations": len(rows), "nullity_modp": nullity,
                "solvable": solvable, "unique_in_domain": nullity == 0}
         print(f"level {n}: unknowns {len(cols)}, equations {len(rows)}, nullity {nullity}, "
@@ -75,7 +73,6 @@ def main():
             levels[str(n)] = rec
             print("   no graded solution in this domain; stopping cumulative sums")
             break
-        assert all(v.denominator() == 1 for v in x), "non-integral graded solution"
         graded = sorted((cols[j], int(v)) for j, v in enumerate(x) if v)
         X = {}
         for (lam, D2), k in graded:
