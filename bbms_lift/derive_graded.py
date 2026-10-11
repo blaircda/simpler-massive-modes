@@ -23,8 +23,10 @@ Reference: Beisert, Bianchi, Morales, Samtleben, hep-th/0310292, sec. 2
 4. Report the nullity of the graded system.  If it is zero, the graded
    solution is unique in the domain; otherwise the level is flagged and the
    solution returned by the solver is an arbitrary representative.
-   Linear algebra: dense solves over GF(p) (word-size primes), CRT lift to
-   symmetric residues, then an exact integer check of A x = b.
+   Linear algebra (graded.solve_level): the system is block diagonal in 4
+   blocks (central character x gap parity); each block is echelonized as a
+   dense GF(p) matrix (word-size primes), residues are CRT-lifted to
+   symmetric integers, and the solution is checked exactly against r_n.
    Forget Delta, form cumulative sums R_n = X_1 + ... + X_n, and check
    (i) non-negativity and (ii) R_n|_{B4} = R^9_n (computed here).
 
@@ -32,17 +34,19 @@ Positive (not super-) counting: fermionic states carry + signs.  The map
 preserves the spinor/tensor class, so this is BBMS's supercharacter with
 spinorial coefficients negated.
 
-Output: data/bbms_graded.json
+Output: data/bbms_graded.json (rewritten after every level; --resume continues
+from the last completed level of an existing output file).
 """
 
 import argparse
 import json
 import os
+import resource
 import sys
 import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from graded import HERE, build_system, dynkin_D5, levels_data, solve_exact
+from graded import HERE, dynkin_D5, levels_data, solve_level
 from uplift import restrict
 
 
@@ -53,6 +57,8 @@ def main():
     ap.add_argument("--gmax", type=int, default=None,
                     help="use the unitarity window 0 <= Delta - bound(lambda) <= gmax instead")
     ap.add_argument("--out", default=os.path.join(HERE, "data", "bbms_graded.json"))
+    ap.add_argument("--resume", action="store_true",
+                    help="continue after the last completed level stored in --out")
     args = ap.parse_args()
     N = args.max_level
     t0 = time.time()
@@ -60,20 +66,56 @@ def main():
     r, R9, T = levels_data(N)
     print(f"graded Fock space and r_n(x) through level {N} [{time.time()-t0:.1f}s]", flush=True)
 
-    levels, cum = {}, {}
-    for n in range(1, N + 1):
-        entries, b, cols, rows = build_system(n, r, R9, T, args.slack, gmax=args.gmax)
-        nullity, x = solve_exact(entries, b, len(rows), len(cols))
+    meta = {"generator": "bbms_lift/derive_graded.py", "max_level": N,
+            "slack": args.slack, "gmax": args.gmax,
+            "conventions": "ambient2 doubled D5 weights; J = x5; SO(8) on x1..x4; "
+                           "nu = Delta - J; Delta2 = 2*Delta; positive counting. "
+                           "If unique_in_domain is false the stored solution is an "
+                           "arbitrary representative."}
+
+    def save():
+        out = {"meta": meta, "levels": levels}
+        os.makedirs(os.path.dirname(args.out), exist_ok=True)
+        tmp = args.out + ".tmp"
+        with open(tmp, "w") as f:
+            json.dump(out, f, indent=1)
+        os.replace(tmp, args.out)
+
+    levels, cum, start = {}, {}, 1
+    if args.resume and os.path.exists(args.out):
+        old = json.load(open(args.out))
+        assert old["meta"]["gmax"] == args.gmax and old["meta"]["slack"] == args.slack, \
+            "resume: domain parameters differ from the stored run"
+        done = [int(k) for k, v in old["levels"].items() if "R_cumulative_D5" in v]
+        last = 0
+        while last + 1 in done:
+            last += 1
+        levels = {str(k): old["levels"][str(k)] for k in range(1, last + 1)}
+        if last:
+            cum = {tuple(e["ambient2"]): e["mult"]
+                   for e in old["levels"][str(last)]["R_cumulative_D5"]}
+        start = last + 1
+        print(f"resuming after level {last}", flush=True)
+
+    for n in range(start, N + 1):
+        tn = time.time()
+        nullity, x, stats = solve_level(n, r, R9, T, args.gmax, slack=args.slack,
+                                        log=lambda s: print(s, flush=True))
         solvable = x is not None
-        rec = {"n_unknowns": len(cols), "n_equations": len(rows), "nullity_modp": nullity,
-               "solvable": solvable, "unique_in_domain": nullity == 0}
-        print(f"level {n}: unknowns {len(cols)}, equations {len(rows)}, nullity {nullity}, "
-              f"solvable {solvable} [{time.time()-t0:.1f}s]", flush=True)
+        ncols = sum(v.get("cols", 0) for v in stats.values() if isinstance(v, dict))
+        rec = {"n_unknowns": ncols, "blocks": stats, "nullity_modp": nullity,
+               "solvable": solvable, "unique_in_domain": nullity == 0,
+               "seconds": round(time.time() - tn, 1)}
+        rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1e6
+        print(f"level {n}: unknowns {ncols}, nullity {nullity}, solvable {solvable} "
+              f"[{time.time()-tn:.1f}s, total {time.time()-t0:.1f}s, peak RSS {rss:.2f} GB]",
+              flush=True)
         if not solvable:
             levels[str(n)] = rec
+            save()
             print("   no graded solution in this domain; stopping cumulative sums")
             break
-        graded = sorted((cols[j], int(v)) for j, v in enumerate(x) if v)
+        graded = sorted((col, int(v)) for col, v in x.items())
         X = {}
         for (lam, D2), k in graded:
             X[lam] = X.get(lam, 0) + k
@@ -97,17 +139,7 @@ def main():
         print(f"   cumulative: restriction to B4 ok {res_ok}, non-negative {nonneg}, "
               f"#D5 irreps {len(cum)}", flush=True)
         levels[str(n)] = rec
-
-    out = {"meta": {"generator": "bbms_lift/derive_graded.py", "max_level": N,
-                    "slack": args.slack, "gmax": args.gmax,
-                    "conventions": "ambient2 doubled D5 weights; J = x5; SO(8) on x1..x4; "
-                                   "nu = Delta - J; Delta2 = 2*Delta; positive counting. "
-                                   "If unique_in_domain is false the stored solution is an "
-                                   "arbitrary representative."},
-           "levels": levels}
-    os.makedirs(os.path.dirname(args.out), exist_ok=True)
-    with open(args.out, "w") as f:
-        json.dump(out, f, indent=1)
+        save()
     print(f"wrote {args.out} [{time.time()-t0:.1f}s]")
 
 

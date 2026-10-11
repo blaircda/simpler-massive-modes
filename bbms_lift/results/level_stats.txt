@@ -1,0 +1,24 @@
+level  1: unique True, max gap 0; N_n 1 (S1 invariant 1, ok); #classes 1; min mult 1 (x1), #negative 0; classes: min 1 NONNEG; gaps 0+:1
+level  2: unique True, max gap 2; N_n 1 (S1 invariant 1, ok); #classes 1; min mult 1 (x1), #negative 0; classes: min 1 NONNEG; gaps 0+:1 2-:1
+level  3: unique True, max gap 2; N_n 2 (S1 invariant 2, ok); #classes 2; min mult 1 (x2), #negative 0; classes: min 1 NONNEG; gaps 0+:2 2-:1
+level  4: unique True, max gap 2; N_n 3 (S1 invariant 3, ok); #classes 3; min mult 1 (x3), #negative 0; classes: min 1 NONNEG; gaps 0+:3 2-:2
+level  5: unique True, max gap 2; N_n 6 (S1 invariant 6, ok); #classes 6; min mult 1 (x6), #negative 0; classes: min 1 NONNEG; gaps 0+:5 2+:1 2-:3
+level  6: unique True, max gap 4; N_n 11 (S1 invariant 11, ok); #classes 11; min mult 1 (x11), #negative 0; classes: min 1 NONNEG; gaps 0+:10 2+:1 2-:5 4-:1
+level  7: unique True, max gap 4; N_n 21 (S1 invariant 21, ok); #classes 20; min mult 1 (x19), #negative 0; classes: min 1 NONNEG; gaps 0+:17 2+:3 2-:10 4-:1
+level  8: unique True, max gap 4; N_n 39 (S1 invariant 39, ok); #classes 33; min mult 1 (x27), #negative 0; classes: min 1 NONNEG; gaps 0+:26 2+:7 2-:17 4-:3
+level  9: unique True, max gap 4; N_n 75 (S1 invariant 75, ok); #classes 52; min mult 1 (x33), #negative 0; classes: min 1 NONNEG; gaps 0+:39 2+:11 2-:23 4+:1 4-:7
+level 10: unique True, max gap 6; N_n 141 (S1 invariant 141, ok); #classes 74; min mult 1 (x36), #negative 0; classes: min 1 NONNEG; gaps 0+:56 2+:17 2-:32 4+:1 4-:14 6-:1
+level 11: unique True, max gap 6; N_n 266 (S1 invariant 266, ok); #classes 100; min mult 1 (x36), #negative 0; classes: min 1 NONNEG; gaps 0+:77 2+:27 2-:44 4+:4 4-:22 6-:2
+level 12: unique True, max gap 6; N_n 495 (S1 invariant 495, ok); #classes 131; min mult 1 (x41), #negative 0; classes: min 1 NONNEG; gaps 0+:105 2+:37 2-:56 4+:6 4-:31 6-:9
+level 13: unique True, max gap 8; N_n 921 (S1 invariant 921, ok); #classes 170; min mult 1 (x48), #negative 0; classes: min 1 NONNEG; gaps 0+:136 2+:48 2-:72 4+:11 4-:44 6+:1 6-:15 8+:1 8-:2
+level 14: unique True, max gap 8; N_n 1688 (S1 invariant 1688, ok); #classes 214; min mult 1 (x51), #negative 0; classes: min 1 NONNEG; gaps 0+:177 0-:2 2+:65 2-:93 4+:15 4-:60 6+:1 6-:23 8-:6
+level 15: unique True, max gap 8; N_n 3086 (S1 invariant 3086, ok); #classes 268; min mult 1 (x57), #negative 0; classes: min 1 NONNEG; gaps 0+:224 0-:2 2+:86 2-:117 4+:19 4-:80 6+:4 6-:33 8-:9
+level 16: unique True, max gap 8; N_n 5587 (S1 invariant 5587, ok); #classes 329; min mult 1 (x65), #negative 0; classes: min 1 NONNEG; gaps 0+:283 0-:6 2+:107 2-:145 4+:26 4-:105 6+:5 6-:47 8-:17
+level 17: unique True, max gap 8; N_n 10048 (S1 invariant 10048, ok); #classes 401; min mult 1 (x72), #negative 0; classes: min 1 NONNEG; gaps 0+:353 0-:11 2+:141 2-:179 4+:34 4-:134 6+:6 6-:65 8+:1 8-:24
+level 18: unique True, max gap 8; N_n 17925 (S1 invariant 17925, ok); #classes 484; min mult 1 (x78), #negative 0; classes: min 1 NONNEG; gaps 0+:432 0-:18 2+:175 2-:216 4+:47 4-:168 6+:11 6-:86 8+:1 8-:34
+level 19: unique True, max gap 8; N_n 31779 (S1 invariant 31779, ok); #classes 579; min mult -43 (x1), #negative 1; classes: min 1 NONNEG; gaps 0+:522 0-:20 2+:212 2-:258 4+:60 4-:210 6+:15 6-:111 8+:3 8-:46
+level 20: unique True, max gap 8; N_n 55921 (S1 invariant 55921, ok); #classes 687; min mult -146 (x1), #negative 1; classes: min 1 NONNEG; gaps 0+:630 0-:32 2+:255 2-:310 4+:73 4-:260 6+:18 6-:143 8+:3 8-:63
+level 21: unique True, max gap 8; N_n 97804 (S1 invariant 97804, ok); #classes 811; min mult -346 (x1), #negative 1; classes: min 1 NONNEG; gaps 0+:748 0-:41 2+:310 2-:364 4+:94 4-:312 6+:26 6-:179 8+:3 8-:84
+level 22: unique True, max gap 8; N_n 169904 (S1 invariant 169904, ok); #classes 951; min mult -666 (x1), #negative 2; classes: min 1 NONNEG; gaps 0+:874 0-:55 2+:371 2-:426 4+:113 4-:377 6+:32 6-:224 8+:6 8-:108
+level 23: unique True, max gap 8; N_n 293400 (S1 invariant 293400, ok); #classes 1106; min mult -1114 (x1), #negative 4; classes: min -88 NEGATIVE; gaps 0+:1017 0-:69 2+:437 2-:498 4+:139 4-:447 6+:40 6-:276 8+:6 8-:139
+level 24: unique True, max gap 8; N_n 503579 (S1 invariant 503579, ok); #classes 1281; min mult -2649 (x1), #negative 8; classes: min -888 NEGATIVE; gaps 0+:1181 0-:83 2+:514 2-:575 4+:166 4-:532 6+:49 6-:336 8+:9 8-:173

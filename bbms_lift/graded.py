@@ -250,11 +250,11 @@ def bound2(lam):
     return 2 + 2 * k + 4 * l + 6 * m + 5 * p + 3 * q
 
 
-def build_system(n, r, R9, T, slack, lams=None, gmax=None):
+def domain_cols(n, r, R9, slack, lams=None, gmax=None):
     """
-    Domain: if gmax is None, Delta with [Delta - l1, Delta + l1] meeting the
-    nu-support of r_n widened by slack; otherwise the 'unitarity window'
-    0 <= Delta - bound(lambda) <= gmax.
+    Unknowns (lambda, 2 Delta).  If gmax is None: Delta with [Delta - l1,
+    Delta + l1] meeting the nu-support of r_n widened by slack; otherwise the
+    'unitarity window' 0 <= Delta - bound(lambda) <= gmax.
     """
     nus = sorted(r[n])
     nu_lo, nu_hi = nus[0], nus[-1]
@@ -270,6 +270,13 @@ def build_system(n, r, R9, T, slack, lams=None, gmax=None):
         for D2 in rng:
             if D2 % 2 == par:
                 cols.append((lam, D2))
+    return cols
+
+
+def build_system(n, r, R9, T, slack, lams=None, gmax=None):
+    """Global sparse system (small n / diagnostics); see solve_level for large n."""
+    nus = sorted(r[n])
+    cols = domain_cols(n, r, R9, slack, lams=lams, gmax=gmax)
     rows = {}
     for nu in nus:
         for i in np.nonzero(r[n][nu][:T.size])[0]:
@@ -328,4 +335,155 @@ def solve_exact(entries, b, nrows, ncols):
         if nullity:
             # with a kernel, independent mod-p solves need not be compatible
             return nullity, None
+    raise RuntimeError("no exact solution reconstructed; add primes")
+
+
+# ------------------------------------------------------------------
+# Memory-lean block solver (large n)
+# ------------------------------------------------------------------
+#
+# The system is block diagonal with 4 blocks, keyed by
+#   column (lambda, 2Delta):  (class bit l1 mod 2,  (sum(lambda) - Delta) mod 2)
+#   row    (nu, w):           (class bit w1 mod 2,  (sum(w) - nu) mod 2)
+# (central character of Spin(10), and Sum w_i + J = Sum lambda_i mod 2 on all
+# weights of V_lambda, with J = Delta - nu).  In the unitarity window the
+# second bit is the gap parity.  Each block is built directly as a dense
+# GF(p) matrix from compact per-irrep weight arrays, so no global entry list
+# is ever held in memory.
+
+_W4ID, _W4 = {}, []
+
+
+def _wid(w):
+    i = _W4ID.get(w)
+    if i is None:
+        i = _W4ID[w] = len(_W4)
+        _W4.append(w)
+    return i
+
+
+_SLA = {}
+
+
+def d5_slice_arrays(lam):
+    """(J2, wid, mult) int64 arrays of the (J, D4-dominant w4) weights of V_lam."""
+    if lam not in _SLA:
+        sl = d5_slices(lam)
+        J2 = np.fromiter((k[0] for k in sl), np.int64, len(sl))
+        wid = np.fromiter((_wid(k[1]) for k in sl), np.int64, len(sl))
+        m = np.fromiter(sl.values(), np.int64, len(sl))
+        _SLA[lam] = (J2, wid, m)
+        _SLICES.pop(lam, None)   # keep only the compact form
+        _DOMM.pop(lam, None)
+    return _SLA[lam]
+
+
+def col_block(lam, D2):
+    return (lam[0] % 2, ((sum(lam) - D2) // 2) % 2)
+
+
+def row_block(nu, w):
+    return (w[0] % 2, ((sum(w) - 2 * nu) // 2) % 2)
+
+
+_OFF, _BIG = 1 << 20, 1 << 32   # row key = (nu + _OFF) * _BIG + wid
+
+
+def _col_keys(lam, D2):
+    J2, wid, m = d5_slice_arrays(lam)
+    nu2 = D2 - J2
+    ok = nu2 % 2 == 0
+    return (nu2[ok] // 2 + _OFF) * _BIG + wid[ok], m[ok]
+
+
+def _solve_block_mod(p, cols, cj, tgt_keys, tgt_vals):
+    """Echelonize [A_block | b_block] over GF(p).  Returns (residues {j: x_j}, nullity, consistent)."""
+    ks, cs, vs = [], [], []
+    for a, j in enumerate(cj):
+        k, m = _col_keys(*cols[j])
+        ks.append(k)
+        cs.append(np.full(k.size, a, dtype=np.int64))
+        vs.append(m)
+    keys = np.concatenate(ks + [tgt_keys])
+    uk, inv = np.unique(keys, return_inverse=True)
+    nA = keys.size - tgt_keys.size
+    ri, ti = inv[:nA], inv[nA:]
+    cc, vv = np.concatenate(cs), np.concatenate(vs)
+    nr, nc = uk.size, len(cj)
+    A = matrix(GF(p), nr, nc + 1, sparse=False)
+    for i, j, v in zip(ri.tolist(), cc.tolist(), (vv % p).tolist()):
+        A[i, j] = v
+    for i, v in zip(ti.tolist(), [t % p for t in tgt_vals]):
+        A[i, nc] = v
+    del ks, cs, vs, keys, cc, vv
+    A.echelonize()
+    piv = A.pivots()
+    if piv and piv[-1] == nc:
+        return None, nc - (len(piv) - 1), False
+    res = {cj[c]: int(A[k, nc]) for k, c in enumerate(piv)}
+    return res, nc - len(piv), True
+
+
+def solve_level(n, r, R9, T, gmax, slack=0, primes=PRIMES, log=None):
+    """
+    Solve phi(X_n) = r_n(x) on the domain_cols domain, block by block.
+    Returns (nullity, {col: integer coefficient} or None, block stats).
+    Exactness: the CRT-lifted solution is checked against r_n over Z
+    (every (nu, w) key, including those where r_n vanishes).
+    """
+    from sage.all import CRT_list
+    cols = domain_cols(n, r, R9, slack, gmax=gmax)
+    tgt = {}
+    for nu, a in r[n].items():
+        for i in np.nonzero(a[:T.size])[0]:
+            w = tuple(int(t) for t in T.W[i])
+            tgt[(nu + _OFF) * _BIG + _wid(w)] = int(a[i])
+    blocks = {}
+    for j, c in enumerate(cols):
+        blocks.setdefault(col_block(*c), []).append(j)
+    tgt_by_block = {}
+    for k, v in tgt.items():
+        nu, wid = k // _BIG - _OFF, k % _BIG
+        tgt_by_block.setdefault(row_block(nu, _W4[wid]), []).append((k, v))
+    for b in tgt_by_block:
+        if b not in blocks:
+            return None, None, {"error": f"target in block {b} with no unknowns"}
+    residues, mods, stats, nullity = [], [], {}, 0
+    for p in primes:
+        resp = {}
+        for b, cj in sorted(blocks.items()):
+            tk = tgt_by_block.get(b, [])
+            tkeys = np.array([k for k, _ in tk], dtype=np.int64)
+            res, nl, ok = _solve_block_mod(p, cols, cj, tkeys, [v for _, v in tk])
+            if p == primes[0]:
+                stats[str(b)] = {"cols": len(cj), "nullity": nl, "rhs_rows": len(tk)}
+                nullity += nl
+                if log:
+                    log(f"   block {b}: {len(cj)} unknowns, nullity {nl}, consistent {ok}")
+            if not ok:
+                return nullity, None, stats
+            resp.update(res)
+        residues.append(resp)
+        mods.append(p)
+        M = 1
+        for q in mods:
+            M *= q
+        x = {}
+        for j in set().union(*residues):
+            v = CRT_list([rs.get(j, 0) for rs in residues], mods) if len(mods) > 1 else residues[0][j]
+            v = int(v) % M
+            v = v - M if v > M // 2 else v
+            if v:
+                x[cols[j]] = v
+        # exact check over Z: sum_j x_j phi(col_j) == r_n on every key
+        acc = {}
+        for (lam, D2), c in x.items():
+            k, m = _col_keys(lam, D2)
+            for kk, mm in zip(k.tolist(), m.tolist()):
+                acc[kk] = acc.get(kk, 0) + c * mm
+        acc = {k: v for k, v in acc.items() if v}
+        if acc == tgt:
+            return nullity, x, stats
+        if nullity:
+            return nullity, None, stats
     raise RuntimeError("no exact solution reconstructed; add primes")
