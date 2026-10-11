@@ -12,6 +12,7 @@ All scripts here only *read* `so10_uplift/data/*.json` and reuse `so10_uplift/up
 | `kernel_moves.py` | S3b | `results/kernel_moves.txt` | ~15 min |
 | `delta_ideal.py` | S4 | `results/delta_ideal.txt` | ~5 s |
 | `regge_induction.py` | S5 | `results/regge_induction.txt` | ~20 s |
+| `regge_stress.py` | S5 step 1: induction to $n=32$; (a) for all uplifts (LP); (b) on samples | `results/regge_stress_*.txt` | ~2 min / ~2 min / ~10 s |
 
 Notation: an uplift is $c=(c_\lambda)$ over D5 conjugation classes $\lambda=(l_1,\dots,l_5)$, $l_5\ge0$, with $\sum_\lambda c_\lambda\,V_\lambda|_{B4}=R^9_n=\sum_\mu m_n(\mu)V_\mu$. Branching is interlacing: $l_1\ge\mu_1\ge l_2\ge\mu_2\ge l_3\ge\mu_3\ge l_4\ge\mu_4\ge|l_5|$.
 
@@ -103,6 +104,14 @@ $$\rho_n:=R^9_n-\mathrm{Res}\,T(A_{n-1})=r^9_n-S(\mathrm{top}\,A_{n-1}).$$
 1. **Canonical uplifts.** $A^{\rm can}_n\supseteq T(A^{\rm can}_{n-1})$ holds only for $n\le8$; the canonical uplift is not inductive. But $\rho_n\ge0$ for all $n\le24$: the shifted canonical uplift never overshoots $R^9_n$.
 2. **The induction runs to $n=24$** from $A_1=1$, for each of three rules for $E_n$: max-height, min-height, and an arbitrary feasible ILP solution. Each run takes seconds.
 3. **Path independence.** For *every* enumerated uplift $A_{n-1}$ ($n-1\le10$; 6057 uplifts at $n-1=10$), $\rho_n\ge0$ and $\rho_n$ is liftable. The residual depends on $A_{n-1}$ only through its top slices: 90 distinct residuals at $n=11$.
+
+**Step 1 stress tests (2026-10-11; `regge_stress.py`).** Data: $r^9_n$ for $n\le32$ in `data/r9_to32.json`, from `so10_uplift/derive_r9.py`. It is identical to `so10_uplift/data/r9.json` for $n\le24$.
+- **Induction to $n=32$** for all three rules for $E_n$, with $|E_n|=N_n-N_{n-1}$ (12,294,174 at $n=32$).
+- **(a) for *all* uplifts, rigorously, for $n\le24$.**
+  - The identity $\mathrm{top}(A)=\mathrm{Res}\,A-\mathrm{Res}\,T^{-1}(A)$ turns (a) at $\mu=\nu+e_1$ into $\min_A\mathrm{Res}\,T^{-1}(A)(\nu)\ge R^9_{n-1}(\nu)-r^9_n(\mu)$. An LP lower bound on the minimum suffices.
+  - It is certified at every weight with positive deficit (484 weights at $n=24$).
+  - It is **tight but never violated**: slack exactly 0, always at symmetric tensors $\nu=(k,0,0,0)$, on the leading trajectory. The deficits there come in repeating pairs: 1,1,1,1,2,2,3,3,7,7,12,12,25,25,43,43,83,83,145,145,267,267 for $n=3..24$.
+- **(b) on sampled uplifts, $n=12..18$.** Samples are random-objective ILP vertices plus random walks along the S3b Euler moves: 36–111 distinct uplifts per level. Every residual is non-negative and liftable. The samples are modest because the walks accept few moves.
 
 **Conjecture (Regge continuation).** For all $n\ge2$ and every non-negative uplift $A$ of $R^9_{n-1}$:
 - (a) $r^9_n\ge S(\mathrm{top}\,A)$, i.e. continuing all trajectories one step never overshoots level $n$;

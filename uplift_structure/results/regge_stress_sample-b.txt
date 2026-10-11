@@ -1,0 +1,9 @@
+data: /home/chris/Programming/Projects/simpler-massive-modes/uplift_structure/data/r9_to32.json (max level 32); identical to so10_uplift r9 for n <= 24: True
+  n=12: 84 distinct sampled uplifts of R9_11 (11 Euler moves); rho negative 0; not liftable 0; distinct residuals 52 [2s]
+  n=13: 111 distinct sampled uplifts of R9_12 (16 Euler moves); rho negative 0; not liftable 0; distinct residuals 70 [1s]
+  n=14: 93 distinct sampled uplifts of R9_13 (22 Euler moves); rho negative 0; not liftable 0; distinct residuals 79 [1s]
+  n=15: 109 distinct sampled uplifts of R9_14 (30 Euler moves); rho negative 0; not liftable 0; distinct residuals 82 [1s]
+  n=16: 57 distinct sampled uplifts of R9_15 (40 Euler moves); rho negative 0; not liftable 0; distinct residuals 48 [1s]
+  n=17: 57 distinct sampled uplifts of R9_16 (52 Euler moves); rho negative 0; not liftable 0; distinct residuals 47 [1s]
+  n=18: 36 distinct sampled uplifts of R9_17 (66 Euler moves); rho negative 0; not liftable 0; distinct residuals 20 [1s]
+RESULT: no counterexample
