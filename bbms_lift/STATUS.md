@@ -12,6 +12,7 @@ Derivation scripts here never import baseline files. Comparison with `so10_uplif
 |---|---|---|---|
 | `graded.py` | library: ν-graded Fock space, $r_n(x)$, the map $\varphi$, linear system | — | — |
 | `derive_graded.py` | solve the graded lift level by level (block solver, B7); cumulative checks; `--resume` | `data/*.json` | ~5 min to $n=24$ |
+| `positive_graded.py` | B6 diagnostic: minimal $K$-correction to a resolved-positive lift (ILP) | `results/positive_graded.txt` | ~5 min to $n=24$ |
 | `level_stats.py` | per-level gaps, $N_n$ check, chirality-resolved and class-level positivity | `results/level_stats.txt` | ~2 s |
 | `compare_uplifts.py` | verification: compare with `so10_uplift/data/R10*.json` | stdout | ~2 s |
 | `letter_identities.py` | exact identities for $\varphi$ | `results/letter_identities.txt` | ~3 s |
@@ -179,6 +180,31 @@ Data: `data/bbms_unitarity_g8.json` to $n=24$; `results/level_stats.txt`.
 - At class level, every uplift is the $x=1$ image of some graded lift ($\mathrm{BBMS}+K\cdot Y$, with $K(1)=e$, by S4). So the grading by itself imposes **no** constraint relevant to existence. Its only use was the specific window normal form, and that fails.
 - What survives, and is independent of the window: B2 (kernel $=(K)$), B5 (exactly which graded characters lift, and that the string levels do at all $n$), B4 (the pure-spinor letter), and S4.
 - To be useful for existence, a graded approach needs a *different, principled* choice of representative mod $K$ that stays positive. One option is BBMS's own procedure: lift to SO(10) first, then assign Δ per SO(8)×U(1)$_J$ component. Their unitarity bound is "satisfied but not saturated" at higher levels, with no upper bound. That would need a uniqueness principle other than a width-8 window.
+
+**Diagnostic: positive graded lifts do exist (`positive_graded.py`, `results/positive_graded.txt`).**
+
+*Set-up.* For window width $G\ge10$, the single-term multiples $K\cdot V_\mu x^{\Delta}$ at gap 0 lie in the window, and each becomes $e\cdot V_\mu$ at $x=1$, whatever $\Delta$ is. So the chirality-resolved cumulative sums reachable by graded lifts are $R_n^{\rm BBMS}+\sum_\mu t_\mu\,e\cdot V_\mu$ with $t_\mu\in\mathbb Z$. This is the set $R^{\rm BBMS}+\delta^2R$: the grading fixes chirality data modulo $\delta^2$. Increments at successive levels add, so each level can be tested independently.
+
+*Method.*
+- An integer program per level, with generators $\mu$ having $\mathrm{supp}(e\cdot V_\mu)$ inside the resolved candidates.
+- $e\cdot V_\mu$ is computed by Klimyk's formula and validated against Sage.
+- The minimal $\|t\|_1$ is certified by the LP bound (an integer at ⌈LP⌉ is optimal).
+
+*Results.*
+- **A chirality-resolved non-negative graded lift (window width 10) exists at every $n\le24$.**
+- The minimal correction to the BBMS normal form is $\|t\|_1=0,0,8,25,58,217,733$ for $n=17..23$ (all certified optimal), and $\in[1934,1936]$ at $n=24$.
+- The correction is concentrated in a few low-lying moves:
+  - mostly $e\cdot\overline{16}$, with coefficient $+4,+21,+57,+111,+356,+843$;
+  - then $e\cdot[k,0,0,1,0]$ for $k=1,2,3$ (the $\overline{16}$ series);
+  - and, from $n=23$, $e\cdot1$.
+- These are exactly the directions in which the window solution went negative.
+
+*Reading.*
+- The grading is **not** incompatible with positivity. The BBMS window normal form just picks the wrong representative, by $K$-multiples in the $\overline{16}$-series and singlet directions. These need gap up to 10, just beyond the kernel-free width 8.
+- A principled positive normal form therefore needs a different choice of fundamental domain for $(K)$, at least in the $\overline{16}$-series directions.
+- **Literature-motivated candidate (not yet tested).** Bianchi's lectures (hep-th/0409304, after eq. 3.17) quote *two* SO(10) unitarity bounds, $\Delta_\pm=1+k+2l+3m+2(p+q)\pm\frac12(p-q)$. Our window uses only $\Delta_+$ for every λ. For $\overline{16}$-type irreps ($p>q$), $\Delta_-<\Delta_+$.
+- **Caveat** (`../previous_efforts.md`). Adjusting windows until positivity holds risks the "aggregating refinements" trap. A variant is only worth testing if it comes from the physics (as $\Delta_\pm$ does), and should be stopped as soon as it fails.
+
 
 ### B7. Block-diagonal solver (2026-10-11)
 

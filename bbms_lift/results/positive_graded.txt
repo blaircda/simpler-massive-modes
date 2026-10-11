@@ -1,0 +1,17 @@
+generators: inner (supp e V_mu in candidates)
+level 17: 88 generators; resolved-positive graded lift exists: True; min |t|_1 = 0 (= ceil LP bound, optimal)
+      correction: spinor-mu |t|_1 0, tensor-mu |t|_1 0; largest t_mu (Dynkin):  [1s]
+level 18: 111 generators; resolved-positive graded lift exists: True; min |t|_1 = 0 (= ceil LP bound, optimal)
+      correction: spinor-mu |t|_1 0, tensor-mu |t|_1 0; largest t_mu (Dynkin):  [0s]
+level 19: 142 generators; resolved-positive graded lift exists: True; min |t|_1 = 8 (= ceil LP bound, optimal)
+      correction: spinor-mu |t|_1 8, tensor-mu |t|_1 0; largest t_mu (Dynkin): +4 e.(0, 0, 0, 1, 0), -4 e.(1, 0, 0, 1, 0) [1s]
+level 20: 179 generators; resolved-positive graded lift exists: True; min |t|_1 = 25 (= ceil LP bound, optimal)
+      correction: spinor-mu |t|_1 25, tensor-mu |t|_1 0; largest t_mu (Dynkin): +21 e.(0, 0, 0, 1, 0), -4 e.(1, 0, 0, 1, 0) [1s]
+level 21: 219 generators; resolved-positive graded lift exists: True; min |t|_1 = 58 (= ceil LP bound, optimal)
+      correction: spinor-mu |t|_1 58, tensor-mu |t|_1 0; largest t_mu (Dynkin): +57 e.(0, 0, 0, 1, 0), -1 e.(0, 0, 0, 0, 1) [1s]
+level 22: 269 generators; resolved-positive graded lift exists: True; min |t|_1 = 217 (= ceil LP bound, optimal)
+      correction: spinor-mu |t|_1 216, tensor-mu |t|_1 1; largest t_mu (Dynkin): +111 e.(0, 0, 0, 1, 0), -104 e.(2, 0, 0, 1, 0), +1 e.(1, 1, 0, 1, 0), +1 e.(0, 0, 1, 0, 2) [2s]
+level 23: 325 generators; resolved-positive graded lift exists: True; min |t|_1 = 733 (= ceil LP bound, optimal)
+      correction: spinor-mu |t|_1 679, tensor-mu |t|_1 54; largest t_mu (Dynkin): +356 e.(0, 0, 0, 1, 0), +202 e.(1, 0, 0, 1, 0), -83 e.(2, 0, 0, 1, 0), +42 e.(0, 0, 0, 0, 0), +30 e.(2, 0, 0, 0, 1), +5 e.(0, 0, 1, 0, 2) [121s]
+level 24: 390 generators; resolved-positive graded lift exists: True; min |t|_1 in [1934, 1936] (time-limited)
+      correction: spinor-mu |t|_1 1632, tensor-mu |t|_1 304; largest t_mu (Dynkin): +843 e.(0, 0, 0, 1, 0), +688 e.(1, 0, 0, 1, 0), +209 e.(0, 0, 0, 0, 0), -86 e.(0, 0, 0, 0, 2), -82 e.(3, 0, 0, 1, 0), -11 e.(1, 0, 0, 2, 1) [122s]
