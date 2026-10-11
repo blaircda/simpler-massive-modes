@@ -1,0 +1,34 @@
+  W_ 0:         1 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_ 1:         0 irreps; negative entries 0; non-negatively SO(10)-liftable: None
+  W_ 2:         0 irreps; negative entries 1 [((0, 0, 0, 0), -1)]
+  W_ 3:         1 irreps; negative entries 1 [((0, 0, 0, 1), -1)]
+  W_ 4:         1 irreps; negative entries 1 [((1, 0, 0, 0), -1)]
+  W_ 5:         4 irreps; negative entries 0; non-negatively SO(10)-liftable: False
+  W_ 6:         6 irreps; negative entries 0; non-negatively SO(10)-liftable: False
+  W_ 7:        10 irreps; negative entries 1 [((0, 0, 0, 0), -1)]
+  W_ 8:        19 irreps; negative entries 0; non-negatively SO(10)-liftable: False
+  W_ 9:        38 irreps; negative entries 0; non-negatively SO(10)-liftable: False
+  W_10:        63 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_11:       118 irreps; negative entries 0; non-negatively SO(10)-liftable: False
+  W_12:       207 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_13:       369 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_14:       641 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_15:      1126 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_16:      1933 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_17:      3334 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_18:      5671 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_19:      9633 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_20:     16209 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_21:     27194 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_22:     45260 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_23:     75065 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_24:    123696 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_25:    202995 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_26:    331294 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_27:    538462 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_28:    870830 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_29:   1402682 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_30:   2249188 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_31:   3592406 irreps; negative entries 0; non-negatively SO(10)-liftable: True
+  W_j has negative entries at j = [2, 3, 4, 7]; W_j >= 0 but not liftable at j = [5, 6, 8, 9, 11]
+[18s]

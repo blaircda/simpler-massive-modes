@@ -13,6 +13,9 @@ All scripts here only *read* `so10_uplift/data/*.json` and reuse `so10_uplift/up
 | `delta_ideal.py` | S4 | `results/delta_ideal.txt` | ~5 s |
 | `regge_induction.py` | S5 | `results/regge_induction.txt` | ~20 s |
 | `regge_stress.py` | S5 step 1: induction to $n=32$; (a) for all uplifts (LP); (b) on samples | `results/regge_stress_*.txt` | ~2 min / ~2 min / ~10 s |
+| `regge_extremal.py` | S5 step 2: per-weight LP maxima of top content vs min/max-height uplifts | `results/regge_extremal.txt` | ~1 min ($n\le18$) |
+| `regge_a_star.py` | S5 step 2: universal certificate (lemma), (a*) to $n=32$, certificate optimality | `results/regge_a_star.txt` | ~1 min |
+| `regge_step2.py` | S5 step 2: optimal duals at low weights; singlet margins; Regge monotonicity; $W$ factorisation | `results/regge_step2_*.txt` | ~30 s total |
 
 Notation: an uplift is $c=(c_\lambda)$ over D5 conjugation classes $\lambda=(l_1,\dots,l_5)$, $l_5\ge0$, with $\sum_\lambda c_\lambda\,V_\lambda|_{B4}=R^9_n=\sum_\mu m_n(\mu)V_\mu$. Branching is interlacing: $l_1\ge\mu_1\ge l_2\ge\mu_2\ge l_3\ge\mu_3\ge l_4\ge\mu_4\ge|l_5|$.
 
@@ -112,6 +115,47 @@ $$\rho_n:=R^9_n-\mathrm{Res}\,T(A_{n-1})=r^9_n-S(\mathrm{top}\,A_{n-1}).$$
   - It is certified at every weight with positive deficit (484 weights at $n=24$).
   - It is **tight but never violated**: slack exactly 0, always at symmetric tensors $\nu=(k,0,0,0)$, on the leading trajectory. The deficits there come in repeating pairs: 1,1,1,1,2,2,3,3,7,7,12,12,25,25,43,43,83,83,145,145,267,267 for $n=3..24$.
 - **(b) on sampled uplifts, $n=12..18$.** Samples are random-objective ILP vertices plus random walks along the S3b Euler moves: 36–111 distinct uplifts per level. Every residual is non-negative and liftable. The samples are modest because the walks accept few moves.
+
+**Step 2(a): the continuation inequality (2026-10-11).**
+
+*Lemma (proved; pointwise check on 1584 classes in `regge_a_star.py`).*
+- **Statement.** For a B4 weight ν let $\tilde\nu=(\nu_1+1,\nu_1+1,\nu_3,\nu_4)$ and $y_\nu=\delta_\nu-\delta_{\nu+e_1}+\delta_{\tilde\nu}$. Then $y_\nu\cdot\mathrm{Res}\,V_\lambda\ge[\text{top slice of }\lambda\ni\nu]$ for every class λ.
+- **Proof, by cases on $l_2$.**
+  - If $l_2\le\nu_1$, then $\tilde\nu\notin$ box and the left side is exactly $[l_1=\nu_1]\cdot[\nu'\prec l']$.
+  - If $l_2=\nu_1+1$, then $\nu\notin$ box and $[\tilde\nu\in\text{box}]\ge[\nu+e_1\in\text{box}]$, because the $\tilde\nu$ conditions are weaker ($l_3\le\nu_1+1$ instead of $l_3\le\nu_2$).
+  - If $l_2\ge\nu_1+2$, all three terms vanish.
+- **Consequence.** For every non-negative uplift $A$ of $R=R^9_{n-1}$: $\mathrm{top}(A)(\nu)\le R(\nu)-R(\nu+e_1)+R(\tilde\nu)$. So half (a) holds for **all** uplifts at every $\mu=\nu+e_1$ where the uplift-free inequality
+$$(\mathrm a^*)\qquad R^9_n(\nu+e_1)\ \ge\ R^9_{n-1}(\nu)+R^9_{n-1}(\tilde\nu)$$
+holds.
+
+*Data.*
+- **(a*) holds** at every weight for $n\le12$.
+- **Failures are few and near the origin.** For $13\le n\le32$ it fails only at a few weights near the origin: the singlet, the vector, the spinor, and later $(2,0,0,0)$; at most 5 of 1,426 weights at $n=32$.
+- **Equality is common.** (a*) holds with *equality* at about half of all weights (748/1426 at $n=32$), presumably the Regge-edge region of GMSZ's shift relations.
+- **The certificate is optimal** (equals the LP maximum of top content) everywhere except those few low weights ($n\le20$).
+- **Better certificates at the low weights** (`regge_step2.py duals`):
+  - The spinor's optimal certificate is the $n$-independent 5-term chain $+[0,0,0,1]-[1,0,0,1]+[0,1,0,1]-[0,0,1,1]+[0,0,0,3]$ (Dynkin). It extends $y_\nu$ by also raising coordinates 3 and 4.
+  - The singlet's is $+[0]$ plus a 4-term chain placed near the top of the support ($\mu_1=n-6$).
+- The per-weight maxima are integral ($n\le18$). No single uplift attains them all: the min-height uplift does only for $n\le10$.
+
+*Universal versus existential.*
+- **Some uplift hoards nearly every possible singlet.** $\max_A A(\text{singlet})\approx R^9_{n-1}(1)$ (636 vs 639 at $n=20$). So the universal (a) at the vector needs $r^9_n(9)\gtrsim R^9_{n-1}(1)$.
+  - The ratio rises from 1.25 to 1.91 over $n=8..32$.
+  - But fixed-irrep asymptotics give $r_n(9)/r_n(1)\to9$, while $R_{n-1}(1)/r_n(1)$ grows like $\sqrt n$. That *suggests* (heuristic, unproved) that the every-uplift form fails eventually, at $n$ of order $10^3$ or beyond.
+- **A proof should therefore target the existential induction with a specific rule.** The max-height induction never creates an SO(10) singlet ($A_{n-1}(1)=0$ for all $n\le32$), so it has the full margin $r_n(9)$ there.
+
+*Regge monotonicity* (`regge_step2.py monotone`). $r^9_n(\nu+e_1)\ge r^9_{n-1}(\nu)$ for **all** ν and $n\le32$, and hence also cumulatively. This would follow from an injective "multiply by the mode-1 vector's highest-weight vector" map if the spectrum were a free $\mathrm{Sym}(q\cdot9)$-module.
+
+*Plethystic factorisation* (`regge_step2.py wfactor`).
+- **Definition.** $R^9(q)=\mathrm{Res}\,\mathrm{PE}[q\cdot10]\cdot W(q)$ with $W=R^9\cdot\mathrm{Res}\,K(q)=Z_m\cdot\mathrm{PE}[-q\cdot9]$, where $K(q)=\sum_k(-1)^k\Lambda^k(10)q^k$ is the graded Euler class of `../bbms_lift/` B2.
+- **Positivity.** $W_j\ge0$ for all $j\ge8$ (and $j=5,6$). It is negative only at $j=2,3,4,7$, with one entry each: $-1$, $-16$, $-9$, $-1$.
+- **Liftability.** $W_j$ is non-negatively SO(10)-liftable at $j=10$ and for all $12\le j\le31$. It is not liftable at $j=5,6,8,9,11$.
+- So the free-module structure holds only eventually. An explicit $\mathrm{PE}[q\cdot10]\otimes W^{(10)}$ construction would need a low-order correction.
+
+*Emerging proof architecture for (a).*
+- **Edge:** the universal certificate, plus (a*) as an inequality on the string spectrum itself. It is often an equality, so it calls for an injection or shift-relation argument.
+- **Bulk** (low weights): a bound specific to the construction, e.g. the max-height rule keeps low-$l_1$ SO(10) content small.
+- Half (b) has not yet been attacked theoretically. Note that (a)+(b) together $\iff$ $T(A)\le$ some uplift of $R^9_n$.
 
 **Conjecture (Regge continuation).** For all $n\ge2$ and every non-negative uplift $A$ of $R^9_{n-1}$:
 - (a) $r^9_n\ge S(\mathrm{top}\,A)$, i.e. continuing all trajectories one step never overshoots level $n$;

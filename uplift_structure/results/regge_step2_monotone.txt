@@ -1,0 +1,3 @@
+  per level  r9_n(nu+e1) >= r9_(n-1)(nu): violations 0 (all nu, n <= 32)
+  cumulative R9_n(nu+e1) >= R9_(n-1)(nu): violations 0 (all nu, n <= 32)
+[0s]

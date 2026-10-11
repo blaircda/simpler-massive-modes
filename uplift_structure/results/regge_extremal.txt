@@ -1,0 +1,25 @@
+n= 2: 1 weights; min-height attains max top at all weights: True (misses 0); max-height misses 0; fractional LP maxima 0; (a) violated by LP max at 0 weights [0s]
+n= 3: 2 weights; min-height attains max top at all weights: True (misses 0); max-height misses 0; fractional LP maxima 0; (a) violated by LP max at 0 weights [0s]
+n= 4: 4 weights; min-height attains max top at all weights: True (misses 0); max-height misses 0; fractional LP maxima 0; (a) violated by LP max at 0 weights [0s]
+n= 5: 7 weights; min-height attains max top at all weights: True (misses 0); max-height misses 0; fractional LP maxima 0; (a) violated by LP max at 0 weights [0s]
+n= 6: 11 weights; min-height attains max top at all weights: True (misses 0); max-height misses 0; fractional LP maxima 0; (a) violated by LP max at 0 weights [0s]
+n= 7: 17 weights; min-height attains max top at all weights: True (misses 0); max-height misses 0; fractional LP maxima 0; (a) violated by LP max at 0 weights [0s]
+n= 8: 24 weights; min-height attains max top at all weights: True (misses 0); max-height misses 1; fractional LP maxima 0; (a) violated by LP max at 0 weights [0s]
+n= 9: 33 weights; min-height attains max top at all weights: True (misses 0); max-height misses 1; fractional LP maxima 0; (a) violated by LP max at 0 weights [0s]
+n=10: 44 weights; min-height attains max top at all weights: True (misses 0); max-height misses 2; fractional LP maxima 0; (a) violated by LP max at 0 weights [0s]
+n=11: 57 weights; min-height attains max top at all weights: False (misses 1); max-height misses 3; fractional LP maxima 0; (a) violated by LP max at 0 weights [0s]
+      e.g. nu=(2, 0, 0, 0): top(Amin)=6, LP max=7.00
+n=12: 73 weights; min-height attains max top at all weights: False (misses 1); max-height misses 3; fractional LP maxima 0; (a) violated by LP max at 0 weights [0s]
+      e.g. nu=(2, 0, 0, 0): top(Amin)=5, LP max=10.00
+n=13: 92 weights; min-height attains max top at all weights: False (misses 1); max-height misses 5; fractional LP maxima 0; (a) violated by LP max at 0 weights [0s]
+      e.g. nu=(2, 0, 0, 0): top(Amin)=12, LP max=23.00
+n=14: 113 weights; min-height attains max top at all weights: False (misses 1); max-height misses 6; fractional LP maxima 0; (a) violated by LP max at 0 weights [0s]
+      e.g. nu=(2, 0, 0, 0): top(Amin)=19, LP max=43.00
+n=15: 139 weights; min-height attains max top at all weights: False (misses 2); max-height misses 8; fractional LP maxima 0; (a) violated by LP max at 0 weights [0s]
+      e.g. nu=(2, 0, 0, 0): top(Amin)=38, LP max=89.00; nu=(2, 2, 2, 0): top(Amin)=28, LP max=29.00
+n=16: 168 weights; min-height attains max top at all weights: False (misses 2); max-height misses 10; fractional LP maxima 0; (a) violated by LP max at 0 weights [1s]
+      e.g. nu=(2, 0, 0, 0): top(Amin)=66, LP max=171.00; nu=(2, 2, 2, 0): top(Amin)=56, LP max=57.00
+n=17: 200 weights; min-height attains max top at all weights: False (misses 2); max-height misses 12; fractional LP maxima 0; (a) violated by LP max at 0 weights [1s]
+      e.g. nu=(2, 0, 0, 0): top(Amin)=131, LP max=294.00; nu=(2, 2, 2, 0): top(Amin)=72, LP max=82.00
+n=18: 238 weights; min-height attains max top at all weights: False (misses 2); max-height misses 14; fractional LP maxima 0; (a) violated by LP max at 0 weights [2s]
+      e.g. nu=(2, 0, 0, 0): top(Amin)=236, LP max=499.00; nu=(2, 2, 2, 0): top(Amin)=126, LP max=151.00
