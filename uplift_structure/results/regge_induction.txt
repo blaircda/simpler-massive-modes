@@ -1,0 +1,40 @@
+(1) canonical uplifts
+  n= 1: A_n - T(A_n-1) >= 0: True; rho_n >= 0: True
+  n= 2: A_n - T(A_n-1) >= 0: True; rho_n >= 0: True
+  n= 3: A_n - T(A_n-1) >= 0: True; rho_n >= 0: True
+  n= 4: A_n - T(A_n-1) >= 0: True; rho_n >= 0: True
+  n= 5: A_n - T(A_n-1) >= 0: True; rho_n >= 0: True
+  n= 6: A_n - T(A_n-1) >= 0: True; rho_n >= 0: True
+  n= 7: A_n - T(A_n-1) >= 0: True; rho_n >= 0: True
+  n= 8: A_n - T(A_n-1) >= 0: True; rho_n >= 0: True
+  n= 9: A_n - T(A_n-1) >= 0: False (2 negative entries); rho_n >= 0: True
+  n=10: A_n - T(A_n-1) >= 0: False (2 negative entries); rho_n >= 0: True
+  n=11: A_n - T(A_n-1) >= 0: False (6 negative entries); rho_n >= 0: True
+  n=12: A_n - T(A_n-1) >= 0: False (5 negative entries); rho_n >= 0: True
+  n=13: A_n - T(A_n-1) >= 0: False (4 negative entries); rho_n >= 0: True
+  n=14: A_n - T(A_n-1) >= 0: False (11 negative entries); rho_n >= 0: True
+  n=15: A_n - T(A_n-1) >= 0: False (9 negative entries); rho_n >= 0: True
+  n=16: A_n - T(A_n-1) >= 0: False (13 negative entries); rho_n >= 0: True
+  n=17: A_n - T(A_n-1) >= 0: False (14 negative entries); rho_n >= 0: True
+  n=18: A_n - T(A_n-1) >= 0: False (15 negative entries); rho_n >= 0: True
+  n=19: A_n - T(A_n-1) >= 0: False (23 negative entries); rho_n >= 0: True
+  n=20: A_n - T(A_n-1) >= 0: False (27 negative entries); rho_n >= 0: True
+  n=21: A_n - T(A_n-1) >= 0: False (25 negative entries); rho_n >= 0: True
+  n=22: A_n - T(A_n-1) >= 0: False (25 negative entries); rho_n >= 0: True
+  n=23: A_n - T(A_n-1) >= 0: False (28 negative entries); rho_n >= 0: True
+  n=24: A_n - T(A_n-1) >= 0: False (35 negative entries); rho_n >= 0: True
+(2) Regge induction from A_1 = 1
+  rule max-height: ok to n=24 [4s]
+  rule min-height: ok to n=24 [1s]
+  rule feasible: ok to n=24 [1s]
+(3) path independence: every enumerated uplift A_{n-1}
+  A_1 -> level 2: 1 uplifts; rho negative for 0; not liftable for 0; distinct residuals 1
+  A_2 -> level 3: 1 uplifts; rho negative for 0; not liftable for 0; distinct residuals 1
+  A_3 -> level 4: 1 uplifts; rho negative for 0; not liftable for 0; distinct residuals 1
+  A_4 -> level 5: 1 uplifts; rho negative for 0; not liftable for 0; distinct residuals 1
+  A_5 -> level 6: 1 uplifts; rho negative for 0; not liftable for 0; distinct residuals 1
+  A_6 -> level 7: 1 uplifts; rho negative for 0; not liftable for 0; distinct residuals 1
+  A_7 -> level 8: 2 uplifts; rho negative for 0; not liftable for 0; distinct residuals 2
+  A_8 -> level 9: 8 uplifts; rho negative for 0; not liftable for 0; distinct residuals 3
+  A_9 -> level 10: 72 uplifts; rho negative for 0; not liftable for 0; distinct residuals 10
+  A_10 -> level 11: 6057 uplifts; rho negative for 0; not liftable for 0; distinct residuals 90

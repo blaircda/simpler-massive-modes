@@ -11,6 +11,7 @@ All scripts here only *read* `so10_uplift/data/*.json` and reuse `so10_uplift/up
 | `canonical_in_fibres.py` | S3a | `results/canonical_in_fibres.txt` | ~10 min |
 | `kernel_moves.py` | S3b | `results/kernel_moves.txt` | ~15 min |
 | `delta_ideal.py` | S4 | `results/delta_ideal.txt` | ~5 s |
+| `regge_induction.py` | S5 | `results/regge_induction.txt` | ~20 s |
 
 Notation: an uplift is $c=(c_\lambda)$ over D5 conjugation classes $\lambda=(l_1,\dots,l_5)$, $l_5\ge0$, with $\sum_\lambda c_\lambda\,V_\lambda|_{B4}=R^9_n=\sum_\mu m_n(\mu)V_\mu$. Branching is interlacing: $l_1\ge\mu_1\ge l_2\ge\mu_2\ge l_3\ge\mu_3\ge l_4\ge\mu_4\ge|l_5|$.
 
@@ -86,8 +87,32 @@ Let $\delta=S^+-S^-=[0,0,0,1,0]-[0,0,0,0,1]$ and let $\sigma$ be the outer autom
 - **Chirality is a selection question.** It is controlled by the $\delta$-odd part of the kernel, which is invisible on classes.
 - **The BBMS difference is an example.** The level-6 difference between BBMS and the baseline reported in `../previous_efforts.md` is $[0,0,0,1,0]+[1,0,0,1,0]-[0,0,0,0,1]-[1,0,0,0,1]=\delta\,(10+2)$. It vanishes under $\pi$.
 
+### S5. Regge induction (`regge_induction.py`; added 2026-10-11)
+
+**Set-up (exact).**
+- Let $V^*_\lambda=V_\lambda-V_{\lambda-e_1}$ (the "starred" reps of BBMS, hep-th/0310292 eq. 2.13), with $V^*_\lambda=V_\lambda$ when $l_1=l_2$.
+- By interlacing, $\mathrm{Res}\,V^*_\lambda$ is exactly the **top slice** $\{\mu:\mu_1=l_1,\ (\mu_2,\mu_3,\mu_4)\prec(l_2,..,l_5)\}$, which is the SO(8)→SO(7) branching of $(l_2,..,l_5)$ placed at $\mu_1=l_1$. In the starred basis, restriction is diagonal in $\mu_1=l_1$.
+- Let $T:V_\lambda\mapsto V_{\lambda+e_1}$ (Regge shift), $\mathrm{top}(A)=\sum_\lambda A_\lambda\,\mathrm{Res}\,V^*_\lambda$, and $S$ the shift $\mu_1\mapsto\mu_1+1$. Then
+$$\mathrm{Res}\,T(A)=\mathrm{Res}\,A+S(\mathrm{top}\,A).$$
+- **Regge induction:** $A_n=T(A_{n-1})+E_n$ with $E_n\ge0$ a non-negative uplift of
+$$\rho_n:=R^9_n-\mathrm{Res}\,T(A_{n-1})=r^9_n-S(\mathrm{top}\,A_{n-1}).$$
+- Unrolled, this is a decomposition of every level into **SO(10) Regge trajectories**: $r^9_n=\sum_\lambda h_n(\lambda)\,\mathrm{Res}\,V_\lambda+\sum_{j\ge1}\sum_\lambda h_{n-j}(\lambda)\,\mathrm{Res}\,V^*_{\lambda+je_1}$ with heads $h_m=E_m\ge0$. These are Bars' "copies of earlier levels", organised as trajectories.
+- $|E_n|=N_n-N_{n-1}$ for any rule, by S1, since $T$ preserves the irrep count.
+
+**Results.**
+1. **Canonical uplifts.** $A^{\rm can}_n\supseteq T(A^{\rm can}_{n-1})$ holds only for $n\le8$; the canonical uplift is not inductive. But $\rho_n\ge0$ for all $n\le24$: the shifted canonical uplift never overshoots $R^9_n$.
+2. **The induction runs to $n=24$** from $A_1=1$, for each of three rules for $E_n$: max-height, min-height, and an arbitrary feasible ILP solution. Each run takes seconds.
+3. **Path independence.** For *every* enumerated uplift $A_{n-1}$ ($n-1\le10$; 6057 uplifts at $n-1=10$), $\rho_n\ge0$ and $\rho_n$ is liftable. The residual depends on $A_{n-1}$ only through its top slices: 90 distinct residuals at $n=11$.
+
+**Conjecture (Regge continuation).** For all $n\ge2$ and every non-negative uplift $A$ of $R^9_{n-1}$:
+- (a) $r^9_n\ge S(\mathrm{top}\,A)$, i.e. continuing all trajectories one step never overshoots level $n$;
+- (b) $\rho_n=r^9_n-S(\mathrm{top}\,A)$ has a non-negative uplift (the new heads).
+
+By induction from $A_1=1$, this implies existence at all $n$. Path independence means a proof needs only a one-step lemma for an arbitrary uplift.
+
 ## Open / next ideas
 
+- **Prove the Regge continuation conjecture (S5).** This is the current main line; the plan is in the root STATUS.
 - **Existence in move coordinates.** The uplift set is $\{t\in\mathbb Z^K: R_{\rm can}+\sum t_\nu h_\nu\ge0\}$. Since the moves are multiples of $e$, an all-orders argument might construct one explicit uplift and control the $h_\nu$ algebraically.
 - **Transport formulation (from S2).** Split each $m_n(\mu)$ among the fibres whose box contains $\mu$, so that every fibre's finite-difference inverse is non-negative.
 - **Generating-function routes to an explicit uplift.** $\sum_n R^9_n q^n=(1-q)^{-1}\sum_n r^9_n q^n$; an SO(10)-covariant formula for $(1-q)^{-1}\times$(light-cone character).
