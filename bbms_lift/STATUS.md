@@ -202,9 +202,13 @@ Data: `data/bbms_unitarity_g8.json` to $n=24$; `results/level_stats.txt`.
 *Reading.*
 - The grading is **not** incompatible with positivity. The BBMS window normal form just picks the wrong representative, by $K$-multiples in the $\overline{16}$-series and singlet directions. These need gap up to 10, just beyond the kernel-free width 8.
 - A principled positive normal form therefore needs a different choice of fundamental domain for $(K)$, at least in the $\overline{16}$-series directions.
-- **Literature-motivated candidate (not yet tested).** Bianchi's lectures (hep-th/0409304, after eq. 3.17) quote *two* SO(10) unitarity bounds, $\Delta_\pm=1+k+2l+3m+2(p+q)\pm\frac12(p-q)$. Our window uses only $\Delta_+$ for every λ. For $\overline{16}$-type irreps ($p>q$), $\Delta_-<\Delta_+$.
-- **Caveat** (`../previous_efforts.md`). Adjusting windows until positivity holds risks the "aggregating refinements" trap. A variant is only worth testing if it comes from the physics (as $\Delta_\pm$ does), and should be stopped as soon as it fails.
-
+- **Literature-motivated variant: tested, failed (pre-registered single test, 2026-10-11).**
+  - *Motivation.* Bianchi's lectures (hep-th/0409304, after eq. 3.17) quote two SO(10) unitarity bounds, $\Delta_\pm=1+k+2l+3m+2(p+q)\pm\frac12(p-q)$. His spinor example $[0,0,0,0,1]_{5/2}$ saturates the smaller one.
+  - *The variant.* Use $\min(\Delta_\pm)=1+l_1+l_2+l_3+l_4-|l_5|$ as the lower edge (`derive_graded.py --bound min`, `data/bbms_unitarity_min_g8.json`). It is chirality-symmetric, equals our $\Delta_+$ for $l_5\ge0$, and is lower by $2|l_5|$ for $\overline{16}$-type irreps.
+  - *Success criterion (fixed before running).* Uniquely solvable, with non-negative cumulative sums, for all $n\le24$; stop at the first failure.
+  - *Result.* For $n\le14$ the solution is identical to the $\Delta_+$ window: the extra low-Δ slots are never used. At $n=15$ the even-gap spinor block is **inconsistent**: there is no graded solution in this window.
+  - *Why.* Lowering the $\overline{16}$-type windows also lowers their top edge, and the spinor block needs that top slot. This matches the diagnostic above, which says positivity needs *more* room above (gap up to 10) in the $\overline{16}$ directions. The physically motivated bound moves the window the other way.
+  - Following the caveat in `../previous_efforts.md`, no further window variants are pursued. Shaping the window to the data would be fitting, not a principle.
 
 ### B7. Block-diagonal solver (2026-10-11)
 
@@ -223,4 +227,6 @@ Data: `data/bbms_unitarity_g8.json` to $n=24$; `results/level_stats.txt`.
    - Superseded by the block solver of B7, which is another ~8× faster and gives identical output for $n\le16$.
 2. Prove the refined normal-form conjecture of B3, for the even-gap sector, gaps $\ge0$. A plausible route is top-down division by $K$, whose top $g'$ part is the single monic term $x^{10}$, controlled by superadditivity of $g'$. Separately, show that $r_n$ has a preimage at even gaps $\ge0$ (unitarity).
 3. ~~Check the closed formula of B4~~ It is automatically true (see the B4 assessment). Replacement: build a *computational* closed formula from letters satisfying B5. For example, use an NSR-type grading in which every letter is $8_v=\varphi(10x-1-x^2)$, following Hanany–Forcella–Troost. This would be a different refinement from BBMS's, but any graded lift serves for existence.
-4. **Existence.** ~~Positivity of the window lift~~ This fails from $n=23$ (B6). Any further graded approach needs a principled positive representative mod $K$ (see B6). Look for a manifestly positive rewriting of $(1-q)^{-1}X(q,x)$ at $x=1$ after reduction. Literature to check: pure-spinor partition functions and characters (Berkovits; Berkovits–Nekrasov; Movshev–Schwarz; Eager–Noja–Senghaas–Walcher [arXiv:2404.07167](https://arxiv.org/abs/2404.07167), which also cites Pengpan–Ramond).
+4. **Existence.** ~~Positivity of the window lift~~ This fails from $n=23$ (B6). A principled positive representative mod $K$ is still lacking: the $\min(\Delta_\pm)$ window fails at $n=15$ (B6), and further window tuning is ruled out as fitting. Remaining leads:
+   - why the $\overline{16}$ direction needs a correction that grows roughly 2–3× per level;
+   - returning to the class-level structure (`../uplift_structure/`), using the Euler-move freedom with $e\cdot\overline{16}$-series moves as the main lever. Look for a manifestly positive rewriting of $(1-q)^{-1}X(q,x)$ at $x=1$ after reduction. Literature to check: pure-spinor partition functions and characters (Berkovits; Berkovits–Nekrasov; Movshev–Schwarz; Eager–Noja–Senghaas–Walcher [arXiv:2404.07167](https://arxiv.org/abs/2404.07167), which also cites Pengpan–Ramond).

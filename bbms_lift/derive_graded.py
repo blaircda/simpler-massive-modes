@@ -56,6 +56,8 @@ def main():
     ap.add_argument("--slack", type=int, default=1, help="extra Delta range on each side")
     ap.add_argument("--gmax", type=int, default=None,
                     help="use the unitarity window 0 <= Delta - bound(lambda) <= gmax instead")
+    ap.add_argument("--bound", choices=["plus", "min"], default="plus",
+                    help="window lower edge: BBMS Delta_+ (default) or min(Delta_+, Delta_-)")
     ap.add_argument("--out", default=os.path.join(HERE, "data", "bbms_graded.json"))
     ap.add_argument("--resume", action="store_true",
                     help="continue after the last completed level stored in --out")
@@ -67,7 +69,7 @@ def main():
     print(f"graded Fock space and r_n(x) through level {N} [{time.time()-t0:.1f}s]", flush=True)
 
     meta = {"generator": "bbms_lift/derive_graded.py", "max_level": N,
-            "slack": args.slack, "gmax": args.gmax,
+            "slack": args.slack, "gmax": args.gmax, "bound": args.bound,
             "conventions": "ambient2 doubled D5 weights; J = x5; SO(8) on x1..x4; "
                            "nu = Delta - J; Delta2 = 2*Delta; positive counting. "
                            "If unique_in_domain is false the stored solution is an "
@@ -84,7 +86,8 @@ def main():
     levels, cum, start = {}, {}, 1
     if args.resume and os.path.exists(args.out):
         old = json.load(open(args.out))
-        assert old["meta"]["gmax"] == args.gmax and old["meta"]["slack"] == args.slack, \
+        assert (old["meta"]["gmax"] == args.gmax and old["meta"]["slack"] == args.slack
+                and old["meta"].get("bound", "plus") == args.bound), \
             "resume: domain parameters differ from the stored run"
         done = [int(k) for k, v in old["levels"].items() if "R_cumulative_D5" in v]
         last = 0
@@ -100,7 +103,7 @@ def main():
     for n in range(start, N + 1):
         tn = time.time()
         nullity, x, stats = solve_level(n, r, R9, T, args.gmax, slack=args.slack,
-                                        log=lambda s: print(s, flush=True))
+                                        log=lambda s: print(s, flush=True), bound=args.bound)
         solvable = x is not None
         ncols = sum(v.get("cols", 0) for v in stats.values() if isinstance(v, dict))
         rec = {"n_unknowns": ncols, "blocks": stats, "nullity_modp": nullity,

@@ -250,12 +250,23 @@ def bound2(lam):
     return 2 + 2 * k + 4 * l + 6 * m + 5 * p + 3 * q
 
 
-def domain_cols(n, r, R9, slack, lams=None, gmax=None):
+def bound2_min(lam):
+    """2 x min(Delta_+, Delta_-), Delta_+- = 1 + k + 2l + 3m + 2(p+q) +- (p-q)/2
+    (Bianchi hep-th/0409304 after eq. 3.17): 2 + L1 + L2 + L3 + L4 - |L5| (doubled)."""
+    return 2 + lam[0] + lam[1] + lam[2] + lam[3] - abs(lam[4])
+
+
+BOUNDS = {"plus": bound2, "min": bound2_min}
+
+
+def domain_cols(n, r, R9, slack, lams=None, gmax=None, bound="plus"):
     """
     Unknowns (lambda, 2 Delta).  If gmax is None: Delta with [Delta - l1,
     Delta + l1] meeting the nu-support of r_n widened by slack; otherwise the
-    'unitarity window' 0 <= Delta - bound(lambda) <= gmax.
+    'unitarity window' 0 <= Delta - bound(lambda) <= gmax, with bound = BBMS's
+    Delta_+ ("plus", eq. 2.15 of hep-th/0310292) or min(Delta_+, Delta_-) ("min").
     """
+    bfun = BOUNDS[bound]
     nus = sorted(r[n])
     nu_lo, nu_hi = nus[0], nus[-1]
     if lams is None:
@@ -266,7 +277,7 @@ def domain_cols(n, r, R9, slack, lams=None, gmax=None):
         if gmax is None:
             rng = range(2 * nu_lo - l1 - 2 * slack, 2 * nu_hi + l1 + 2 * slack + 1)
         else:
-            rng = range(bound2(lam), bound2(lam) + 2 * gmax + 1)
+            rng = range(bfun(lam), bfun(lam) + 2 * gmax + 1)
         for D2 in rng:
             if D2 % 2 == par:
                 cols.append((lam, D2))
@@ -424,7 +435,7 @@ def _solve_block_mod(p, cols, cj, tgt_keys, tgt_vals):
     return res, nc - len(piv), True
 
 
-def solve_level(n, r, R9, T, gmax, slack=0, primes=PRIMES, log=None):
+def solve_level(n, r, R9, T, gmax, slack=0, primes=PRIMES, log=None, bound="plus"):
     """
     Solve phi(X_n) = r_n(x) on the domain_cols domain, block by block.
     Returns (nullity, {col: integer coefficient} or None, block stats).
@@ -432,7 +443,7 @@ def solve_level(n, r, R9, T, gmax, slack=0, primes=PRIMES, log=None):
     (every (nu, w) key, including those where r_n vanishes).
     """
     from sage.all import CRT_list
-    cols = domain_cols(n, r, R9, slack, gmax=gmax)
+    cols = domain_cols(n, r, R9, slack, gmax=gmax, bound=bound)
     tgt = {}
     for nu, a in r[n].items():
         for i in np.nonzero(a[:T.size])[0]:
