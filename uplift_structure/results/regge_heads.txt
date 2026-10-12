@@ -22,3 +22,6 @@ heads computed to n=14 for both rules [4s]
   16 (x) 45 -> level 6 [min-height]: product has 3 irreps; present among E_6: 3 (1x[0, 0, 0, 0, 1], 1x[0, 1, 0, 0, 1], 1x[1, 0, 0, 0, 1])
   Sym^2 45 -> level 7 [max-height]: product has 4 irreps; present among E_7: 3 (1x[0, 0, 0, 1, 1], 1x[0, 2, 0, 0, 0], 1x[2, 0, 0, 0, 0])
   Sym^2 45 -> level 7 [min-height]: product has 4 irreps; present among E_7: 3 (1x[0, 0, 0, 1, 1], 1x[0, 2, 0, 0, 0], 1x[2, 0, 0, 0, 0])
+(3) second Regge direction: E_n contains T_2(E_(n-2))?  (T_2 = shift +e1, level +2)
+  [max-height] vacuum (n=3): False; fails for n in 4..14 at: [11, 12, 13, 14]
+  [min-height] vacuum (n=3): False; fails for n in 4..14 at: [9, 10, 11, 12, 13, 14]

@@ -4,7 +4,8 @@ F_n = sum_{m<n} sum_{j>=1} p_K(n-m, j) T^j(P_m) collects Cartan shifts of earlie
 primaries by modes k in K (level +k, spin +e1 each), p_K(N, j) = #partitions of N
 into exactly j parts from K; vacuum exempt.  P_n >= 0 (new primaries) must
 uplift rho_n - Res(F_n).  K = {2} is the "double Regge induction" (shifts T and
-T_2); K = {2,3,...} would make the uplift a Cartan module over all modes.
+T_2); K = {3} tests a level-3 direction on its own; K = {2,3,...} would make
+the uplift a Cartan module over all modes.
 
 Output: results/regge_modes.txt
 """
@@ -51,7 +52,7 @@ def run(K, rule):
     tot = {n: sum(P.values()) for n, P in Pm.items()}
     return f"ok to n={N}; primaries per level: {[tot.get(n, 0) for n in range(2, min(N, 16) + 1)]}"
 lines = []
-for K in ((2,), (2, 3), (2, 3, 4), tuple(range(2, 40))):
+for K in ((2,), (3,), (2, 3), (2, 3, 4), tuple(range(2, 40))):
     for rule in ("max-height", "min-height", "feasible"):
         t0 = time.time()
         s = f"K={K if len(K) < 5 else 'all k>=2'} [{rule}]: {run(K, rule)} [{time.time()-t0:.0f}s]"

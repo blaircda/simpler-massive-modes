@@ -13,7 +13,10 @@ only reports the data:
       contribute at level a+b-1.  For the first such products (16.16 ->
       Lambda^2 16 at level 5, 16.45 at level 6, Sym^2 45 at level 7) the
       script decomposes them (class level) and reports how much of each
-      product's content appears among the heads at that level.
+      product's content appears among the heads at that level;
+  (3) a second Regge direction: does E_n contain T_2(E_{n-2}), where T_2 is
+      the same Cartan shift lambda -> lambda + e1 as T but at level +2?
+      Reported per rule; n = 3 (vacuum, T_2(E_1) = 10) is listed separately.
 
 Output: results/regge_heads.txt
 """
@@ -109,6 +112,14 @@ def main():
             log(f"  {name} -> level {lvl} [{rule}]: product has {sum(pd.values())} irreps; "
                 f"present among E_{lvl}: {sum(common.values())} "
                 f"({', '.join(f'{v}x{list(k)}' for k, v in sorted(common.items()))})")
+
+    log("(3) second Regge direction: E_n contains T_2(E_(n-2))?  (T_2 = shift +e1, level +2)")
+    for rule in ("max-height", "min-height"):
+        E = H[rule]
+        vac = all(E[3].get(l, 0) >= c for l, c in T(E[1]).items())
+        bad = [n for n in range(4, N + 1)
+               if any(E[n].get(l, 0) < c for l, c in T(E[n - 2]).items())]
+        log(f"  [{rule}] vacuum (n=3): {vac}; fails for n in 4..{N} at: {bad or 'none'}")
     os.makedirs(RESULTS, exist_ok=True)
     with open(os.path.join(RESULTS, "regge_heads.txt"), "w") as f:
         f.write("\n".join(lines) + "\n")

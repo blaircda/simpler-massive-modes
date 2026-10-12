@@ -235,17 +235,22 @@ So products of earlier heads reappear as heads, consistent with an algebra $A$ w
 
 **(ii) But not a small algebra** (`head_pl.py`). This is the SO(10) super-PL of the head series. Chiralities are fixed degree by degree to match predicted products; the naive "all spinors are 16" convention creates spurious $\pm$ pairs.
 - Generators: $16$ (level 3); $45$ (level 4); $1+144$ (level 5); $126+320$ (level 6).
-- From level 7: mixtures of new generators and relations ($-1$ from $w\cdot w$, $-45$, $-54$, $-210$, $-1050$, …), with no termination.
+- From level 7: mixtures of new generators and relations ($-1$ from $w\cdot w$, $-45$, $-54$, $-210$, $-1050$, …), with no sign of termination through level 9.
 
 There is no finite superparticle-type presentation.
 
-**(iii) A second Regge direction** (`regge_heads.py`, `regge_modes.py`). The second-wave generators $144=[1,0,0,0,1]$ (level 5) and $320=[1,1,0,0,0]$ (level 6) are θ and $w$ shifted by $+e_1$ at level $+2$.
-- With $T_2$ = (spin $+e_1$, level $+2$) on Cartan labels, $E_n\supseteq T_2(E_{n-2})$ holds exactly for all $n\le8$ (rule-independent), with the vacuum exempt: there is no $10$ at level 3, so no mode-2 vector state.
-- The max- and min-height rules lose this from $n=11$ and $n=9$ respectively.
-- **Double Regge induction** ($E_n=T_2(E_{n-2})+P_n$, $P_n\ge0$) **runs to $n=32$ for every rule.** So the uplift can always be chosen with two commuting Regge directions, $T$ (level $+1$) and $T_2$ (level $+2$).
-- The primary-head counts are rule-independent: 0, 1, 1, 2, 4, 7, 13, 26, 48, 89, 163, 301, 538, 972, 1734 for $n=2..16$, about 70% of $|E_n|$.
+**(iii) A second Regge direction** (`regge_heads.py` part 3, `regge_modes.py`). The second-wave generators $144=[1,0,0,0,1]$ (level 5) and $320=[1,1,0,0,0]$ (level 6) are θ and $w$ shifted by $+e_1$ at level $+2$.
+- Define $T_2$ as the same Cartan shift as $T$ ($\lambda\mapsto\lambda+e_1$), but at level $+2$.
+- $E_n\supseteq T_2(E_{n-2})$ holds for all $4\le n\le8$ under both rules (the rule-independent range).
+- The vacuum is exempt: $T_2(E_1)=10$ is not in $E_3=16$.
+- The plain rules do not enforce this containment, and lose it from $n=11$ (max-height) and $n=9$ (min-height).
+- **Double Regge induction runs to $n=32$ for all three tested rules (max-height, min-height, feasible).** Here $E_n=T_2(E_{n-2})+P_n$ with $P_n\ge0$, vacuum exempt. So the uplift can be chosen with two commuting Regge directions, $T$ (level $+1$) and $T_2$ (level $+2$).
+- The primary counts are 0, 1, 1, 2, 4, 7, 13, 26, 48, 89, 163, 301, 538, 972, 1734 for $n=2..16$. They are *automatically* rule-independent: $|P_n|=|E_n|-|E_{n-2}|$, and $|E_n|=|A_n|-|A_{n-1}|$ is fixed by the uplift-invariant irrep count (S1). They are about 70% of $|E_n|$.
 
-**(iv) No third direction.** Also forcing $T_3$ (level $+3$), or all $T_k$ with $k\ge2$, makes the induction **fail at $n=7$ for every rule**. So the structure is not a Cartan module over all string modes (an arc space). It has exactly two Regge directions.
+**(iv) No level-3 direction.** Forcing $T_3$ (shift $+e_1$, level $+3$) makes the induction **fail at $n=7$ for every rule**. This holds for $T_3$ on its own, together with $T_2$, and for all $T_k$ with $k\ge2$.
+- On its own the forced copy is $T_3(E_4)=320$, and no non-negative lift of $\rho_7$ contains it.
+- $A_6$ is the unique uplift, so this is a strict obstruction.
+- So the structure is not a Cartan module over all string modes (an arc space).
 
 **Tentative reading (unproved).**
 - Two commuting first-row shifts at levels 1 and 2 are what the first-row highest-weight monomials $(y_0^+)^a(y_1^+)^b$ of *two* vector oscillators $y_0$ (degree 1) and $y_1$ (degree 2) would produce, in the spirit of $\mathfrak{so}(10)\times\mathfrak{sp}(4)$ Howe duality.
