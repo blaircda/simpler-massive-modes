@@ -1,0 +1,53 @@
+rho_n, max-height induction (n <= 32):
+  (1) greedy l5 = mu4                     : fails at [7, 8, 9, 10, 11, 12, 13, 14, '...'] (26 levels)
+  (1) greedy l5 = floor                   : fails at [6, 8, 9, 10, 11, 12, 13, 14, '...'] (26 levels)
+  (1) adaptive (deepest profile)          : fails at [8, 9, 10, 11, 12, 13, 14, 15, '...'] (25 levels)
+  (2) any lift (ILP)                      : fails at [] (0 levels)
+  (2) l5 extremal (ILP)                   : fails at [] (0 levels)
+  (2) l3 extremal (ILP)                   : fails at [8, 10, 11, 12, 13, 14, 15, 16, '...'] (24 levels)
+  (3) levels: no degenerate tops          : fails at [6, 8, 9, 10, 11, 12, 13, 14, '...'] (26 levels)
+  (3) levels: all degenerate              : fails at [7, 8, 9, 10, 11, 12, 13, 14, '...'] (26 levels)
+  (3) levels: degenerate where forced     : fails at [8, 9, 10, 11, 12, 13, 14, 15, '...'] (25 levels)
+  (3) levels: per-level ILP, min          : fails at [] (0 levels)
+  (3) levels: per-level ILP, max          : fails at [] (0 levels)
+  [11s]
+rho_n, min-height induction (n <= 32):
+  (1) greedy l5 = mu4                     : fails at [7, 8, 9, 10, 11, 12, 13, 14, '...'] (26 levels)
+  (1) greedy l5 = floor                   : fails at [6, 8, 9, 10, 11, 12, 13, 14, '...'] (26 levels)
+  (1) adaptive (deepest profile)          : fails at [8, 9, 10, 11, 12, 13, 14, 15, '...'] (25 levels)
+  (2) any lift (ILP)                      : fails at [] (0 levels)
+  (2) l5 extremal (ILP)                   : fails at [] (0 levels)
+  (2) l3 extremal (ILP)                   : fails at [8, 10, 11, 12, 13, 14, 15, 16, '...'] (24 levels)
+  (3) levels: no degenerate tops          : fails at [6, 8, 9, 10, 11, 12, 13, 14, '...'] (26 levels)
+  (3) levels: all degenerate              : fails at [7, 8, 9, 10, 11, 12, 13, 14, '...'] (26 levels)
+  (3) levels: degenerate where forced     : fails at [8, 9, 10, 11, 12, 13, 14, 15, '...'] (25 levels)
+  (3) levels: per-level ILP, min          : fails at [31, 32] (2 levels)
+  (3) levels: per-level ILP, max          : fails at [29, 30, 31, 32] (4 levels)
+  [21s]
+cumulative R9_n (n <= 24):
+  (1) greedy l5 = mu4                     : fails at [7, 8, 9, 10, 11, 12, 13, 14, '...'] (18 levels)
+  (1) greedy l5 = floor                   : fails at [6, 8, 9, 10, 11, 12, 13, 14, '...'] (18 levels)
+  (1) adaptive (deepest profile)          : fails at [10, 11, 12, 13, 14, 15, 16, 17, '...'] (15 levels)
+  (2) any lift (ILP)                      : fails at [] (0 levels)
+  (2) l5 extremal (ILP)                   : fails at [] (0 levels)
+  (2) l3 extremal (ILP)                   : fails at [8, 9, 10, 11, 12, 13, 14, 15, '...'] (17 levels)
+  (3) levels: no degenerate tops          : fails at [6, 8, 9, 10, 11, 12, 13, 14, '...'] (18 levels)
+  (3) levels: all degenerate              : fails at [7, 8, 9, 10, 11, 12, 13, 14, '...'] (18 levels)
+  (3) levels: degenerate where forced     : fails at [10, 11, 12, 13, 14, 15, 16, 17, '...'] (15 levels)
+  (3) levels: per-level ILP, min          : fails at [] (0 levels)
+  (3) levels: per-level ILP, max          : fails at [] (0 levels)
+  [24s]
+(4) per-level choices along the max-height induction (n <= 32):
+  boundary negative after forced: spinor, mu4 1.5 -> 0.5, k2 - (t-1) = 0: 82987
+  boundary negative after forced: tensor, mu4 1 -> 0, k2 - (t-1) = 0: 1538192
+  boundary negative after forced: tensor, mu4 1 -> 0, k2 - (t-1) = 1: 99776
+  extra degenerate repairing directly via +[m1,m3-1]: 1720955
+  extra degenerate, indirect: 42
+  level transitions: 96
+  [28s]
+(4) the same for the cumulative R9_n (n <= 24):
+  boundary negative after forced: tensor, mu4 1 -> 0, k2 - (t-1) = 0: 79956
+  extra degenerate repairing directly via +[m1,m3-1]: 79956
+  level transitions: 52
+  [28s]
+(2) the box of (2,2,2,2,1) = {(2,2,2,1),(2,2,2,2)}: lift exists True, l5-extremal lift exists False

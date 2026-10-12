@@ -22,6 +22,7 @@ All scripts here only *read* `so10_uplift/data/*.json` and reuse `so10_uplift/up
 | `regge_directions.py` | S8 (v): head uniqueness; Cartan-direction scan; forced inductions; null test; joint $T_2$, $T_w$ | `results/regge_directions.txt` | ~3 min |
 | `gmsz_compare.py` | S9: GMSZ (2609.04107) support rule, shift relations, monotonicities; heads vs stable range | `results/gmsz_compare.txt` | ~2.5 min |
 | `bm_compare.py` | S10: Basile–Markou principal embedding and trajectory moves on the full spectrum | `results/bm_compare.txt` | ~10 s |
+| `half_b.py` | S11: half (b): greedy rules, restricted box families, the level recursion for $l_5$-extremal lifts | `results/half_b.txt` | ~15 s |
 | `super_pl.py` | S7: super-plethystic log of the SO(9) spectrum | `results/super_pl.txt` | ~5 s (degree 7) |
 | `regge_step2.py` | S5 step 2: optimal duals at low weights; singlet margins; Regge monotonicity; $W$ factorisation | `results/regge_step2_*.txt` | ~30 s total |
 
@@ -389,6 +390,59 @@ GMSZ's $a_{[\ell,m,r,s],n}$ is our $r^9_n$, with the same level convention (top 
   - The reason column moves have uniform triangular costs: they lengthen only the arms of the first $k$ hooks.
   - A plausible origin of GMSZ's stabilization: the dressing coefficients depend smoothly on the lengths, and degenerate only for short arms.
 - The core problem is unchanged from S6/S7: an SO(9)-covariant model of the super-representations with manifest positivity.
+
+### S11. Half (b): liftability of the residual $\rho_n$ (2026-10-12) (`half_b.py`)
+
+**Set-up.**
+- A class-level lift of an SO(9) character $\rho$ is a non-negative sum of interlacing boxes.
+- Processing weights from the top down, the height-maximal remaining weight must be the top $(l_1,\dots,l_4)$ of whatever lifts it.
+- So a lift is fixed by one choice per top: $l_5\in[\text{floor},\mu_4]$, where the floor is 0 for tensors and ½ for spinors.
+
+**Local rules fail.** Three greedy lifts fail from $n=6$–$10$, for $\rho_n$ under both inductions and for the cumulative $R^9_n$:
+- always $l_5=\mu_4$;
+- always $l_5=$ floor;
+- an adaptive profile that sends as many boxes down the $\mu_4$ column as the remainders allow.
+
+The choices of $l_5$ need global coordination.
+
+**$l_5$ can always be taken extremal.**
+- Every $\rho_n$ ($n\le32$, both inductions) and every $R^9_n$ ($n\le24$) has a lift using only $l_5\in\{\text{floor},l_4\}$. In the $\mu_4$ direction each box is then either "full" or "degenerate".
+- This is a property of the string data, not of liftability in general: the extremal cone is a proper subcone. For example, the box of $(2,2,2,2,1)$, $\{(2,2,2,1),(2,2,2,2)\}$, has no extremal lift.
+- $l_3$ cannot be restricted the same way: $l_3\in\{l_2,l_4\}$ fails from $n=8$.
+
+**Exact level recursion for extremal lifts.** Slice by $t=\mu_4$, from the top down.
+- At level $t$ the tops $(\mu_1,\mu_2,\mu_3)$ are the *unique* lift $T_t$ of the level remainder. It is given by explicit third finite differences, because the level restriction is unitriangular.
+- The only choice is the degenerate part $0\le D_t\le T_t$ (with $l_5=t$); the remaining tops get $l_5=$ floor.
+- The next level is $T_{t-1}=\mathrm{Lift}(\rho_{t-1}-\rho_t)+M(D_t)$, which depends only on $\rho_{t-1}$, $\rho_t$ and $D_t$. One degenerate top $(m_1,m_2,m_3)$ contributes:
+  - $+[m_1,m_2,m_3]$;
+  - at the boundary tops ($\mu_3=t-1$): $-[m_1,m_2]+[m_1,m_3-1]-[m_2-1,m_3-1]$.
+- So an extremal lift exists iff some sequence $D_t$ keeps every $T_t\ge0$.
+- Example: the unique $E_8$ needs both mechanisms. One copy of the top $(1,1,1,1)$ is degenerate (126) and one is full (210), to cancel a $-1$ of $\mathrm{Lift}(\rho_0-\rho_1)$ at $(1,1,1)$. The top $(2,1,1,1)$ is degenerate (1050), to cancel a $-1$ at the boundary top $(2,0,0)$ via $+[m_1,m_3-1]$.
+
+**Results of the recursion.**
+- Rules with no degenerate tops, all degenerate, or degenerate only where the non-boundary entries force it all fail. The first two reproduce the restricted-family results.
+- A per-level ILP choice of $D_t$ (no lookahead; minimising or maximising the number of degenerate tops) **succeeds for every $\rho_n$ of the max-height induction ($n\le32$) and every cumulative $R^9_n$ ($n\le24$).**
+- Under the min-height induction it hits dead ends at $n=29$–$32$, although extremal lifts exist there; those levels need lookahead.
+- So, for the max-height rule, half (b) reduces (empirically) to a sequence of small per-level problems whose data are finite differences of $\rho_n$.
+- The same reduction works for the cumulative $R^9_n$ directly, bypassing the Regge induction.
+
+**Where the choices matter** (max-height induction, $n\le32$; part (4) of the script). Start from the *forced* degenerate tops, $D_t\ge-\mathrm{Lift}(\rho_{t-1}-\rho_t)$ at non-boundary tops.
+- The forced degenerate tops never exceed the available tops. Non-boundary negatives are always fixable (0 of 96 level transitions fail either way).
+- The boundary tops that remain negative all sit at the **bottom transition**:
+  - tensors, $\mu_4\colon1\to0$: at $(k,0,0,0)$, i.e. the symmetric tensors $[k,0,0,0,0]$ (1 538 192 units), and at $(k,1,0,0)$ (99 776);
+  - spinors, $\mu_4\colon\tfrac32\to\tfrac12$: at $(k,\tfrac12,\tfrac12,\tfrac12)$, i.e. $[k-\tfrac12,0,0,0,1]$ (82 987).
+- All but 42 of the 1 720 997 extra degenerate units repair these directly, through $+[m_1,m_3-1]$: degenerate tops $(k,m_2,1,1)$ feed the symmetric tensor $[k,0,0,0,0]$.
+- So, as with half (a) (whose tight spots were the leading trajectory), everything non-trivial in half (b) sits next to the leading-trajectory irreps $[k,0,0,0,0]$ and $[k,0,0,0,1]$, at the lowest $\mu_4$ level. Higher levels need only the forced choices.
+- **For the cumulative $R^9_n$ itself** ($n\le24$) the picture is cleaner still.
+  - The only negatives left after the forced choices are at the symmetric tensors $[k,0,0,0,0]$, at the tensor $\mu_4\colon1\to0$ transition: 79 956 units, all repaired directly.
+  - There are no spinor repairs, no $(k,1,0,0)$ repairs and no indirect extras.
+  - So existence of an uplift of $R^9_n$ reduces (empirically) to: forced choices available at every level, plus symmetric-tensor repairs at the bottom. This route does not use the Regge induction.
+
+**Next.**
+- Prove the two per-level statements found here:
+  - (i) at every level, the forced degenerate tops are available, i.e. $T_t+\mathrm{Lift}(\rho_{t-1}-\rho_t)\ge0$ at each top;
+  - (ii) at the bottom transition, the negatives at $[k,0,0,0,0]$ (and $[k,0,0,0,1]$) can be repaired by degenerate tops $(k,m_2,1,1)$ without creating new negatives.
+- Both are explicit inequalities in finite differences of $\rho_n$, and (by the same recursion) of the cumulative $R^9_n$.
 
 ## Open / next ideas
 
