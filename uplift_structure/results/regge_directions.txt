@@ -1,0 +1,86 @@
+(1) all non-negative lifts of rho_n along the Regge induction
+  n=1: 1 head(s)
+  n=2: 1 head(s)
+  n=3: 1 head(s)
+  n=4: 1 head(s)
+  n=5: 1 head(s)
+  n=6: 1 head(s)
+  n=7: 1 head(s)
+  n=8: 1 head(s)
+  [0s]
+(2) scan: 38 shifts x k=1..6; listed if E_n >= s(E_(n-k)) for all k+2 <= n <= 8 with at least one irrep checked
+  s=[1, 0, 0, 0, 0] k=2: irreps checked 10; vacuum step passes: False; plain rules first fail at n = 11 (max), 9 (min)
+  s=[1, 0, 0, 0, 0] k=5: irreps checked 1; vacuum step passes: False; plain rules first fail at n = 9 (max), 10 (min)
+  s=[0, 1, 0, 0, 0] k=3: irreps checked 5; vacuum step passes: True; plain rules first fail at n = 11 (max), 11 (min)
+  s=[0, 1, 0, 0, 0] k=5: irreps checked 1; vacuum step passes: False; plain rules first fail at n = None (max), 11 (min)
+  s=[2, 0, 0, 0, 0] k=4: irreps checked 2; vacuum step passes: False; plain rules first fail at n = 11 (max), 9 (min)
+  s=[2, 0, 0, 0, 0] k=5: irreps checked 1; vacuum step passes: False; plain rules first fail at n = 9 (max), 9 (min)
+  s=[0, 0, 0, 1, 0] k=4: irreps checked 2; vacuum step passes: False; plain rules first fail at n = 10 (max), 12 (min)
+  s=[0, 0, 0, 1, 0] k=5: irreps checked 1; vacuum step passes: True; plain rules first fail at n = 11 (max), None (min)
+  s=[0, 0, 0, 0, 1] k=3: irreps checked 5; vacuum step passes: False; plain rules first fail at n = 9 (max), 9 (min)
+  s=[0, 0, 0, 0, 1] k=5: irreps checked 1; vacuum step passes: True; plain rules first fail at n = 11 (max), 11 (min)
+  s=[0, 0, 1, 0, 0] k=5: irreps checked 1; vacuum step passes: False; plain rules first fail at n = 10 (max), 10 (min)
+  s=[1, 1, 0, 0, 0] k=5: irreps checked 1; vacuum step passes: True; plain rules first fail at n = 12 (max), 13 (min)
+  s=[1, 0, 0, 0, 1] k=5: irreps checked 1; vacuum step passes: True; plain rules first fail at n = 11 (max), 10 (min)
+(3) forced single-direction inductions to n=32 (vacuum treated as in the scan)
+  s=[1, 0, 0, 0, 0] k=2: max-height: ok to n=32 | min-height: ok to n=32 | feasible: ok to n=32
+  s=[1, 0, 0, 0, 0] k=5: max-height: ok to n=32 | min-height: ok to n=32 | feasible: ok to n=32
+  s=[0, 1, 0, 0, 0] k=3: max-height: ok to n=32 | min-height: ok to n=32 | feasible: ok to n=32
+  s=[0, 1, 0, 0, 0] k=5: max-height: ok to n=32 | min-height: ok to n=32 | feasible: ok to n=32
+  s=[2, 0, 0, 0, 0] k=4: max-height: ok to n=32 | min-height: ok to n=32 | feasible: ok to n=32
+  s=[2, 0, 0, 0, 0] k=5: max-height: STUCK at n=9 (remainder not liftable) | min-height: STUCK at n=9 (remainder not liftable) | feasible: STUCK at n=9 (remainder not liftable)
+  s=[0, 0, 0, 1, 0] k=4: max-height: STUCK at n=14 (forced copies overshoot) | min-height: STUCK at n=14 (forced copies overshoot) | feasible: STUCK at n=14 (forced copies overshoot)
+  s=[0, 0, 0, 1, 0] k=4 fermionic: max-height: ok to n=32 | min-height: ok to n=32 | feasible: ok to n=32
+  s=[0, 0, 0, 1, 0] k=5: max-height: ok to n=32 | min-height: ok to n=32 | feasible: ok to n=32
+  s=[0, 0, 0, 1, 0] k=5 fermionic: max-height: ok to n=32 | min-height: ok to n=32 | feasible: ok to n=32
+  s=[0, 0, 0, 0, 1] k=3: max-height: STUCK at n=9 (forced copies overshoot) | min-height: STUCK at n=9 (forced copies overshoot) | feasible: STUCK at n=9 (forced copies overshoot)
+  s=[0, 0, 0, 0, 1] k=3 fermionic: max-height: STUCK at n=13 (forced copies overshoot) | min-height: STUCK at n=13 (forced copies overshoot) | feasible: STUCK at n=13 (forced copies overshoot)
+  s=[0, 0, 0, 0, 1] k=5: max-height: ok to n=32 | min-height: ok to n=32 | feasible: ok to n=32
+  s=[0, 0, 0, 0, 1] k=5 fermionic: max-height: ok to n=32 | min-height: ok to n=32 | feasible: ok to n=32
+  s=[0, 0, 1, 0, 0] k=5: max-height: STUCK at n=10 (forced copies overshoot) | min-height: STUCK at n=10 (forced copies overshoot) | feasible: STUCK at n=10 (forced copies overshoot)
+  s=[1, 1, 0, 0, 0] k=5: max-height: ok to n=32 | min-height: ok to n=32 | feasible: ok to n=32
+  s=[1, 0, 0, 0, 1] k=5: max-height: STUCK at n=11 (forced copies overshoot) | min-height: STUCK at n=11 (forced copies overshoot) | feasible: STUCK at n=11 (forced copies overshoot)
+  s=[1, 0, 0, 0, 1] k=5 fermionic: max-height: STUCK at n=11 (forced copies overshoot) | min-height: STUCK at n=11 (forced copies overshoot) | feasible: STUCK at n=11 (forced copies overshoot)
+  [116s]
+(4) null test: direction forced only on primaries at levels m >= m0
+  s=[1, 0, 0, 0, 0] k=2: m0=2: ok to n=32; m0=5: ok to n=32; m0=7: ok to n=32; m0=9: ok to n=32
+  s=[0, 1, 0, 0, 0] k=3: m0=2: ok to n=32; m0=5: ok to n=32; m0=7: ok to n=32; m0=9: ok to n=32
+  s=[1, 0, 0, 0, 0] k=3: m0=2: STUCK at n=7 (remainder not liftable); m0=5: STUCK at n=9 (remainder not liftable); m0=7: STUCK at n=10 (remainder not liftable); m0=9: STUCK at n=12 (remainder not liftable)
+  s=[1, 0, 0, 0, 0] k=1: m0=2: STUCK at n=4 (forced copies overshoot); m0=5: STUCK at n=6 (forced copies overshoot); m0=7: STUCK at n=8 (forced copies overshoot); m0=9: STUCK at n=10 (forced copies overshoot)
+  s=[0, 1, 0, 0, 0] k=2: m0=2: STUCK at n=5 (forced copies overshoot); m0=5: STUCK at n=7 (forced copies overshoot); m0=7: STUCK at n=9 (forced copies overshoot); m0=9: STUCK at n=11 (forced copies overshoot)
+  s=[0, 0, 0, 0, 1] k=2: m0=2: STUCK at n=5 (forced copies overshoot); m0=5: STUCK at n=7 (forced copies overshoot); m0=7: STUCK at n=9 (forced copies overshoot); m0=9: STUCK at n=11 (forced copies overshoot)
+  s=[0, 0, 1, 0, 0] k=3: m0=2: STUCK at n=6 (forced copies overshoot); m0=5: STUCK at n=8 (forced copies overshoot); m0=7: STUCK at n=10 (forced copies overshoot); m0=9: STUCK at n=12 (forced copies overshoot)
+  s=[2, 0, 0, 0, 0] k=3: m0=2: STUCK at n=6 (forced copies overshoot); m0=5: STUCK at n=8 (forced copies overshoot); m0=7: STUCK at n=10 (forced copies overshoot); m0=9: STUCK at n=12 (forced copies overshoot)
+  s=[0, 0, 0, 0, 0] k=2: m0=2: STUCK at n=5 (remainder not liftable); m0=5: STUCK at n=7 (remainder not liftable); m0=7: ok to n=32; m0=9: ok to n=32
+  [166s]
+(5) joint T2 = (e1, 2) [vacuum exempt] and Tw = (e1+e2, 3)
+  free action, Tw on vacuum True [max-height]: STUCK at n=9 (forced copies overshoot)
+  free action, Tw on vacuum True [min-height]: STUCK at n=9 (forced copies overshoot)
+  free action, Tw on vacuum True [feasible]: STUCK at n=9 (forced copies overshoot)
+    at n=9: forced part F = 1x144[1, 0, 0, 0, 1], 1x560[0, 1, 0, 0, 1], 1x54[2, 0, 0, 0, 0], 1x945[1, 0, 1, 0, 0], 1x1728[1, 0, 0, 1, 1], 1x3696[0, 1, 0, 0, 2], 3x3696[1, 1, 0, 0, 1], 1x8064[0, 2, 0, 0, 1], 1x210[3, 0, 0, 0, 0], 1x4312[2, 0, 1, 0, 0], 1x4410[1, 2, 0, 0, 0], 1x2640[3, 0, 0, 0, 1]
+    overshoot at SO(9) weights [([1, 1, 0, 1], -1)]
+    primaries P_1 = 1x1[0, 0, 0, 0, 0]
+    primaries P_2 = -
+    primaries P_3 = 1x16[0, 0, 0, 0, 1]
+    primaries P_4 = -
+    primaries P_5 = 1x1[0, 0, 0, 0, 0], 1x120[0, 0, 1, 0, 0]
+    primaries P_6 = 1x16[0, 0, 0, 0, 1], 1x126[0, 0, 0, 0, 2], 1x144[1, 0, 0, 0, 1], 1x320[1, 1, 0, 0, 0]
+    primaries P_7 = 1x16[0, 0, 0, 0, 1], 1x120[0, 0, 1, 0, 0], 1x210[0, 0, 0, 1, 1], 2x560[0, 1, 0, 0, 1], 1x54[2, 0, 0, 0, 0]
+    primaries P_8 = 1x16[0, 0, 0, 0, 1], 1x10[1, 0, 0, 0, 0], 1x45[0, 1, 0, 0, 0], 1x210[0, 0, 0, 1, 1], 1x126[0, 0, 0, 0, 2], 1x144[1, 0, 0, 0, 1], 2x560[0, 1, 0, 0, 1], 1x1200[0, 0, 1, 0, 1], 1x320[1, 1, 0, 0, 0], 1x945[1, 0, 1, 0, 0]
+  free action, Tw on vacuum False [max-height]: STUCK at n=9 (forced copies overshoot)
+  free action, Tw on vacuum False [min-height]: STUCK at n=9 (forced copies overshoot)
+  free action, Tw on vacuum False [feasible]: STUCK at n=9 (forced copies overshoot)
+    at n=9: forced part F = 1x144[1, 0, 0, 0, 1], 1x560[0, 1, 0, 0, 1], 1x54[2, 0, 0, 0, 0], 1x945[1, 0, 1, 0, 0], 1x1728[1, 0, 0, 1, 1], 1x3696[0, 1, 0, 0, 2], 3x3696[1, 1, 0, 0, 1], 1x8064[0, 2, 0, 0, 1], 1x210[3, 0, 0, 0, 0], 1x4312[2, 0, 1, 0, 0], 1x4410[1, 2, 0, 0, 0], 1x2640[3, 0, 0, 0, 1]
+    overshoot at SO(9) weights [([1, 1, 0, 1], -1)]
+    primaries P_1 = 1x1[0, 0, 0, 0, 0]
+    primaries P_2 = -
+    primaries P_3 = 1x16[0, 0, 0, 0, 1]
+    primaries P_4 = 1x45[0, 1, 0, 0, 0]
+    primaries P_5 = 1x1[0, 0, 0, 0, 0], 1x120[0, 0, 1, 0, 0]
+    primaries P_6 = 1x16[0, 0, 0, 0, 1], 1x126[0, 0, 0, 0, 2], 1x144[1, 0, 0, 0, 1]
+    primaries P_7 = 1x16[0, 0, 0, 0, 1], 1x120[0, 0, 1, 0, 0], 1x210[0, 0, 0, 1, 1], 2x560[0, 1, 0, 0, 1], 1x54[2, 0, 0, 0, 0]
+    primaries P_8 = 1x16[0, 0, 0, 0, 1], 1x10[1, 0, 0, 0, 0], 1x45[0, 1, 0, 0, 0], 1x210[0, 0, 0, 1, 1], 1x126[0, 0, 0, 0, 2], 1x144[1, 0, 0, 0, 1], 2x560[0, 1, 0, 0, 1], 1x1200[0, 0, 1, 0, 1], 1x320[1, 1, 0, 0, 0], 1x945[1, 0, 1, 0, 0]
+  joint containment max(T2, Tw) [max-height]: STUCK at n=16 (forced copies overshoot)
+  joint containment max(T2, Tw) [min-height]: STUCK at n=12 (forced copies overshoot)
+  joint containment max(T2, Tw) [feasible]: STUCK at n=12 (forced copies overshoot)
+[166s]

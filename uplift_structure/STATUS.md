@@ -19,6 +19,7 @@ All scripts here only *read* `so10_uplift/data/*.json` and reuse `so10_uplift/up
 | `regge_heads.py` | S8: heads $E_n$ under two rules; product test | `results/regge_heads.txt` | ~5 s |
 | `head_pl.py` | S8: SO(10) super-PL of the head series, chiralities fixed by the algebra | `results/head_pl_max-height.txt` | ~1 min (degree 8) |
 | `regge_modes.py` | S8: multi-mode Regge induction (shifts $T_k$, $k\in K$) | `results/regge_modes.txt` | ~15 s |
+| `regge_directions.py` | S8 (v): head uniqueness; Cartan-direction scan; forced inductions; null test; joint $T_2$, $T_w$ | `results/regge_directions.txt` | ~3 min |
 | `super_pl.py` | S7: super-plethystic log of the SO(9) spectrum | `results/super_pl.txt` | ~5 s (degree 7) |
 | `regge_step2.py` | S5 step 2: optimal duals at low weights; singlet margins; Regge monotonicity; $W$ factorisation | `results/regge_step2_*.txt` | ~30 s total |
 
@@ -241,7 +242,7 @@ There is no finite superparticle-type presentation.
 
 **(iii) A second Regge direction** (`regge_heads.py` part 3, `regge_modes.py`). The second-wave generators $144=[1,0,0,0,1]$ (level 5) and $320=[1,1,0,0,0]$ (level 6) are θ and $w$ shifted by $+e_1$ at level $+2$.
 - Define $T_2$ as the same Cartan shift as $T$ ($\lambda\mapsto\lambda+e_1$), but at level $+2$.
-- $E_n\supseteq T_2(E_{n-2})$ holds for all $4\le n\le8$ under both rules (the rule-independent range).
+- $E_n\supseteq T_2(E_{n-2})$ holds for all $4\le n\le8$, where the heads are unique (see (v)).
 - The vacuum is exempt: $T_2(E_1)=10$ is not in $E_3=16$.
 - The plain rules do not enforce this containment, and lose it from $n=11$ (max-height) and $n=9$ (min-height).
 - **Double Regge induction runs to $n=32$ for all three tested rules (max-height, min-height, feasible).** Here $E_n=T_2(E_{n-2})+P_n$ with $P_n\ge0$, vacuum exempt. So the uplift can be chosen with two commuting Regge directions, $T$ (level $+1$) and $T_2$ (level $+2$).
@@ -252,10 +253,37 @@ There is no finite superparticle-type presentation.
 - $A_6$ is the unique uplift, so this is a strict obstruction.
 - So the structure is not a Cartan module over all string modes (an arc space).
 
-**Tentative reading (unproved).**
-- Two commuting first-row shifts at levels 1 and 2 are what the first-row highest-weight monomials $(y_0^+)^a(y_1^+)^b$ of *two* vector oscillators $y_0$ (degree 1) and $y_1$ (degree 2) would produce, in the spirit of $\mathfrak{so}(10)\times\mathfrak{sp}(4)$ Howe duality.
-- The $45$ at level 4 also fits $w=y_0\wedge y_1$ (degree 3), an angular-momentum-like $x\wedge p$.
-- But a bare $y_1$ (a $10$ at level 3) is absent, so any such model must suppress $y_1$ on the vacuum.
+**(v) Which Cartan shifts are directions? Scan, calibration, null test** (`regge_directions.py`).
+- **The heads are unique through $n=8$.** At each $n\le8$, $\rho_n$ has exactly one non-negative lift along the induction, so the low-level containments above are rule-free facts.
+- *Scan.* All 38 dominant shifts $s$ with $l_1\le2$ and level offsets $k=1..6$ were tested for $E_n\supseteq s(E_{n-k})$ on the unique heads ($k+2\le n\le8$).
+  - 13 pairs pass, but only three are tested on at least 5 irreps:
+    - $T_2=(e_1,2)$: 10 irreps; vacuum exempt.
+    - $T_w=(e_1+e_2,3)$: 5 irreps; vacuum included, since $E_4=45=T_w(1)$.
+    - $(\omega_5,3)$: 5 irreps.
+  - The other 10 are tested on only 1–2 irreps.
+- *Forced single-direction inductions to $n=32$ (three rules).*
+  - $T_2$ and $T_w$ survive.
+  - $(\omega_5,3)$ fails at $n=9$, or at $n=13$ if it acts at most once, like a fermion.
+  - Of the 10 weakly tested pairs, six survive and three fail. One more, $(\omega_4,4)$, survives only as a fermion (acting at most once). The survivors include the composites $T_2^2=(2e_1,4)$ and $T_2T_w=(2e_1+e_2,5)$.
+  - So surviving to $n=32$ alone is weak evidence when the low-level test is weak.
+- *Null test (delayed start).* Each direction is forced only on primaries at levels $m\ge m_0$, for $m_0=2,5,7,9$.
+  - $T_2$ and $T_w$ survive to $n=32$ from every start.
+  - These wrong directions fail no later than two levels after they can first act, for every start: $T_3$, $(e_1,1)$, $(e_1+e_2,2)$, $(\omega_5,2)$, $(e_1+e_2+e_3,3)$ and $(2e_1,3)$.
+  - The exception is the singlet shift $(0,2)$: it fails for $m_0\le5$ but survives from $m_0\ge7$.
+  - So for non-zero shifts the test discriminates: **$T_2$ and $T_w$ are genuine secondary Regge directions.**
+- *But they do not act freely together.*
+  - Forcing the free commutative action of $T_2$ and $T_w$ fails at $n=9$ for every rule. This holds with the vacuum exempt from $T_2$, and with $T_w$ either acting on the vacuum or not.
+  - The forced part needs three copies of $3696_s=[1,1,0,0,1]$: $T_2$ of the two primaries $560$ at level 7, and $T_w$ of the primary $144$ at level 6. Only two fit.
+  - The heads up to $n=8$ are unique, so this is a strict obstruction.
+  - The weaker joint containment $E_n\supseteq\max(T_2E_{n-2},T_wE_{n-3})$ also fails under the three greedy rules, at $n=12$–$16$. That failure is not strict, because the rules make choices from $n=9$ on.
+  - The excess copy would disappear if $144$ (level 6) $=T_2(x)$ and $560$ (level 7) $=T_w(x)$ for a common $x=16$ at level 4, because then $T_2T_w(x)$ is counted once. But $E_4=45$ has no 16.
+
+**Reading (tentative).**
+- $T=(e_1,1)$, $T_2=(e_1,2)$ and $T_w=(e_1+e_2,3)$ are exactly the highest-weight vectors $y_0^+$, $y_1^+$ and $(y_0\wedge y_1)^+$ of two vector oscillators: $y_0$ in degree 1 and $y_1$ in degree 2.
+- Freely combined, their monomials would give the SO(10) highest weights of the harmonics of $\mathbb C[y_0,y_1]$, graded by GL(2) characters at $(q,q^2)$. This is Howe duality for $O(10)\times\mathfrak{sp}(4)$.
+- The $45=w$ at level 4 fits $y_0\wedge y_1$, an angular-momentum-like $x\wedge p$.
+- The data confirm each generator separately, but **rule out the free combination at $n=9$**. They also rule out $y_1$ acting on the vacuum: there is no 10 at level 3.
+- So the naive two-oscillator harmonic model fails. A super-extension in which a 16 at level 4 is cancelled (the ghost $x$ above) is conceivable but untested.
 
 ## Open / next ideas
 
