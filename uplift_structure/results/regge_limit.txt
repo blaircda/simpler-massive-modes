@@ -1,0 +1,77 @@
+Regge-limit Fock space Z_Regge to D = 60 (SO(7) irreps with mu_1 <= 10)
+(0) (8v + 8c) x (level-1 fermions of charge +1/2) = q T(q) on the torus (256 = 44+84+128, 256 weights): True
+  Fock space built to D = 60 in 152s (box |p| <= 33, boundary empty)
+(1) Fock dimensions: D=10: 2.647e+04, D=20: 1.269e+08, D=30: 1.298e+11, D=40: 5.486e+13, D=50: 1.277e+16, D=60: 1.915e+18
+(2) least D of each SO(7) irrep mu (mu_1 <= 10, cost7 <= 60) vs cost7(mu) = 2a - 3b + c(b-c, 2c): all equal; zero multiplicities at D >= cost7 (D <= 60): mu=(0.0, 0.0, 0.0) D=2
+(3) a_D(j,i,L) = Regge limit of the all-full lift at columns (n-D, j, i), level L.  Per family (j,i):
+    D with a_D(j,i,0) < 0 [offset d = least such D] | D with excess e_D(j,i) > 0 [-> level i+1]
+    (0,0): neg D = 8..60 [d = 8] | excess D = -
+    (1,0): neg D = 22..60 [d = 22] | excess D = -
+    (1,1): neg D = 15..60 [d = 15] | excess D = 30..60
+    (2,0): neg D = 49..60 [d = 49] | excess D = -
+    (2,1): neg D = 26..60 [d = 26] | excess D = 50..60
+    (2,2): neg D = 14..60 [d = 14] | excess D = -
+    (3,2): neg D = 17..60 [d = 17] | excess D = -
+    (3,3): neg D = 19..60 [d = 19] | excess D = -
+    (4,2): neg D = 20..60 [d = 20] | excess D = -
+    (4,3): neg D = 22..60 [d = 22] | excess D = -
+    (4,4): neg D = 26..60 [d = 26] | excess D = -
+    (5,2): neg D = 22..60 [d = 22] | excess D = -
+    (5,3): neg D = 25..60 [d = 25] | excess D = -
+    (5,4): neg D = 28..60 [d = 28] | excess D = -
+    (5,5): neg D = 31..60 [d = 31] | excess D = -
+    (6,2): neg D = 24..60 [d = 24] | excess D = -
+    (6,3): neg D = 27..60 [d = 27] | excess D = -
+    (6,4): neg D = 30..60 [d = 30] | excess D = -
+    (6,5): neg D = 33..60 [d = 33] | excess D = -
+    (6,6): neg D = 36..60 [d = 36] | excess D = -
+    (7,2): neg D = 26..60 [d = 26] | excess D = -
+    (7,3): neg D = 29..60 [d = 29] | excess D = -
+    (7,4): neg D = 32..60 [d = 32] | excess D = -
+    (7,5): neg D = 35..60 [d = 35] | excess D = -
+    (7,6): neg D = 38..60 [d = 38] | excess D = -
+    (7,7): neg D = 41..60 [d = 41] | excess D = -
+    (8,2): neg D = 28..60 [d = 28] | excess D = -
+    (8,3): neg D = 31..60 [d = 31] | excess D = -
+    (8,4): neg D = 34..60 [d = 34] | excess D = -
+    (8,5): neg D = 37..60 [d = 37] | excess D = -
+    (8,6): neg D = 40..60 [d = 40] | excess D = -
+    (8,7): neg D = 43..60 [d = 43] | excess D = -
+    (8,8): neg D = 46..60 [d = 46] | excess D = -
+    (1,1) family near the edge: D: a_D(1,1,0), a_D(1,1,1), e_D
+      D=24: -34068 +77657 e=-43589
+      D=25: -64447 +123687 e=-59240
+      D=26: -118296 +194949 e=-76653
+      D=27: -216003 +305402 e=-89399
+      D=28: -386833 +473963 e=-87130
+      D=29: -687723 +730613 e=-42890
+      D=30: -1205907 +1116390 e=+89517
+      D=31: -2098373 +1693332 e=+405041
+      D=32: -3612423 +2546068 e=+1066355
+      D=33: -6173118 +3797412 e=+2375706
+      D=34: -10456703 +5612089 e=+4844614
+      D=35: -17590574 +8218625 e=+9371949
+      D=36: -29369998 +11913412 e=+17456586
+      D=37: -48724957 +17083946 e=+31641011
+      D=38: -80303440 +24200980 e=+56102460
+      D=39: -131570831 +33817688 e=+97753143
+      D=40: -214299259 +46504017 e=+167795242
+(5) SO(8) lift Z8 (8v bosons k >= 2, 8s fermions k+1/2 >= 3/2): decomposed into D4 irreps for D <= 20; non-negative; Res^D4_B3 [q^D] Z8 = [q^D] Z_Regge irrep by irrep: True
+    its non-full classes, (L, J): count, by D (tensor sector, integer D):
+      D=5: (1, 1): 1
+      D=6: (1, 1): 1
+      D=7: (1, 1): 4
+      D=8: (1, 1): 5
+      D=9: (1, 1): 16
+      D=10: (1, 1): 31
+      D=11: (1, 1): 74
+      D=12: (1, 1): 143, (2, 1): 1
+      D=13: (1, 1): 304, (2, 1): 3, (2, 2): 1
+      D=14: (1, 1): 587, (2, 1): 10, (2, 2): 1
+      D=15: (1, 1): 1176, (2, 1): 27, (2, 2): 4
+      D=16: (1, 1): 2231, (2, 1): 73, (2, 2): 8
+      D=17: (1, 1): 4278, (2, 1): 171, (2, 2): 25
+      D=18: (1, 1): 7949, (2, 1): 403, (2, 2): 52
+      D=19: (1, 1): 14782, (2, 1): 885, (2, 2): 132
+      D=20: (1, 1): 26903, (2, 1): 1912, (2, 2): 280
+    first D of each non-full type (L, J), both sectors: (1, 1): 5, (2, 1): 12, (2, 2): 13

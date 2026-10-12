@@ -562,10 +562,74 @@ So the negatives fill the bulk, and the stable range cuts them off.
 - A uniform analysis has to work in that regime. There, GMSZ's shift relations and support costs control the structure: multiplicities depend on $n$ minus the cost of the weight.
 - Asymptotic positivity says the lower edge must eventually recede at fixed weights, but this has not started by $n=44$.
 
+### S15. The Regge limit: a closed-form model of the top of the spectrum (2026-10-12) (`regge_limit.py`, `regge_scaling.py`)
+
+`regge_limit.py` derives the model from the light-cone Fock space and reads no spectrum data. `regge_scaling.py` compares it with the data (to $n=40$ in the repo, to $n=44$ regenerated). Results: `results/regge_limit.txt`, `results/regge_scaling.txt`, `results/regge_scaling_44.txt`.
+
+**Coordinates from GMSZ's costs.** Write an SO(9) weight as $\nu=(x_1,\mu)$ with $\mu=(a,b,c)$ an SO(7) weight, and $\ell=x_1-a$.
+- At level $n$ the top distance is $D=n-x_1$.
+- GMSZ's cost splits as $n_0(\nu)=x_1+{\rm cost}_7(\mu)$, with ${\rm cost}_7(a,b,c)=2a-3b+c(b-c,2c)$.
+- So the GMSZ depth is $w=n-n_0=D-{\rm cost}_7(\mu)$.
+
+**The model.** As $x_1\to\infty$ at fixed $D$, $r^9_n(x_1,\mu)\to m_D(\mu)$, the multiplicity of the SO(7) irrep $\mu$ in $[q^D]Z_{\rm Regge}$, where
+
+$$Z_{\rm Regge}=q\prod_{k\ge2}\frac{1}{(1-q^k)\det_7(1-q^kg)}\prod_{k\ge1}\det_8\big(1+q^{k+1/2}g\big).$$
+
+This is a positive Fock space: bosons in $1+7$ at levels $k\ge2$, and SO(7)-spinor fermions at levels $k+\tfrac12\ge\tfrac32$.
+
+Derivation:
+1. On the common torus, the SO(9) character of the level-$n$ states $F_n=256\otimes r^9_n$ is the light-cone character: bosons $8_v$, fermions $8_s$, ground states $8_v+8_c$.
+2. Restrict to SO(2)$_{12}\times$SO(7), with charge $z=x_1$. The Koszul transform $K(\chi)=\det_7(1-z^{-1}g)\,\chi$ extracts irreducible multiplicities exactly. By the parabolic BGG resolution, for every dominant $(N,\mu)$, $m(N,\mu)$ is the coefficient of $z^N\chi_\mu$ in $K(\chi)$; all other terms have SO(7) highest weights with first entry $\ge N+2$. Since $K$ is multiplicative, $K(F)=256|\cdot K(r^9)$.
+3. Put $z=y/q$. At each order in $q$, $\sum_nq^nK(F_n)$ is a Laurent polynomial in $y$ divided by $1-y$, the pole of $\alpha^+_{-1}$. So the coefficient of $y^N$ is constant for large $N$, equal to the residue at $y=1$: this is the Regge limit.
+4. Take the residue. The Koszul factor removes the level-1 SO(6) vector and one scalar. What remains of the bosons is two scalars and the SO(6) vector at each level $k\ge2$, i.e. $1+7$. The fermions of charge $\pm\tfrac12$ pair into $8$ at depths $j+\tfrac12\ge\tfrac32$.
+5. The ground states times the level-1 fermions of charge $+\tfrac12$ give exactly $q\,T(q)$, with $T(q)=256|_{z=1/q}$ (`regge_limit.py` (0), checked on weights). So the 256 cancels and leaves $Z_{\rm Regge}$.
+
+**GMSZ's support costs follow from the Fock space** (`regge_limit.py` (2), to $D=60$).
+- For every SO(7) irrep with $\mu_1\le10$ and cost $\le60$, the least $D$ with $m_D(\mu)>0$ is exactly ${\rm cost}_7(\mu)$.
+- The only zero at $D\ge{\rm cost}_7$ is $\mu=0$ at $D=2$: GMSZ's gap $[n-2,0,0,0]$.
+- So $c(r,s)$ is the lowest energy of the irrep $[m,r,s]$ in this Fock space.
+
+**Data against the model** (`regge_scaling.py`; every statement holds on both data sets).
+- 321 101 comparisons ($n\le44$, $\mu_1\le10$). In all of them $r^9_n\le m_D$, and $r^9_n$ is non-decreasing in $\ell$ at fixed $(D,\mu)$.
+- $r^9_n=m_D$ exactly whenever $\ell\ge w$, with zero exceptions. Saturation sets in at $\ell=w$ (2151 cases) or $\ell=w-1$ (21 cases). So GMSZ's shift relation (3.32), iterated, ends exactly on this model.
+- The same holds for the cumulative $R^9_n$ against $G_D=\sum_{D'\le D}m_{D'}$.
+- Below saturation (the ramp), data/model reaches $\tfrac12$ at $\ell\approx2$–$4$ and $0.99$ at $\ell\approx6$–$12$, both growing slowly with $w$.
+- The all-full lift agrees exactly near the top: $a(n-D,j,i,L)=a_D(j,i,L)$ (all $j\le6$, all $L$) for every $D\le\lfloor n/2\rfloor+1$ and every $n\le44$. The first difference is at $D=\lfloor n/2\rfloor+2$.
+
+**The upper edges of the transition region are Regge-limit quantities.**
+- The model's offsets ($d(j,i)$ = least $D$ with $a_D(j,i,0)<0$) are 8, 22, 15, 26, 14, 17, 19, 26, 31, 36 for $(0,0),(1,0),(1,1),(2,1),(2,2),(3,2),(3,3),(4,4),(5,5),(6,6)$. These are exactly S14's measured offsets; the data reach all of them by $n=43$.
+- In the model each family stays negative for every $D$ from $d(j,i)$ to 60.
+- The model's $(1,1)$ excess is $e_{29}=-42\,890$ and $e_{30}=+89\,517$, and $e_D>0$ for all $30\le D\le60$. So the band's upper edge $n-30$ is the sign change of a closed-form, $n$-independent quantity.
+- The data at fixed $D$ converge to $e_D$. At $D=24$: $-43\,588$ at $n=44$, against $-43\,589$.
+- The lower edge $k=4$ is not a Regge property. There $\ell=3$, which is about where the ramp of $\mu=(1,1,0)$ reaches half the Regge value.
+
+**Predictions beyond $n=44$, near the top.**
+- Family $(2,1)$ has excess for $D\ge50$: a second family that needs level 2. In the data it should appear only from $n\approx55$, depending on the ramp.
+- No family with $i\ge2$ has excess for $D\le60$. So near the top, the same-column count never forces level 3 up to $D=60$. S13's level-3 extrapolation concerns bulk columns at small $k$, which the model does not cover.
+- More families turn negative, e.g. $(2,0)$ from $D=49$. The offsets grow like costs: $d(j,i)=2j+3i+6$ for $4\le i\le j\le8$.
+
+**The Regge-limit uplift problem is solved.**
+- $Z_{\rm Regge}$ is the restriction of the SO(8) Fock space
+
+$$Z_8=q\prod_{k\ge2}\det_{8_v}(1-q^kg)^{-1}\prod_{k\ge1}\det_{8_s}\big(1+q^{k+1/2}g\big),$$
+
+because $8_v\to7+1$ and $8_s\to8$. So every Regge slice $\Phi_D=[q^D]Z_{\rm Regge}$ is the restriction of a non-negative SO(8) character. `regge_limit.py` (5) checks this irrep by irrep for $D\le20$.
+- In SO(10) terms, the classes $(n-D,\lambda_8)$, $\lambda_8\in[q^D]Z_8$, restrict to the cumulative $R^9$ in the Regge limit.
+- This explicit lift uses non-full classes $(L,J)$ (S13's repair types): $(1,1)$ from $D=5$, $(2,1)$ from $D=12$ and $(2,2)$ from $D=13$, with rapidly growing counts (at $D=20$: 26 903, 1 912 and 280). So it is a valid but costly lift. The same-column count forces level 2 only from $D=30$, and the data's minimal lifts never skip two bottom levels ($K_J=1$, S13).
+
+**What this means for half (b)** (derived from the above, not computed separately).
+- In the Regge induction, $T$ keeps the top distance fixed. Also $\rho_n$ vanishes wherever $r^9_n$ equals the model and the slices of $A_{n-1}$ already restrict to it.
+- So the classes at a top distance $D$ are frozen once $D$ is in the wedge $\ell\ge w$, and their SO(8) parts restrict to $\Phi_D$.
+- Near the top, half (b) is therefore the $n$-independent problem of lifting each $\Phi_D$ to a non-negative SO(8) character, and $Z_8$ solves it.
+- The open part of half (b) is the ramp, $\ell<w$, roughly $D>n/2$, where the residuals live. There the data stay below the Regge values in a controlled way: monotone in $\ell$, and exactly saturating at $\ell=w$.
+
 ## Open / next ideas
+
+- **The ramp in closed form (from S15).** At fixed $q$-order, the coefficient of $y^N$ is a partial sum of the Laurent polynomial $P_D(y)$. So the finite-$\ell$ multiplicities are the Regge Fock space with a second grading (charge), truncated. Dividing by the charge-graded $256(y/q)$ is no longer the clean cancellation of the Regge limit. This would give the ramp, and so the lower part of the band, from first principles.
+- **Minimal repair levels for the Regge problem.** An ILP per $D$ on $\Phi_D$ alone is $n$-independent; compare it with $K_L(n)$ of S13.
 
 - **Prove the Regge continuation conjecture (S5).** This is the current main line; the plan is in the root STATUS.
 - **Existence in move coordinates.** The uplift set is $\{t\in\mathbb Z^K: R_{\rm can}+\sum t_\nu h_\nu\ge0\}$. Since the moves are multiples of $e$, an all-orders argument might construct one explicit uplift and control the $h_\nu$ algebraically.
 - **Transport formulation (from S2).** Split each $m_n(\mu)$ among the fibres whose box contains $\mu$, so that every fibre's finite-difference inverse is non-negative.
-- **Generating-function routes to an explicit uplift.** $\sum_n R^9_n q^n=(1-q)^{-1}\sum_n r^9_n q^n$; an SO(10)-covariant formula for $(1-q)^{-1}\times$(light-cone character).
+- **Generating-function routes to an explicit uplift.** $\sum_n R^9_n q^n=(1-q)^{-1}\sum_n r^9_n q^n$; an SO(10)-covariant formula for $(1-q)^{-1}\times$(light-cone character). In the Regge limit this is realised (S15): the SO(8) Fock space $Z_8$ gives the uplift near the top.
 - Write the explicit per-fibre finite-difference inverse, and check what non-negativity means in those terms.
