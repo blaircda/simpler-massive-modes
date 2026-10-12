@@ -25,6 +25,9 @@ All scripts here only *read* `so10_uplift/data/*.json` and reuse `so10_uplift/up
 | `half_b.py` | S11: half (b): greedy rules, restricted box families, the level recursion for $l_5$-extremal lifts | `results/half_b.txt` | ~15 s |
 | `cumulative_lift.py` | S12: all-full lift of $R^9_n$, forced recursion, bottom chains, uplift by the level recursion; `--bosonic` for $B$ | `results/cumulative_lift*.txt` | ~10 s (n ≤ 40) |
 | `beyond32.py` | S11/S12 beyond 32 (data `r9_to40.json`): Regge induction to 40; extremal lifts of $\rho_n$; intermediate-$l_5$ classes | `results/beyond32.txt` | ~2.5 min |
+| `repair_levels.py` | S13: repair levels $K_L(n)$, $K_J(n)$ of $\rho_n$ (both rules) and minimal top-level repairs | `results/repair_levels*.txt` | ~25 min (n ≤ 40, both rules) |
+| `repair_asymptotics.py` | S13: column indicator $e_c(n,k)$ for $R^9_n$; asymptotic $D_4(\dim)$ | `results/repair_asymptotics*.txt` | ~1 min |
+| `repair_capacity.py` | S13: least vs largest number of repairs per level | `results/repair_capacity.txt` | ~6 min |
 | `super_pl.py` | S7: super-plethystic log of the SO(9) spectrum | `results/super_pl.txt` | ~5 s (degree 7) |
 | `regge_step2.py` | S5 step 2: optimal duals at low weights; singlet margins; Regge monotonicity; $W$ factorisation | `results/regge_step2_*.txt` | ~30 s total |
 
@@ -483,6 +486,49 @@ Idea: lift $R^9_n$ directly, through the S11 level recursion, with no Regge indu
 - $|A_{40}|=1\,457\,936\,065$ for both rules, as S1 requires.
 - So non-negative uplifts of $R^9_n$ exist for all $n\le40$; previously this was established for $n\le32$.
 - The S9 column monotonicities also hold to $n=40$ (`beyond32.py` (4)): $(\omega_1,+1)$, which is Regge monotonicity and the input to half (a), $(\omega_2,+3)$, $(\omega_3,+6)$ and $(2\omega_4,+10)$, with 0 violations. $(\omega_1,+2)$ fails only at the 38 gap entries $[n-2,0,0,0]$.
+
+### S13. Mapping the repair levels (2026-10-12) (`repair_levels.py`, `repair_asymptotics.py`, `repair_capacity.py`)
+
+**Definitions.**
+- A class is *full* when $l_5$ is minimal (0 for tensors, ½ for spinors).
+- A non-full class skips the bottom $J=l_5-\text{floor}$ levels of $\mu_4$ and reaches up to level $L=l_4-\text{floor}$.
+- For each residual $\rho_n$:
+  - $K_L(n)$ is the least $K$ such that $\rho_n$ lifts with non-full classes only at levels $L\le K$;
+  - $K_J(n)$ is the least $J$ such that every class can have skip depth at most $J$.
+- The onset $n_K$ of repair level $K$ is the first $n$ with $K_L(n)\ge K$.
+
+**The map.** Data: both rules for $n\le40$; max-height also for $n\le44$, using data from `so10_uplift/derive_r9.py --max-level 44` (15 min, not stored in the repo).
+- **Max-height rule.**
+  - No repairs at all for $n\le5$ and $n=7$.
+  - Level 1 from $n=6$.
+  - Level 2 from $n=34$, through 44. No level 3 by $n=44$.
+  - $K_J=1$ throughout: no lift ever needs to skip more than one bottom level.
+  - Level-2 repairs are all of type $(L,J)=(2,1)$: 22 487 at $n=34$, 5.9 M at 40, 51.9 M at 44.
+- **Min-height rule.** Level 2 is already needed from $n=31$, and its minimal lifts also use the type $(2,2)$. So the onsets depend on the rule.
+
+**Mechanism (exact).** Switch a level-$L$ class to skip $\mu_4=0$, i.e. $(m_1,m_2,m_3,L,1)$ instead of $(\dots,L,0)$. This changes the bottom-level coefficients by:
+- $+1$ at its own column $(m_1,m_2,m_3)$;
+- $-[m_1,m_2,L-1]+[m_1,m_3-1,L-1]-[m_2-1,m_3-1,L-1]$ on bottom columns with third coordinate $L-1$.
+
+So a bottom deficit at a column $(k,c,c)$ is covered only by same-column repairs at levels $1..c$, or by level-$(c+1)$ feed through $+[m_1,m_3-1,L-1]$. This gives a local indicator for the cumulative $R^9_n$:
+$$e_c(n,k)=-a(k,c,c,0)-\sum_{L\le c}a(k,c,c,L).$$
+- $c=0$: positive from $n=9$. The symmetric-tensor chain has no same-column capacity.
+- $c=1$: the relative excess at bulk columns $(4..8,1,1)$ rises in accelerating steps and crosses 0 at $n\approx34$–35; this is the level-2 onset. For example, at $k=5$ it goes $-0.96$ ($n=20$), $-0.02$ (34), $+1.98$ (44).
+- $c=2$: $\approx-0.58$ at $n=44$, rising steadily by about 0.009 per level. A linear extrapolation of this single column puts the level-3 onset near $n\approx100$.
+- $c=3$: slower still.
+
+**The onset is local, not aggregate.** When level 2 first became necessary, the minimum number of level-1 repairs over all lifts was only 57% of the maximum possible (0.41 → 0.57 over $n=16..33$). For level 2 the ratio is 0.011 → 0.130 over $n=34..40$.
+
+**Asymptotics at fixed weights.**
+- For fixed weights, multiplicities become proportional to SO(9) dimensions (Curtright–Thorn). So $a(l)\sim C(n)\,D_4(l)$ with $D_4(l)=\sum_\varepsilon(-1)^{|\varepsilon|}\dim(l+\varepsilon)$.
+- $D_4(l)\ge70$ for every dominant $l$ with $l_1\le20$. The minimum is at the origin: $1-9+36-84+126$.
+- So at fixed weights the all-full lift is *eventually* positive and needs no repairs: the deficits are pre-asymptotic.
+- The approach is slow. At $n=44$ some columns are still moving away from their asymptotic value; for example $(1,1,1)$ is at $-4.2$ against an asymptotic $-3.3$.
+
+**Reading.**
+- The repairs live in a transition region between two well-behaved regions: the stable range near the leading trajectory (exactly structured, $n$-independent) and fixed weights (asymptotically positive).
+- On the evidence, the needed repair level grows with $n$: level 2 from $n=31$–34, level 3 plausibly near $n\sim100$. So no finite repair pattern covers all $n$.
+- A proof of half (b), or of existence directly, will need uniform asymptotics in the transition region together with an exact treatment of the stable range.
 
 ## Open / next ideas
 
