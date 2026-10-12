@@ -190,3 +190,35 @@ Seed references (all pre-1995 membrane/duality background): Witten; Hull–Towns
 3. **Use the A3 rules.** Use the empirical support rule and shift relations to predict the fibre sizes $m_n(a,a,b,b)$ and the large-$l_1$ behaviour of $R^9_n$. Check the shift relations against our stored data to $n=24$.
 4. **Extract the chiral factor from free SYM.** A1's Pólya-counting derivation of $Z_{SO(10,2)}$ is an all-orders formula. Investigate whether it can be factorised to give the chiral $\mathrm{vac}_\ell$, which is the most promising route to an all-orders *construction*. Positivity would remain to be shown.
 5. **Get the Curtright–Thorn–Goldstone papers (C1).** Check whether their SO(D−1) generating-function derivation generalises to a cumulative SO(D) statement.
+
+---
+
+## Follow-up (2026-10-12): arc spaces, βγ systems and pure-spinor characters
+
+Context: `uplift_structure/` S6. Regge monotonicity of the SO(9) spectrum is proved for the bosonic analogue, using the arc space of the SO(9) null cone. We wanted to know whether the literature supplies the fermionic (superstring) extension.
+
+Seeds:
+- Berkovits–Nekrasov, *The character of pure spinors*, [hep-th/0503075](https://arxiv.org/abs/hep-th/0503075), [INSPIRE 678015](https://inspirehep.net/literature/678015).
+- Aisaka–Arroyo–Berkovits–Nekrasov, *Pure spinor partition function and the massive superstring spectrum*, [arXiv:0806.0584](https://arxiv.org/abs/0806.0584), [INSPIRE 787223](https://inspirehep.net/literature/787223).
+
+### Directly relevant
+- **AABN (0806.0584).** They compute the (λ, ω) pure-spinor partition function, with spin characters, up to the fifth mass level. Adding the (x, θ, p) contribution reproduces the massive spectrum.
+  - **Lesson.** The naive Hilbert space, gauge-invariant polynomials in λ, ω and derivatives, is *incomplete*. From the second mass level there are extra **fermionic** states, from functions not globally defined on pure-spinor space (higher Čech/Dolbeault cohomology), tied to the $b$ ghost.
+  - Their spectrum is SO(10)-covariant (10D Lorentz) plus a light-cone twist (§6). It is not an SO(9)-covariant non-negative model.
+- **Aisaka–Arroyo, *Hilbert space of curved βγ systems on quadric cones*** ([arXiv:0806.0586](https://arxiv.org/abs/0806.0586), [INSPIRE 787224](https://inspirehep.net/literature/787224)). This is the βγ system on exactly our type of cone (quadric).
+  - BRST cohomology lives at ghost numbers 0 and 1, which are in bijection.
+  - The ghost-number-1 states are the non-globally-defined ones.
+- **Chandrasekhar–Ray, *Beta-gamma system, pure spinors and Hilbert series of arc spaces*** ([arXiv:1407.3762](https://arxiv.org/abs/1407.3762), [INSPIRE 1306332](https://inspirehep.net/literature/1306332)). They obtain field generating functions as Hilbert series of **arc spaces** of the constraint variety. This is the same object as our $B=\mathbb C[J_\infty(Q)]$, so it supports S6's use of it.
+
+### Background / possibly useful later
+- Nekrasov, *Lectures on curved βγ systems, pure spinors, and anomalies*, [hep-th/0511008](https://arxiv.org/abs/hep-th/0511008), [INSPIRE 696666](https://inspirehep.net/literature/696666).
+- Movshev, *A formula for the partition function of the βγ system on the cone of pure spinors*, [arXiv:1602.04673](https://arxiv.org/abs/1602.04673), [INSPIRE 1421675](https://inspirehep.net/literature/1421675). It gives a closed formula via theta functions and Eisenstein series.
+- Cederwall–Palmkvist, *Superalgebras, constraints and partition functions*, [arXiv:1503.06215](https://arxiv.org/abs/1503.06215), [INSPIRE 1355238](https://inspirehep.net/literature/1355238). Partition functions of constrained bosonic variables (pure spinors, null vectors) are encoded by Borcherds superalgebras.
+- Boffo–Grassi–Hulik–Sachs, *On superparticles and their partition functions*, [arXiv:2402.09868](https://arxiv.org/abs/2402.09868), [INSPIRE 2758691](https://inspirehep.net/literature/2758691). Twisted world-line partition functions for spinning/superparticles.
+- Grassi–Policastro–Scheidegger, *Partition functions, localization, and the chiral de Rham complex*, [hep-th/0702044](https://arxiv.org/abs/hep-th/0702044), [INSPIRE 744007](https://inspirehep.net/literature/744007).
+- Cederwall, *Pure spinor superfields — an overview*, [arXiv:1307.1762](https://arxiv.org/abs/1307.1762), [INSPIRE 1241859](https://inspirehep.net/literature/1241859).
+
+**Upshot.**
+- The bosonic step of S6 (the null-cone arc space as a domain with the right Hilbert series) is standard ground.
+- No paper found gives an SO(9)-covariant, manifestly non-negative model of the massive superstring spectrum.
+- The pure-spinor experience warns that a correct model needs more than functions on a (super)variety: fermionic states arise from non-global functions.
