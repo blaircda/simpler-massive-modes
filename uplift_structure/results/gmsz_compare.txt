@@ -1,0 +1,53 @@
+(1) our r9_7 == GMSZ (E.19): True  (23 irreps; total dimension 26136, GMSZ (E.20): 26136)
+(2) support rule (3.6) incl. the gap [n-2,0,0,0], levels 7..32
+  level offset +0: support differs at 0 of 26 levels
+  level offset -1: support differs at 26 of 26 levels
+  level offset +1: support differs at 26 of 26 levels
+(3) shift relations as stated; (4) k=1: equality by margin from the stated region (region = margin > 0), and the inequality a_n >= a_(n-d) on all labels
+  l-shift: 37757 instances in the stated regions, 0 violations
+     k=1 equality by margin  -3: 1/549, -2: 0/611, -1: 15/678, 0: 748/748, 1: 678/678, 2: 611/611
+     k=1 inequality holds in 11782/11782
+  m-shift: 7223 instances in the stated regions, 0 violations
+     k=1 equality by margin  -3: 0/584, -2: 0/658, -1: 0/736, 0: 0/822, 1: 914/914, 2: 658/658
+     k=1 inequality holds in 9067/9067
+  r-shift: 620 instances in the stated regions, 0 violations
+     k=1 equality by margin  -3: 0/557, -2: 0/492, -1: 0/559, 0: 0/516, 1: 333/333, 2: 110/110
+     k=1 inequality holds in 5937/5937
+(5) monotonicity r9_n(nu + w) >= r9_(n-d)(nu), all nu in r9_(n-d), n <= 32
+  column 1 = w1    at + 1:     0 violations of 11746 (0 of them at the top [n-d-1,0,0,0] of level n-d)
+  column 1 = w1    at + 2:    30 violations of 10321 (30 of them at the top [n-d-1,0,0,0] of level n-d)
+  column 2 = w2    at + 2:  8021 violations of 10321 (30 of them at the top [n-d-1,0,0,0] of level n-d)
+  column 2 = w2    at + 3:     0 violations of  9033 (0 of them at the top [n-d-1,0,0,0] of level n-d)
+  column 3 = w3    at + 5:  2477 violations of  6836 (1 of them at the top [n-d-1,0,0,0] of level n-d)
+  column 3 = w3    at + 6:     0 violations of  5906 (0 of them at the top [n-d-1,0,0,0] of level n-d)
+  column 4 = 2w4   at + 9:    72 violations of  3693 (0 of them at the top [n-d-1,0,0,0] of level n-d)
+  column 4 = 2w4   at +10:     0 violations of  3121 (0 of them at the top [n-d-1,0,0,0] of level n-d)
+  box row 2 = e2   at + 2:  1078 violations of  9038 (0 of them at the top [n-d-1,0,0,0] of level n-d)
+  box row 2 = e2   at + 3:     0 violations of  7879 (0 of them at the top [n-d-1,0,0,0] of level n-d)
+  box row 3 = e3   at + 3:   269 violations of  5937 (0 of them at the top [n-d-1,0,0,0] of level n-d)
+  box row 3 = e3   at + 4:     0 violations of  5107 (0 of them at the top [n-d-1,0,0,0] of level n-d)
+  box row 4 = e4   at + 3:   123 violations of  4037 (0 of them at the top [n-d-1,0,0,0] of level n-d)
+  box row 4 = e4   at + 4:     0 violations of  3439 (0 of them at the top [n-d-1,0,0,0] of level n-d)
+  spinor w4        at + 3:  3149 violations of  9033 (1 of them at the top [n-d-1,0,0,0] of level n-d)
+  spinor w4        at + 4:   589 violations of  7874 (0 of them at the top [n-d-1,0,0,0] of level n-d)
+  level only       at + 1:    37 violations of 11746 (31 of them at the top [n-d-1,0,0,0] of level n-d)
+(6) SO(10) heads vs the l-stable range of (3.32) (margin = 2l - (lmax+1); equality for margin >= 0)
+  [max-height] max margin of Res E_n, n=1..20: [-1, None, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+  [max-height] on margin >= 0: top(A_(n-1)) != r9_(n-1) at 0 weights
+  [min-height] max margin of Res E_n, n=1..20: [-1, None, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+  [min-height] on margin >= 0: top(A_(n-1)) != r9_(n-1) at 0 weights
+  [21s]
+(7) SO(10) head directions with the r-shift and 4-form costs (control: self-dual 5-form at +10)
+  3-form [0,0,1,0,0] at +6 [max-height]: plain containment fails at n = [13, 14, 15, 16] (n <= 16)
+  3-form [0,0,1,0,0] at +6 [min-height]: plain containment fails at n = [14, 15, 16] (n <= 16)
+  3-form [0,0,1,0,0] at +6: forced ok to n=32 | ok to n=32 | ok to n=32
+  3-form [0,0,1,0,0] at +6: null test m0=2,5,7,9: ok to n=32 | ok to n=32 | ok to n=32 | ok to n=32
+  4-form [0,0,0,1,1] at +10 [max-height]: plain containment fails at n = [15, 16] (n <= 16)
+  4-form [0,0,0,1,1] at +10 [min-height]: plain containment fails at n = [16] (n <= 16)
+  4-form [0,0,0,1,1] at +10: forced ok to n=32 | ok to n=32 | ok to n=32
+  4-form [0,0,0,1,1] at +10: null test m0=2,5,7,9: ok to n=32 | ok to n=32 | ok to n=32 | ok to n=32
+  sd 5-form [0,0,0,0,2] at +10 [max-height]: plain containment fails at n = [13, 16] (n <= 16)
+  sd 5-form [0,0,0,0,2] at +10 [min-height]: plain containment fails at n = [11, 13, 15, 16] (n <= 16)
+  sd 5-form [0,0,0,0,2] at +10: forced ok to n=32 | ok to n=32 | ok to n=32
+  sd 5-form [0,0,0,0,2] at +10: null test m0=2,5,7,9: ok to n=32 | ok to n=32 | ok to n=32 | ok to n=32
+[149s]

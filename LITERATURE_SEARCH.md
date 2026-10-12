@@ -62,7 +62,12 @@ A very recent large-scale study of exactly our $r^9_n$.
   - They could also help prove that the fibre sizes $m_n(a,a,b,b)$ behave as needed.
 - **Data and methods.** A theta-function form of the refined partition function (3.5), and multiplicities computed to level 226 (all reps) and 501 (individual reps).
 - **Open problems.** They list proving the support rule and the shift relations from first principles.
-- They note (§5) the SO(10) grouping of A1 and ask whether multiplicities organise into SO(10,2).
+- They note (§7) the SO(10) grouping of A1 and ask whether multiplicities organise into SO(10,2).
+- **Checked against our data (2026-10-12; `uplift_structure/` S9, `gmsz_compare.py`).**
+  - Their $a_{k,n}$ is our $r^9_n$, with the same level convention. Their worked example (E.19), labelled "level 6", is our $r^9_7$ exactly.
+  - Their support rule and the shift relations (3.32)–(3.34) hold on all our data ($n\le32$).
+  - The shift relations are the stable ends of monotone "column moves" that hold at all depths: $(\omega_1,+1)$, $(\omega_2,+3)$, $(\omega_3,+6)$, plus a 4-form move at $+10$ that they do not list.
+  - Their gap $[n-2,0,0,0]$ is the vacuum exemption of our SO(10) direction $T_2$.
 
 ### ★ A4. Hanany, Forcella, Troost — *The covariant perturbative string spectrum* (2010)
 [arXiv:1007.2622](https://arxiv.org/abs/1007.2622) · [INSPIRE 861347](https://inspirehep.net/literature/861347)
@@ -187,7 +192,7 @@ Seed references (all pre-1995 membrane/duality background): Witten; Hull–Towns
 
    If so, it is a candidate canonical construction with a physical definition.
 2. **Try an SO(10)-covariant Hanany–Forcella–Troost formula (A4).** Write an analogue for $(1-q)^{-1}\sum_n r^9_n q^n$ in plethystic form over SO(10) fugacities with $\chi_{8_v}=\chi_{10}-2$ (or similar), and check whether it reproduces a valid uplift.
-3. **Use the A3 rules.** Use the empirical support rule and shift relations to predict the fibre sizes $m_n(a,a,b,b)$ and the large-$l_1$ behaviour of $R^9_n$. Check the shift relations against our stored data to $n=24$.
+3. **Use the A3 rules.** Use the empirical support rule and shift relations to predict the fibre sizes $m_n(a,a,b,b)$ and the large-$l_1$ behaviour of $R^9_n$. Check the shift relations against our stored data to $n=24$. *(Checking done to $n=32$: see `uplift_structure/` S9. The fibre-size prediction is not done.)*
 4. **Extract the chiral factor from free SYM.** A1's Pólya-counting derivation of $Z_{SO(10,2)}$ is an all-orders formula. Investigate whether it can be factorised to give the chiral $\mathrm{vac}_\ell$, which is the most promising route to an all-orders *construction*. Positivity would remain to be shown.
 5. **Get the Curtright–Thorn–Goldstone papers (C1).** Check whether their SO(D−1) generating-function derivation generalises to a cumulative SO(D) statement.
 
@@ -222,3 +227,24 @@ Seeds:
 - The bosonic step of S6 (the null-cone arc space as a domain with the right Hilbert series) is standard ground.
 - No paper found gives an SO(9)-covariant, manifestly non-negative model of the massive superstring spectrum.
 - The pure-spinor experience warns that a correct model needs more than functions on a (super)variety: fermionic states arise from non-global functions.
+
+---
+
+## Follow-up (2026-10-12, b): the "deep string spectrum" and Howe duality
+
+Context: `uplift_structure/` S9. GMSZ (A3) say their support rule follows from constructing the highest-weight state of each irrep at its lowest level, citing the papers below. The same framework, a Howe dual of the Lorentz algebra acting on oscillator mode labels with trajectory-shifting operators, is the natural home for our Regge directions $T$, $T_2$, $T_w$ and for the column-move monotonicities.
+
+- ★ **Markou, Skvortsov — *An excursion into the string spectrum* (2023)** · [arXiv:2309.15988](https://arxiv.org/abs/2309.15988) · [INSPIRE 2703943](https://inspirehep.net/literature/2703943). Bosonic string.
+  - The Virasoro constraints are a subalgebra of $sp(2K)$, which is Howe dual to the Lorentz algebra.
+  - Lowest-weight states of $sp(2K)$ give whole trajectories at depth 0. A Young diagram $(s_1,s_2,\dots)$ first appears at level $\sum_i i\,s_i$ (their eq. 4.1.2).
+  - Deeper trajectories come from "dressing functions" built from $sp$ creation operators.
+  - They observe that adding a box to row $i$ raises the level by $i$, and that dressing coefficients depend smoothly on the row lengths.
+  - **Relevance:** a candidate mechanism for an *injection* at fixed depth, which would prove Regge-type monotonicity.
+- ★ **Basile, Markou — *On the deep superstring spectrum* (2024)** · [arXiv:2405.18467](https://arxiv.org/abs/2405.18467) · [INSPIRE 2791237](https://inspirehep.net/literature/2791237). The superstring extension, with an $osp$ Howe dual.
+  - Lowest-weight states give the simplest NS trajectories. The R sector needs supplementary states.
+  - Deeper trajectories come from $osp$ raising operators.
+  - **Relevance:** the superstring version of the above. GMSZ cite it for deriving their support rule. Caveat from S9: for super-representations, single boxes in rows 2 and 3 are not monotone at the bosonic costs (column moves are).
+- **Markou — *On the deep string spectrum* (2025, proceedings)** · [arXiv:2505.00177](https://arxiv.org/abs/2505.00177) · [INSPIRE 2917269](https://inspirehep.net/literature/2917269). A review of the two papers above.
+
+Not yet done: reading Basile–Markou in detail, to check whether their $osp$ lowest-weight and dressing construction gives an explicit injective map along the column moves for the super-representations (after dividing out $44+84+128$).
+

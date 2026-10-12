@@ -20,6 +20,7 @@ All scripts here only *read* `so10_uplift/data/*.json` and reuse `so10_uplift/up
 | `head_pl.py` | S8: SO(10) super-PL of the head series, chiralities fixed by the algebra | `results/head_pl_max-height.txt` | ~1 min (degree 8) |
 | `regge_modes.py` | S8: multi-mode Regge induction (shifts $T_k$, $k\in K$) | `results/regge_modes.txt` | ~15 s |
 | `regge_directions.py` | S8 (v): head uniqueness; Cartan-direction scan; forced inductions; null test; joint $T_2$, $T_w$ | `results/regge_directions.txt` | ~3 min |
+| `gmsz_compare.py` | S9: GMSZ (2609.04107) support rule, shift relations, monotonicities; heads vs stable range | `results/gmsz_compare.txt` | ~2.5 min |
 | `super_pl.py` | S7: super-plethystic log of the SO(9) spectrum | `results/super_pl.txt` | ~5 s (degree 7) |
 | `regge_step2.py` | S5 step 2: optimal duals at low weights; singlet margins; Regge monotonicity; $W$ factorisation | `results/regge_step2_*.txt` | ~30 s total |
 
@@ -284,6 +285,59 @@ There is no finite superparticle-type presentation.
 - The $45=w$ at level 4 fits $y_0\wedge y_1$, an angular-momentum-like $x\wedge p$.
 - The data confirm each generator separately, but **rule out the free combination at $n=9$**. They also rule out $y_1$ acting on the vacuum: there is no 10 at level 3.
 - So the naive two-oscillator harmonic model fails. A super-extension in which a 16 at level 4 is cancelled (the ghost $x$ above) is conceivable but untested.
+
+### S9. Comparison with GMSZ, arXiv:2609.04107 (2026-10-12) (`gmsz_compare.py`)
+
+GMSZ's $a_{[\ell,m,r,s],n}$ is our $r^9_n$, with the same level convention (top irrep $[n-1,0,0,0]$).
+
+**The data agree.**
+- Our $r^9_7$ equals their worked example (E.19) exactly. Their appendix labels it "level 6"; the offset is confined to the appendix.
+- Their support rule (Table 1 / (3.6)), including the gap $[n-2,0,0,0]$, holds at every level $7\le n\le32$ of our data. With the levels shifted by $\pm1$ it fails at every level.
+- Their shift relations hold with zero violations in the stated regions: 37 757 instances for $\ell$ (3.32), 7 223 for $m$ (3.33) and 620 for $r$ (3.34).
+
+**Their shift relations are the saturated ends of monotone sequences.**
+- The three shifts are depth-preserving moves: a column of height 1, 2 or 3 is added to the Young diagram, at a cost of 1, 3 or 6 levels.
+- On our data the inequality $r^9_n(\nu+w)\ge r^9_{n-d}(\nu)$ holds at **all** depths, not only in their stable ranges:
+  - $(\omega_1,+1)$: 0 violations of 11 746. This is S6's per-level Regge monotonicity, which implies half (a) of the Regge step.
+  - $(\omega_2,+3)$: 0 of 9 033.
+  - $(\omega_3,+6)$: 0 of 5 906.
+  - A fourth move that GMSZ do not list, a column of height 4 ($2\omega_4=[0,0,0,2]$) at $+10$: 0 of 3 121.
+- One level less fails every time: 8 021, 2 477 and 72 violations.
+- So the costs are the triangular numbers 1, 3, 6, 10. This is the bosonic depth-0 cost $\sum_i i\,s_i$ of a column, i.e. an antisymmetrised $\alpha_{-1}\wedge\dots\wedge\alpha_{-k}$ (Markou–Skvortsov).
+- Single boxes behave differently by row:
+  - Row 2 is monotone only at $+3$, not at the bosonic cost $+2$ (1 078 violations).
+  - Row 3 is monotone only at $+4$, not at the bosonic cost $+3$ (269 violations).
+  - Row 4 is monotone at its bosonic cost $+4$ (0 violations; $+3$ gives 123).
+- How sharp their regions are, at $k=1$:
+  - (3.33) and (3.34) are sharp: equality holds exactly in the stated region.
+  - (3.32) also holds one step outside its stated region (748/748 at the boundary), and mostly fails one step further (15/678 equalities).
+
+**Dictionary with the SO(10) structures of S5–S8.**
+- *$\ell$-shift and $T$.*
+  - For $n\le20$, under both rules, every SO(9) component of $\mathrm{Res}\,E_n$ lies outside the $\ell$-stable range of (3.32), and touches its edge (margin $-1$) at every level.
+  - Inside that range $\mathrm{top}(A_{n-1})=r^9_{n-1}$ exactly, so there the uplift is pure Regge continuation, with no heads.
+  - Their "halfway point" is the frontier of the new SO(10) irreps. It moves by one unit of $l_1$ every two levels, i.e. along $T_2$.
+- *$m$-shift and $T_w$.* Restricting $E_n\supseteq T_w(E_{n-3})$ (and so $A_n\supseteq T_w(A_{n-3})$) to SO(9) gives exactly the $(\omega_2,+3)$ inequality. So (3.33) is the SO(9) shadow of $T_w$: same shift vector $e_1+e_2$, same level offset 3.
+- *$T_2$ and their gap.*
+  - $T_2$, with the vacuum exempt, restricts to $r^9_n(\nu+e_1)\ge r^9_{n-2}(\nu)$ everywhere except on the leading trajectory.
+  - The data show exactly 30 violations, all of the form "top $[n-3,0,0,0]$ of level $n-2$ maps to $[n-2,0,0,0]$ at level $n$". That is GMSZ's gap.
+  - So **the vacuum exemption of $T_2$ is the SO(10) form of their empirical gap.**
+  - $T_2$ raises the depth by one, which is why it is absent from their depth-preserving list.
+- *$r$-shift and the 4-form.*
+  - The SO(10) head directions $(\omega_3,+6)$ and $([0,0,0,1,1],+10)$ survive forced inductions to $n=32$ and the null test.
+  - So does a control, a self-dual 5-form shift $([0,0,0,0,2],+10)$, even though the plain heads violate it at $n=11$–$13$.
+  - At these offsets the forced part is too small to discriminate, so these SO(10) directions remain undecided.
+
+**Open on both sides.**
+- GMSZ list proving the support rule and the "repeat" relations as open problems (§7). We need the $\ell$-inequality for half (a) (S6).
+- Their multiplicities go to level 226 (all irreps) and 501 (single irreps), with data on Zenodo (their ref. [17]). That would test all four monotonicities far beyond $n=32$.
+
+**Lead for half (a).** GMSZ attribute the support rule to explicit depth-0 highest-weight constructions, which use a Howe dual of the Lorentz algebra.
+- For the bosonic string the dual is $sp(2K)$ (Markou–Skvortsov 2309.15988); for the superstring it is $osp$ (Basile–Markou 2405.18467).
+- Deeper states come from "trajectory-shifting" (dressing) operators.
+- Markou–Skvortsov note that adding a box to row $i$ raises the level by $i$, with dressing coefficients smooth in the row lengths.
+- An *injective* version of this at fixed depth would prove the column monotonicities, and hence half (a).
+- Caveat: for super-representations, single boxes in rows 2 and 3 are not monotone at the bosonic costs, so the superstring mechanism must differ there.
 
 ## Open / next ideas
 
