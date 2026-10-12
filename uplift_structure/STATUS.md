@@ -15,6 +15,7 @@ All scripts here only *read* `so10_uplift/data/*.json` and reuse `so10_uplift/up
 | `regge_stress.py` | S5 step 1: induction to $n=32$; (a) for all uplifts (LP); (b) on samples | `results/regge_stress_*.txt` | ~2 min / ~2 min / ~10 s |
 | `regge_extremal.py` | S5 step 2: per-weight LP maxima of top content vs min/max-height uplifts | `results/regge_extremal.txt` | ~1 min ($n\le18$) |
 | `regge_a_star.py` | S5 step 2: universal certificate (lemma), (a*) to $n=32$, certificate optimality | `results/regge_a_star.txt` | ~1 min |
+| `regge_monotone.py` | S6: arc-space algebra $B$; $M'=Z_m/\mathrm{Hilb}(B)$; induction lemma | `results/regge_monotone.txt` | ~3 min ($n\le32$) |
 | `regge_step2.py` | S5 step 2: optimal duals at low weights; singlet margins; Regge monotonicity; $W$ factorisation | `results/regge_step2_*.txt` | ~30 s total |
 
 Notation: an uplift is $c=(c_\lambda)$ over D5 conjugation classes $\lambda=(l_1,\dots,l_5)$, $l_5\ge0$, with $\sum_\lambda c_\lambda\,V_\lambda|_{B4}=R^9_n=\sum_\mu m_n(\mu)V_\mu$. Branching is interlacing: $l_1\ge\mu_1\ge l_2\ge\mu_2\ge l_3\ge\mu_3\ge l_4\ge\mu_4\ge|l_5|$.
@@ -162,6 +163,38 @@ holds.
 - (b) $\rho_n=r^9_n-S(\mathrm{top}\,A)$ has a non-negative uplift (the new heads).
 
 By induction from $A_1=1$, this implies existence at all $n$. Path independence means a proof needs only a one-step lemma for an arbitrary uplift.
+
+### S6. Regge monotonicity: reduction, and a proof for the bosonic analogue (2026-10-12)
+
+**(i) Half (a) of the Regge induction follows from per-level Regge monotonicity (proved).**
+- *Lemma.* Along any Regge induction $A_n=T(A_{n-1})+E_n$ (any rule for $E_n\ge0$), $\mathrm{top}(A_{n-1})\le r^9_{n-1}$.
+- *Proof.*
+  - $\mathrm{top}(TA)=S(\mathrm{top}A)$, so $\mathrm{top}(A_{n-1})=S(\mathrm{top}A_{n-2})+\mathrm{top}(E_{n-1})$.
+  - The induction step gives $\mathrm{Res}\,E_{n-1}=r^9_{n-1}-S(\mathrm{top}A_{n-2})$, hence
+    $$\mathrm{top}(A_{n-1})=r^9_{n-1}-\mathrm{Res}\,T^{-1}(E_{n-1})\le r^9_{n-1}.$$
+  - The base case is $A_1=1$.
+  - Checked along the max-height induction for $n\le32$.
+- *Consequence.* If **per-level Regge monotonicity** $r^9_n(\nu+e_1)\ge r^9_{n-1}(\nu)$ holds, then $\rho_n=r^9_n-S(\mathrm{top}A_{n-1})\ge r^9_n-S(r^9_{n-1})\ge0$. So half (a) holds at every level, whatever rule picks the new irreps. No certificates are needed, and the possible large-$n$ failure of the every-uplift form (S5) is irrelevant.
+- Monotonicity itself holds for all ν and $n\le32$ (S5, `regge_step2.py monotone`).
+
+**(ii) Monotonicity for the bosonic analogue (proved, modulo standard results).**
+- *The algebra.* Let $Q=\{y\in\mathbb C^9:y\cdot y=0\}$ and $B=\mathbb C[J_\infty(Q)]$, the arc space $\{Y(t)=\sum_k y_kt^k: Y\cdot Y=0\}$, graded by $\deg y_k=k+1$.
+- *Regularity.* $Q$ is a canonical lci singularity (a Gorenstein rational quadric cone). By Mustaţă (Invent. Math. 2001), the jet schemes $J_m(Q)$ are irreducible lci of the expected dimension $8(m+1)$. So the coefficients of $Y\cdot Y$ form a regular sequence, and $\mathrm{Hilb}(B)=\mathrm{PE}[\sum_mq^m9]\prod_{m\ge2}(1-q^m)$.
+  - This is exactly the cumulative bosonic spectrum $\mathrm{PE}[\sum_mq^m8_v]/(1-q)$.
+  - Side remark: it is a genuine SO$(D-1)$ character in *any* dimension, unlike the per-level spectrum.
+- *$B$ is a domain.* It is a union of the domains $\mathbb C[J_m(Q)]$, each reduced (CM and generically reduced) and irreducible.
+- *Monotonicity of $B$.* Multiplication by the highest-weight vector $y_0^+$ (weight $e_1$, degree 1) is injective. It commutes with the SO(9) raising operators, which act as derivations killing $y_0^+$. So it maps highest-weight vectors of weight ν injectively to ones of weight $\nu+e_1$, giving $m_{B,d+1}(\nu+e_1)\ge m_{B,d}(\nu)$.
+- *Checked to degree 31:* $B$ is non-negative and monotone.
+
+**(iii) Crystal lemma (proved).**
+- If $A$ is Regge-monotone and $M\ge0$, then $A\otimes M$ is Regge-monotone.
+- Reason: $c^{\lambda+e_1}_{\mu+e_1,\kappa}\ge c^{\lambda}_{\mu,\kappa}$. By Kashiwara's tensor rule, $c^\lambda_{\mu\kappa}=\#\{b\in B(\kappa):\mathrm{wt}\,b=\lambda-\mu,\ \varepsilon_i(b)\le\langle\mu,\alpha_i^\vee\rangle\}$, and adding the dominant $\omega_1=e_1$ to μ only relaxes the conditions.
+
+**(iv) Obstruction: the superstring does not factor through $B$.**
+- *The test.* Per-level monotonicity would follow from $M'=Z_m/\mathrm{Hilb}(B)\ge0$. In light-cone terms, $M'=(F_F-F_B^{-1})(1-q)/(q(8_v+8_s))$.
+- *The result.* $M'$ is negative at every degree $2\le d\le31$, on a small fixed set: $9$, $[0,0,1,0]$, $[1,1,0,0]$, $[1,0,0,2]$, with coefficients growing to about $-5\times10^4$ at $d=31$. The cumulative quotient $M=M'/(1-q)$ is also negative.
+- *The cause.* $B$ has a mode-2 vector ($y_1$, a 9 at degree 2), whereas the superstring has a spinor 16 there ($r^9_3=44+16$). The fermions are entangled with the bosonic modes.
+- *What is needed.* An SO(9)-covariant model of the superstring spectrum itself: plausibly the arc space of a super null cone (bosonic part $Q$, an 8-dimensional fermionic fibre such as $\ker\slashed y\subset16$, or a κ-symmetry quotient) that is torsion-free over $B$. Then the same highest-weight argument applies. Possibly relevant: the pure-spinor character literature (Berkovits–Nekrasov, hep-th/0503075), and the pure-spinor numerator met in `../bbms_lift/` B4.
 
 ## Open / next ideas
 
