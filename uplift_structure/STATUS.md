@@ -23,6 +23,8 @@ All scripts here only *read* `so10_uplift/data/*.json` and reuse `so10_uplift/up
 | `gmsz_compare.py` | S9: GMSZ (2609.04107) support rule, shift relations, monotonicities; heads vs stable range | `results/gmsz_compare.txt` | ~2.5 min |
 | `bm_compare.py` | S10: Basile–Markou principal embedding and trajectory moves on the full spectrum | `results/bm_compare.txt` | ~10 s |
 | `half_b.py` | S11: half (b): greedy rules, restricted box families, the level recursion for $l_5$-extremal lifts | `results/half_b.txt` | ~15 s |
+| `cumulative_lift.py` | S12: all-full lift of $R^9_n$, forced recursion, bottom chains, uplift by the level recursion; `--bosonic` for $B$ | `results/cumulative_lift*.txt` | ~10 s (n ≤ 40) |
+| `beyond32.py` | S11/S12 beyond 32 (data `r9_to40.json`): Regge induction to 40; extremal lifts of $\rho_n$; intermediate-$l_5$ classes | `results/beyond32.txt` | ~2.5 min |
 | `super_pl.py` | S7: super-plethystic log of the SO(9) spectrum | `results/super_pl.txt` | ~5 s (degree 7) |
 | `regge_step2.py` | S5 step 2: optimal duals at low weights; singlet margins; Regge monotonicity; $W$ factorisation | `results/regge_step2_*.txt` | ~30 s total |
 
@@ -393,6 +395,13 @@ GMSZ's $a_{[\ell,m,r,s],n}$ is our $r^9_n$, with the same level convention (top 
 
 ### S11. Half (b): liftability of the residual $\rho_n$ (2026-10-12) (`half_b.py`)
 
+> **Correction (2026-10-12, `beyond32.py`, data to $n=40$).** The $l_5$-extremal property below holds only up to $n=33$.
+> - From $n=34$ on, $\rho_n$ (max-height induction) has **no** $l_5$-extremal lift: the global ILP is infeasible for every $n=34..40$.
+> - The no-lookahead level recursion fails accordingly.
+> - A lift of $\rho_{34}$ needs at least 22 487 classes with intermediate $l_5$, all of shape $(l_1,l_2,2,2,1)$, Dynkin $(a_4,a_5)=(1,3)$. At $n=35$ and $36$ it needs 134 661 and 370 181 of the same family.
+> - So the repairs climb to the next level as $n$ grows. The clean two-valued structure below is a low-level artefact. The pattern held for every $n\le33$ and then changed, which is exactly the trap `previous_efforts.md` warns about.
+> - The Regge induction itself (unrestricted $l_5$) is unaffected: it runs to $n=40$ (S12).
+
 **Set-up.**
 - A class-level lift of an SO(9) character $\rho$ is a non-negative sum of interlacing boxes.
 - Processing weights from the top down, the height-maximal remaining weight must be the top $(l_1,\dots,l_4)$ of whatever lifts it.
@@ -443,6 +452,37 @@ The choices of $l_5$ need global coordination.
   - (i) at every level, the forced degenerate tops are available, i.e. $T_t+\mathrm{Lift}(\rho_{t-1}-\rho_t)\ge0$ at each top;
   - (ii) at the bottom transition, the negatives at $[k,0,0,0,0]$ (and $[k,0,0,0,1]$) can be repaired by degenerate tops $(k,m_2,1,1)$ without creating new negatives.
 - Both are explicit inequalities in finite differences of $\rho_n$, and (by the same recursion) of the cumulative $R^9_n$.
+
+### S12. The cumulative route, and the data to $n=40$ (2026-10-12) (`cumulative_lift.py`, `beyond32.py`)
+
+Idea: lift $R^9_n$ directly, through the S11 level recursion, with no Regge induction.
+
+**The all-full lift.**
+- The classes with minimal $|l_5|$ (0 for tensors, ½ for spinors) restrict to a unitriangular basis. So $R^9_n$ has a unique lift by them, $a(l)=\Delta^4R(l)=\sum_{\varepsilon\in\{0,1\}^4}(-1)^{|\varepsilon|}R(l+\varepsilon)$.
+- Per SO(9) irrep this is $V_\mu\mapsto\sum_\varepsilon(-1)^{|\varepsilon|}V_{(\mu-\varepsilon,0)}$.
+- Degenerate classes ($l_5=l_4$) repair its negatives level by level, as in S11.
+
+**Up to $n=33$ the picture is clean.**
+- **(A)** $a<0$ only at the bottom level, $l_4=0$ (or ½ for spinors). Spinors have no negatives at all until $n=28$.
+- **(B)** The repairs need only degenerate classes at $l_4=l_5=1$ (or $\tfrac32$).
+  - Forced coverage holds. The tightest case sits at a fixed distance from the top, column $(n-14,2,2)$, with slack 132 for every $n\ge24$.
+  - The bottom deficits are fed along the leading-trajectory chains $[k,0,0,0,0]$, $(k,1,0,0)$ and $[k,0,0,0,1]$.
+  - Their tail sums from the top are $n$-independent: $1,1,1,1,2,3,3,2,-4,-21,\dots$ for $[k,0,0,0,0]$. So the prefix condition reads $R^9_n(\text{singlet})\ge3$ plus small corrections.
+- Uplifts of $R^9_n$ found this way for every $n\le33$, in seconds, use only $l_5$-minimal classes plus $[a_1,a_2,a_3,0,2]$ (and $[a_1,a_2,a_3,0,3]$ from $n=28$).
+
+**It breaks at $n=34$.**
+- The forced degenerate tops in columns $(m_1,1,1)$ drain the singlet node of the symmetric-tensor chain. Its prefix sum goes negative ($-60\,960$ at $n=34$, $-1.0\times10^6$ at $n=40$).
+- From $n=35$, forced coverage itself fails, at column $(5,1,1)$: slack $-77\,285$ at $n=35$, $-4.7\times10^6$ at $n=40$.
+- So "all-full lift plus bottom repairs" is not an all-orders mechanism.
+
+**Bosonic analogue** (`--bosonic 22`). For the cumulative bosonic spectrum $B$ (S6), the all-full lift is non-negative at degrees 7, 8 and 10–22. At degrees 4, 5, 6 and 9 it has a single $-1$ at the bottom level. So for $B$ no repairs are needed in this range, and the bottom-level negatives of the superstring are a fermionic effect.
+
+**Existence to $n=40$.**
+- `so10_uplift/derive_r9.py --max-level 40` gives `data/r9_to40.json` (8 min). It is identical to `r9_to32.json` for $n\le32$.
+- With it, **the Regge induction runs to $n=40$ under both the max-height and the min-height rules.** Half (a) holds at every step, half (b) is solved by unrestricted ILP, and every $A_n$ is verified by restriction.
+- $|A_{40}|=1\,457\,936\,065$ for both rules, as S1 requires.
+- So non-negative uplifts of $R^9_n$ exist for all $n\le40$; previously this was established for $n\le32$.
+- The S9 column monotonicities also hold to $n=40$ (`beyond32.py` (4)): $(\omega_1,+1)$, which is Regge monotonicity and the input to half (a), $(\omega_2,+3)$, $(\omega_3,+6)$ and $(2\omega_4,+10)$, with 0 violations. $(\omega_1,+2)$ fails only at the 38 gap entries $[n-2,0,0,0]$.
 
 ## Open / next ideas
 

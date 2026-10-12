@@ -1,0 +1,22 @@
+data r9_to40.json: n <= 40
+  (2) n=30: rho_n l5-extremal lift exists; no-lookahead level recursion succeeds
+  (2) n=31: rho_n l5-extremal lift exists; no-lookahead level recursion succeeds
+  (2) n=32: rho_n l5-extremal lift exists; no-lookahead level recursion succeeds
+  (2) n=33: rho_n l5-extremal lift exists; no-lookahead level recursion succeeds
+  (2) n=34: rho_n l5-extremal lift does NOT exist; no-lookahead level recursion fails
+  (3) n=34: at least 22487 intermediate-l5 classes needed, e.g. 10787x848925[1, 1, 0, 1, 3], 7623x21866250[4, 1, 0, 1, 3], 1511x9801792[6, 0, 0, 1, 3], 2022x48648600[5, 1, 0, 1, 3]
+  (2) n=35: rho_n l5-extremal lift does NOT exist; no-lookahead level recursion fails
+  (3) n=35: at least 134661 intermediate-l5 classes needed, e.g. 2642x150150[0, 1, 0, 1, 3], 106865x698880[3, 0, 0, 1, 3], 17819x8828820[3, 1, 0, 1, 3], 5180x9801792[6, 0, 0, 1, 3]
+  (2) n=36: rho_n l5-extremal lift does NOT exist; no-lookahead level recursion fails
+  (3) n=36: at least 370181 intermediate-l5 classes needed, e.g. 103438x216216[2, 0, 0, 1, 3], 266743x3071250[2, 1, 0, 1, 3]
+  (2) n=37: rho_n l5-extremal lift does NOT exist; no-lookahead level recursion fails
+  (2) n=38: rho_n l5-extremal lift does NOT exist; no-lookahead level recursion fails
+  (2) n=39: rho_n l5-extremal lift does NOT exist; no-lookahead level recursion fails
+  (2) n=40: rho_n l5-extremal lift does NOT exist; no-lookahead level recursion fails
+(1) Regge induction [max-height]: runs to n=40 (both halves at every step); |A_N| = 1457936065 [78s]
+(1) Regge induction [min-height]: runs to n=40 (both halves at every step); |A_N| = 1457936065 [143s]
+(4) w1 at +1: 0 violations of 29541 (n <= 40); 0 of them at the top [n-d-1,0,0,0]
+(4) w2 at +3: 0 violations of 23851 (n <= 40); 0 of them at the top [n-d-1,0,0,0]
+(4) w3 at +6: 0 violations of 16967 (n <= 40); 0 of them at the top [n-d-1,0,0,0]
+(4) 2w4 at +10: 0 violations of 10321 (n <= 40); 0 of them at the top [n-d-1,0,0,0]
+(4) w1 at +2: 38 violations of 26577 (n <= 40); 38 of them at the top [n-d-1,0,0,0]

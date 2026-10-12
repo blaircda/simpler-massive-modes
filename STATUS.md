@@ -17,7 +17,7 @@ Pipeline `baseline_SO8_to_SO10.py` (runtime ~55 s, passes):
 ## Research directions
 
 - [`so10_uplift/`](so10_uplift/STATUS.md): independent Sage-based pipeline Fock → $r^9_n$ → SO(10) uplifts, through level 24. This is the hard computational evidence. Stored data: `so10_uplift/data/{r9,R10,R10_all_uplifts}.json`; loader `so10_uplift/repdata.py`.
-  - A non-negative uplift exists for all $n\le24$.
+  - A non-negative uplift exists for all $n\le24$ (extended to $n\le40$ by the Regge induction, `uplift_structure/` S12).
   - The uplift is unique for $n\le6$, then has rapidly growing multiplicity (6 722 076 at $n=11$).
   - The baseline $R^{10}_n$ ($n\le10$) is the unique "max-height" uplift. That uplift stays unique through $n=11$ but not from $n=12$; the stored canonical choice adds a lex tie-break.
 - [`uplift_structure/`](uplift_structure/STATUS.md): exploratory analysis of that output (reads it, never modifies it).
@@ -26,7 +26,7 @@ Pipeline `baseline_SO8_to_SO10.py` (runtime ~55 s, passes):
   - The canonical uplift maximises $\sum c\,l_1$.
   - The uplift kernel is generated over $\mathbb Z$ by Euler-class moves $e\otimes V_\nu$ (halved when $l_5(\nu)=0$, checked $n\le16$), with $e=\sum(-1)^k\Lambda^k(10)$.
   - **Proved at all levels (S4):** the kernel of restriction is the principal ideal $(\delta)$, with $\delta=S^+-S^-$ and $e=-\delta^2$. On conjugation classes this gives exactly the halved Euler moves above. So existence is a class-level question, and chirality is purely a selection question.
-  - **Regge induction (S5, main line from 2026-10-11).** $A_n=T(A_{n-1})+E_n$, with $T:\lambda\mapsto\lambda+e_1$ and $E_n\ge0$ the new trajectory heads. It runs to $n=24$ for every tested rule, and continues from *every* enumerated uplift ($n\le11$). Conjecture: one step always works, which would prove existence at all $n$ by induction. Stress tests found no counterexample: the induction runs to $n=32$, and half (a) is certified for every uplift at $n\le24$. Step 2 (S5) proves a universal certificate lemma that reduces half (a) to an SO(9)-only inequality (a*); (a*) fails only at a few weights near the origin. There is a heuristic warning that the every-uplift form may fail at very large $n$, so the target is the existential induction (max-height rule). **S6:** half (a) of the induction is *proved* to follow from per-level Regge monotonicity, for any rule. Monotonicity is proved for the bosonic analogue: the cumulative bosonic spectrum is the coordinate ring of the arc space of the SO(9) null cone, a domain (via Mustaţă). The superstring needs a fermionic (super arc space) extension, since the naive factorisation through the bosonic algebra fails. **S7–S8:**
+  - **Regge induction (S5, main line from 2026-10-11).** $A_n=T(A_{n-1})+E_n$, with $T:\lambda\mapsto\lambda+e_1$ and $E_n\ge0$ the new trajectory heads. It runs to $n=24$ for every tested rule, and continues from *every* enumerated uplift ($n\le11$). Conjecture: one step always works, which would prove existence at all $n$ by induction. Stress tests found no counterexample: the induction runs to $n=32$ (to $n=40$ with the new data, under both rules; S12), and half (a) is certified for every uplift at $n\le24$. Step 2 (S5) proves a universal certificate lemma that reduces half (a) to an SO(9)-only inequality (a*); (a*) fails only at a few weights near the origin. There is a heuristic warning that the every-uplift form may fail at very large $n$, so the target is the existential induction (max-height rule). **S6:** half (a) of the induction is *proved* to follow from per-level Regge monotonicity, for any rule. Monotonicity is proved for the bosonic analogue: the cumulative bosonic spectrum is the coordinate ring of the arc space of the SO(9) null cone, a domain (via Mustaţă). The superstring needs a fermionic (super arc space) extension, since the naive factorisation through the bosonic algebra fails. **S7–S8:**
     - Natural super-null-cone arc-space models are ruled out at degree 2.
     - The trajectory heads are unique through $n=8$. They multiply ($E_5\supseteq\Lambda^216$, $E_6\supseteq16\otimes45$, $E_7\supseteq\mathrm{Sym}^245-1$), but form no finite algebra.
     - Two **secondary Regge directions** pass a null test: $T_2$ (spin $+e_1$, level $+2$) and $T_w$ (spin $+e_1+e_2$, level $+3$). Each forced induction runs to $n=32$ for every rule.
@@ -42,13 +42,18 @@ Pipeline `baseline_SO8_to_SO10.py` (runtime ~55 s, passes):
       - Their principal embedding (lowest level and multiplicity; R multiplicity $2^{K-1}$) holds for all 2 798 irreps first appearing in the full spectrum for $n\le32$. This includes $K=3,4$, beyond their own check.
       - Super-representations have a principal-embedding analogue: at GMSZ's first level, the multiplicity depends only on $(r,s)$.
       - But the paper gives no injective map for half (a). It is RNS, with no osp description of dividing out $44+84+128$, and multiplying by column minors does not preserve the constraints on dressed states.
-    - **S11, half (b)** (liftability of $\rho_n$):
+    - **S11, half (b)** (liftability of $\rho_n$; **corrected**: the $l_5$-extremal structure holds only for $n\le33$, see S12):
       - Local greedy lifts fail.
       - Lifts can always be taken with $l_5$ extremal ($\{0\text{ or }\tfrac12,l_4\}$). This is a property of the data, not of lifting in general.
       - An extremal lift is then an exact level-by-level recursion in $\mu_4$. At each level the tops are unique (finite differences); the only choice is which tops are degenerate.
       - Choosing them by a small per-level ILP with no lookahead succeeds for the max-height induction ($n\le32$), and for the cumulative $R^9_n$ directly ($n\le24$).
       - Above the bottom level only forced choices occur. All real repairs sit at the bottom transition, next to the symmetric tensors $[k,0,0,0,0]$ and the spinors $[k,0,0,0,1]$, i.e. next to the leading trajectory, as in half (a).
       - For the cumulative $R^9_n$ ($n\le24$) the only repairs are at the symmetric tensors $[k,0,0,0,0]$. Existence then reduces (empirically) to explicit finite-difference inequalities on $R^9_n$, with no Regge induction.
+      - **Correction (S12, data to $n=40$).** From $n=34$ no $l_5$-extremal lift of $\rho_n$ exists. Lifts need classes $(l_1,l_2,2,2,1)$, so the repairs climb to the next level. The pattern held for $n\le33$ and then changed.
+    - **S12, the cumulative route and existence to $n=40$:**
+      - Lifting $R^9_n$ directly (all-full lift $\Delta^4R$ plus bottom repairs) works for $n\le33$, with stable-range minimum slack and singlet-sized chain margins.
+      - It breaks at $n=34$: the singlet node is drained, then forced coverage fails at column $(5,1,1)$.
+      - With new data `r9_to40.json`, **the Regge induction runs to $n=40$ under both rules**, so non-negative uplifts exist for all $n\le40$.
 - [`bbms_lift/`](bbms_lift/STATUS.md): the BBMS SO(10)×SO(2)$_\Delta$-graded lift (hep-th/0310292) as a uniform-in-$n$ existence vehicle.
   - Reproduces BBMS's published levels 1–3, chirality included.
   - The grading map's kernel is the ideal generated by $K=\sum_k(-1)^k\Lambda^k(10)x^k$ (proved), and $K(1)=e$. So the grading fixes chirality, and leaves only Euler moves, which are fixed by the Δ-window.

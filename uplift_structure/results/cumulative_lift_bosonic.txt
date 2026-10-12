@@ -1,0 +1,20 @@
+(E) bosonic analogue B: all-full lift by degree
+  degree 4: 7 SO(9) irreps; all-full lift negative at levels [0], min -1
+  degree 5: 9 SO(9) irreps; all-full lift negative at levels [0], min -1
+  degree 6: 13 SO(9) irreps; all-full lift negative at levels [0], min -1
+  degree 7: 17 SO(9) irreps; all-full lift negative at levels [], min 1
+  degree 8: 21 SO(9) irreps; all-full lift negative at levels [], min 1
+  degree 9: 27 SO(9) irreps; all-full lift negative at levels [0], min -1
+  degree 10: 34 SO(9) irreps; all-full lift negative at levels [], min 1
+  degree 11: 41 SO(9) irreps; all-full lift negative at levels [], min 1
+  degree 12: 51 SO(9) irreps; all-full lift negative at levels [], min 1
+  degree 13: 62 SO(9) irreps; all-full lift negative at levels [], min 1
+  degree 14: 73 SO(9) irreps; all-full lift negative at levels [], min 1
+  degree 15: 87 SO(9) irreps; all-full lift negative at levels [], min 1
+  degree 16: 103 SO(9) irreps; all-full lift negative at levels [], min 1
+  degree 17: 119 SO(9) irreps; all-full lift negative at levels [], min 1
+  degree 18: 139 SO(9) irreps; all-full lift negative at levels [], min 1
+  degree 19: 161 SO(9) irreps; all-full lift negative at levels [], min 1
+  degree 20: 184 SO(9) irreps; all-full lift negative at levels [], min 1
+  degree 21: 211 SO(9) irreps; all-full lift negative at levels [], min 1
+  degree 22: 241 SO(9) irreps; all-full lift negative at levels [], min 1
