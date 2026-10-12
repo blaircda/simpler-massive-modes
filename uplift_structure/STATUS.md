@@ -16,6 +16,7 @@ All scripts here only *read* `so10_uplift/data/*.json` and reuse `so10_uplift/up
 | `regge_extremal.py` | S5 step 2: per-weight LP maxima of top content vs min/max-height uplifts | `results/regge_extremal.txt` | ~1 min ($n\le18$) |
 | `regge_a_star.py` | S5 step 2: universal certificate (lemma), (a*) to $n=32$, certificate optimality | `results/regge_a_star.txt` | ~1 min |
 | `regge_monotone.py` | S6: arc-space algebra $B$; $M'=Z_m/\mathrm{Hilb}(B)$; induction lemma | `results/regge_monotone.txt` | ~3 min ($n\le32$) |
+| `super_pl.py` | S7: super-plethystic log of the SO(9) spectrum | `results/super_pl.txt` | ~5 s (degree 7) |
 | `regge_step2.py` | S5 step 2: optimal duals at low weights; singlet margins; Regge monotonicity; $W$ factorisation | `results/regge_step2_*.txt` | ~30 s total |
 
 Notation: an uplift is $c=(c_\lambda)$ over D5 conjugation classes $\lambda=(l_1,\dots,l_5)$, $l_5\ge0$, with $\sum_\lambda c_\lambda\,V_\lambda|_{B4}=R^9_n=\sum_\mu m_n(\mu)V_\mu$. Branching is interlacing: $l_1\ge\mu_1\ge l_2\ge\mu_2\ge l_3\ge\mu_3\ge l_4\ge\mu_4\ge|l_5|$.
@@ -195,6 +196,27 @@ By induction from $A_1=1$, this implies existence at all $n$. Path independence 
 - *The result.* $M'$ is negative at every degree $2\le d\le31$, on a small fixed set: $9$, $[0,0,1,0]$, $[1,1,0,0]$, $[1,0,0,2]$, with coefficients growing to about $-5\times10^4$ at $d=31$. The cumulative quotient $M=M'/(1-q)$ is also negative.
 - *The cause.* $B$ has a mode-2 vector ($y_1$, a 9 at degree 2), whereas the superstring has a spinor 16 there ($r^9_3=44+16$). The fermions are entangled with the bosonic modes.
 - *What is needed.* An SO(9)-covariant model of the superstring spectrum itself: plausibly the arc space of a super null cone (bosonic part $Q$, an 8-dimensional fermionic fibre such as $\ker\slashed y\subset16$, or a κ-symmetry quotient) that is torsion-free over $B$. Then the same highest-weight argument applies. Possibly relevant: the pure-spinor character literature (Berkovits–Nekrasov, hep-th/0503075), and the pure-spinor numerator met in `../bbms_lift/` B4.
+
+### S7. Toward a fermionic model: literature, and the super-plethystic log (2026-10-12)
+
+**Literature** (see `../LITERATURE_SEARCH.md`, follow-up section).
+- The arc space of a quadric cone as the γ-field generating function is standard (Chandrasekhar–Ray; Aisaka–Arroyo). That supports S6(ii).
+- For pure-spinor and quadric βγ systems the full Hilbert space has extra *fermionic*, non-globally-defined states (Aisaka–Arroyo–Berkovits–Nekrasov). So "functions on a supervariety" is likely too naive.
+- No SO(9)-covariant non-negative model of the massive spectrum was found.
+
+**Super-PL** (`super_pl.py`).
+- *Method.* Spinorial weights are treated as fermionic and tensorial ones as bosonic. The spectrum is recomputed from the Fock space and matched to stored data.
+- *Result.*
+  - $\mathrm{PL}(Z_m)$: $9$; $16-1$; $9+36-16$; $-9-36-84+2\cdot16+128$; then growing alternating sums at degrees 5–7.
+  - So there is no finite generator/relation structure, and no complete-intersection model.
+- *Consequence.* Every super arc space whose bosonic generators are consecutive modes $y_0,y_1,\dots$ of a vector fails already at degree 2. Its $y_1$ gives an extra $9$, but $\mathrm{PL}_2=16-1$. The superstring has no independent mode-2 vector: the light-cone mode-2 oscillators are absorbed by the SUSY factor $8_v+8_s$.
+
+**An SO(10) pattern in the cumulative spectrum.**
+- $\mathrm{PL}(R)=\mathrm{PL}(Z_m)+q=\mathrm{Res}\big(10\,q+(16-1)q^2+(45-\overline{16})q^3+\dots\big)$. That is SO(10) generators $10$ (degree 1), $16$ (2), $45$ (3), with relations $1$ (2) and $\overline{16}$ (3).
+- These are the shapes of $y\cdot y=0$ and $\slashed y\theta=0$ for a null 10-vector and a spinor, plus an adjoint, like angular momentum $x\wedge p$ for a massless particle.
+- The canonical uplift reproduces $A_4=210'+144+45$ exactly from these terms.
+- This suggests looking for an **SO(10)-equivariant** algebra (massless 10D superparticle / phase-space type) whose SO(9) restriction is $R$. That would settle existence outright, with positivity manifest, rather than proving SO(9) monotonicity.
+- Caveat: `previous_efforts.md` item 1 found no simple structure in the PL of the baseline uplift to level 10. The pattern beyond degree 4 is untested.
 
 ## Open / next ideas
 
