@@ -1,0 +1,40 @@
+full spectrum F_n = (44+84+128) x r9_n computed for n <= 32 [9s]
+(1) 2798 irreps first appear in F_n, n <= 32; agreement with BM's principal embedding (GSO-even: first level and multiplicity; GSO-odd: appears only later)
+  ('NS', 0, 'GSO-odd'): 1/1
+  ('NS', 1, 'GSO-even'): 64/65
+  ('NS', 1, 'GSO-odd'): 63/63
+  ('NS', 2, 'GSO-even'): 591/591
+  ('NS', 2, 'GSO-odd'): 290/290
+  ('NS', 3, 'GSO-even'): 272/272
+  ('NS', 3, 'GSO-odd'): 304/304
+  ('NS', 4, 'GSO-odd'): 17/17
+  ('R', 0, 'GSO-even'): 0/1
+  ('R', 1, 'GSO-even'): 122/122
+  ('R', 2, 'GSO-even'): 723/723
+  ('R', 3, 'GSO-even'): 346/346
+  ('R', 4, 'GSO-even'): 3/3
+  disagreements (sector, K, weight, first n, mult, BM n, BM mult): [('NS', 1, (2, 0, 0, 0), 2, 1, '0', 1), ('R', 0, (1, 1, 1, 1), 2, 1, '0', 1)]
+  square fermion K=2 (5, 5, 1, 1): BM first level 5, mult 2; data [(5, 2), (6, 6), (7, 16)]
+  square fermion K=3 (7, 7, 7, 1): BM first level 14, mult 4; data [(14, 4), (15, 20), (16, 68)]
+  square fermion K=4 (9, 9, 9, 9): BM first level 30, mult 8; data [(30, 8), (31, 56), (32, 232)]
+(2) single-box trajectory moves at fixed K, BM costs: F_(n+c)(Y') >= F_n(Y)?
+  NS arm 1       :     0 violations of 13577
+  NS arm 2       :  1152 violations of 9059
+  NS arm 3       :   146 violations of 1314
+  NS leg 1 twice :     0 violations of 2641
+  NS leg 2 twice :    27 violations of 1215
+  NS legs 1+2    :     0 violations of 4930
+  NS legs 2+3    :   252 violations of 618
+  R  arm 1       :     0 violations of 9626
+  R  arm 2       :   844 violations of 5976
+  R  arm 3       :    72 violations of 547
+  R  leg 1       :   304 violations of 5551
+  R  leg 2       :   672 violations of 3251
+  R  leg 3       :    78 violations of 225
+(3) column moves on F (cf. S9 for r9)
+  w1  at + 1: 0 violations of 23262
+  w2  at + 3: 0 violations of 18369
+  w3  at + 6: 0 violations of 12559
+  2w4 at +10: 0 violations of 7132
+  w2  at + 2: 15859 violations of 20706
+[11s]

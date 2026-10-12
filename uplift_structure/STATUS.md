@@ -21,6 +21,7 @@ All scripts here only *read* `so10_uplift/data/*.json` and reuse `so10_uplift/up
 | `regge_modes.py` | S8: multi-mode Regge induction (shifts $T_k$, $k\in K$) | `results/regge_modes.txt` | ~15 s |
 | `regge_directions.py` | S8 (v): head uniqueness; Cartan-direction scan; forced inductions; null test; joint $T_2$, $T_w$ | `results/regge_directions.txt` | ~3 min |
 | `gmsz_compare.py` | S9: GMSZ (2609.04107) support rule, shift relations, monotonicities; heads vs stable range | `results/gmsz_compare.txt` | ~2.5 min |
+| `bm_compare.py` | S10: Basile–Markou principal embedding and trajectory moves on the full spectrum | `results/bm_compare.txt` | ~10 s |
 | `super_pl.py` | S7: super-plethystic log of the SO(9) spectrum | `results/super_pl.txt` | ~5 s (degree 7) |
 | `regge_step2.py` | S5 step 2: optimal duals at low weights; singlet margins; Regge monotonicity; $W$ factorisation | `results/regge_step2_*.txt` | ~30 s total |
 
@@ -338,6 +339,56 @@ GMSZ's $a_{[\ell,m,r,s],n}$ is our $r^9_n$, with the same level convention (top 
 - Markou–Skvortsov note that adding a box to row $i$ raises the level by $i$, with dressing coefficients smooth in the row lengths.
 - An *injective* version of this at fixed depth would prove the column monotonicities, and hence half (a).
 - Caveat: for super-representations, single boxes in rows 2 and 3 are not monotone at the bosonic costs, so the superstring mechanism must differ there.
+
+### S10. Basile–Markou, arXiv:2405.18467: reading and checks (2026-10-12) (`bm_compare.py`)
+
+**What the paper does.**
+- It gives a covariant (RNS) construction of whole trajectories of the open superstring, based on super-Howe duality.
+  - The Lorentz algebra pairs with $osp(2M|2N)$ in the NS sector and $osp(2M+1|2N)$ in the R sector, acting on oscillator mode labels.
+  - The Fock space is multiplicity-free under each pair: each Lorentz irrep $Y$ comes with one lowest-weight $osp$-module.
+- In the transverse subspace the super-Virasoro constraints ($G_{1/2},G_{3/2}$ in NS; $G_0,G_1$ in R) are combinations of $osp$ lowering operators, plus a "mass" operator in R.
+- Physical states of spin $Y$ at depth $w$ are "dressings" of the principal embedding by polynomials in $osp$ raising operators.
+  - The coefficients depend on the arm and leg lengths of $Y$. At $w=\tfrac12$ there is one linear condition in the hook lengths.
+  - Trajectories are labelled by $(K,w)$, where $K$ is the diagonal length of the Young diagram, rather than by the number of rows as for the bosonic string.
+- The principal embedding (depth 0), with $Y=(\ell_1..\ell_K|h_1..h_K)$ (arms; legs including the diagonal):
+  - NS: level $\sum_i\big(i\,\ell_i+(i-\tfrac12)h_i\big)$, multiplicity 1.
+  - R: level $\sum_i i(\ell_i+h_i)$, multiplicity $2^{K-1}$. They checked only $K=2$.
+- They do not discuss monotonicity or stabilization. They work with the full spectrum, not the supermultiplet-reduced $r^9$.
+
+**Checks on our data.** The full spectrum is $F_n=(44+84+128)\otimes r^9_n$, computed by Brauer–Klimyk for $n\le32$.
+- *Principal embedding.* Of the 2 798 irreps first appearing at $n\le32$, all but two agree with their prediction: the first level and multiplicity for GSO-even cases, and appearance only later for GSO-odd ones. The two exceptions are the massless vector and spinor (principal level 0).
+- This includes the R multiplicities $2^{K-1}$ beyond their check:
+  - $K=3$: 346 irreps; the $K=3$ square first appears at level 14 with multiplicity 4.
+  - $K=4$: the square first appears at level 30 with multiplicity 8.
+- *Trajectory moves at fixed $K$, at their level costs.*
+  - Monotone: a box on arm 1 (cost 1) in both sectors (0 violations of 13 577 NS and 9 626 R), and in NS two boxes on leg 1 (cost 1) or legs 1+2 (cost 2).
+  - Not monotone (hundreds of violations): boxes on arms 2 and 3, on legs 2 and 3, and on R leg 1.
+- *Column moves on $F$.* Monotone at the triangular costs (0 violations); $\omega_2$ at $+2$ is not. This is the same pattern as for $r^9$ (S9).
+
+**A super-representation analogue of the principal embedding** (`gmsz_compare.py` data, $n\le32$; empirical).
+- Every super-representation $[\ell,m,r,s]$ first appears exactly at GMSZ's level $\ell+3m+c(r,s)$.
+- Its multiplicity there depends only on $(r,s)$, not on $\ell$ or $m$ (rows $r$, columns $s$):
+
+| $r\backslash s$ | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|---|---|---|---|---|---|---|---|---|
+| 0 | 1 | 1 | 1 | 2 | 1 | 3 | 4 | 4 |
+| 1 | 1 | 1 | 3 | 3 | 1 | 3 | 4 | |
+| 2 | 2 | 1 | 3 | 3 | 1 | 3 | | |
+| 3 | 2 | 1 | 3 | 3 | 1 | | | |
+| 4 | 2 | 1 | 3 | | | | | |
+| 5 | 2 | 1 | | | | | | |
+
+**Assessment for half (a): no ready-made injection.**
+- *No route to $r^9$.* The framework is RNS without manifest spacetime supersymmetry: the supercharges involve spin fields, not $osp$ bilinears. So dividing out $44+84+128$ has no $osp$ description.
+- *Not even for the full spectrum.* The natural candidate is multiplication by the highest-weight column minor $(\alpha_{-1}\wedge\dots\wedge\alpha_{-k})\cdot(\varepsilon_1\wedge\dots\wedge\varepsilon_k)$. It does not commute with the constraints.
+  - Already $[G_{1/2},\varepsilon\cdot\alpha_{-1}]=\varepsilon\cdot b_{-1/2}$.
+  - This kills principally embedded states but not dressed ones; for example, their depth-$\tfrac12$ clone of the spin 2.
+  - So the dressing must change with the row lengths, and single-box moves beyond row and column 1 are genuinely non-monotone.
+- *What it does give.*
+  - The natural coordinates $(K,w)$.
+  - The reason column moves have uniform triangular costs: they lengthen only the arms of the first $k$ hooks.
+  - A plausible origin of GMSZ's stabilization: the dressing coefficients depend smoothly on the lengths, and degenerate only for short arms.
+- The core problem is unchanged from S6/S7: an SO(9)-covariant model of the super-representations with manifest positivity.
 
 ## Open / next ideas
 

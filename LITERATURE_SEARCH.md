@@ -246,5 +246,8 @@ Context: `uplift_structure/` S9. GMSZ (A3) say their support rule follows from c
   - **Relevance:** the superstring version of the above. GMSZ cite it for deriving their support rule. Caveat from S9: for super-representations, single boxes in rows 2 and 3 are not monotone at the bosonic costs (column moves are).
 - **Markou — *On the deep string spectrum* (2025, proceedings)** · [arXiv:2505.00177](https://arxiv.org/abs/2505.00177) · [INSPIRE 2917269](https://inspirehep.net/literature/2917269). A review of the two papers above.
 
-Not yet done: reading Basile–Markou in detail, to check whether their $osp$ lowest-weight and dressing construction gives an explicit injective map along the column moves for the super-representations (after dividing out $44+84+128$).
+**Basile–Markou read (2026-10-12; `uplift_structure/` S10, `bm_compare.py`).**
+- Their principal-embedding levels and multiplicities hold for every irrep first appearing in our full spectrum ($n\le32$). This includes R multiplicities $2^{K-1}$ for $K=3$ (level 14) and $K=4$ (level 30); they could check only $K=2$.
+- The paper contains no monotonicity or stability statements, and does not treat super-representations: RNS has no manifest spacetime supersymmetry, so dividing out $44+84+128$ has no $osp$ description.
+- Multiplying by column minors does not commute with the super-Virasoro constraints on dressed states. So there is no ready-made injection for half (a). Its value for us is the $(K,w)$ organisation of trajectories.
 
