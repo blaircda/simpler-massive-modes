@@ -16,6 +16,9 @@ All scripts here only *read* `so10_uplift/data/*.json` and reuse `so10_uplift/up
 | `regge_extremal.py` | S5 step 2: per-weight LP maxima of top content vs min/max-height uplifts | `results/regge_extremal.txt` | ~1 min ($n\le18$) |
 | `regge_a_star.py` | S5 step 2: universal certificate (lemma), (a*) to $n=32$, certificate optimality | `results/regge_a_star.txt` | ~1 min |
 | `regge_monotone.py` | S6: arc-space algebra $B$; $M'=Z_m/\mathrm{Hilb}(B)$; induction lemma | `results/regge_monotone.txt` | ~3 min ($n\le32$) |
+| `regge_heads.py` | S8: heads $E_n$ under two rules; product test | `results/regge_heads.txt` | ~5 s |
+| `head_pl.py` | S8: SO(10) super-PL of the head series, chiralities fixed by the algebra | `results/head_pl_max-height.txt` | ~1 min (degree 8) |
+| `regge_modes.py` | S8: multi-mode Regge induction (shifts $T_k$, $k\in K$) | `results/regge_modes.txt` | ~15 s |
 | `super_pl.py` | S7: super-plethystic log of the SO(9) spectrum | `results/super_pl.txt` | ~5 s (degree 7) |
 | `regge_step2.py` | S5 step 2: optimal duals at low weights; singlet margins; Regge monotonicity; $W$ factorisation | `results/regge_step2_*.txt` | ~30 s total |
 
@@ -217,6 +220,37 @@ By induction from $A_1=1$, this implies existence at all $n$. Path independence 
 - The canonical uplift reproduces $A_4=210'+144+45$ exactly from these terms.
 - This suggests looking for an **SO(10)-equivariant** algebra (massless 10D superparticle / phase-space type) whose SO(9) restriction is $R$. That would settle existence outright, with positivity manifest, rather than proving SO(9) monotonicity.
 - Caveat: `previous_efforts.md` item 1 found no simple structure in the PL of the baseline uplift to level 10. The pattern beyond degree 4 is untested.
+
+### S8. The model test: structure of the trajectory heads (2026-10-12)
+
+The test asks, without guessing relations, whether the new irreps (heads) $E_n$ of the Regge induction have "superparticle" structure (S7).
+
+**(i) Heads multiply** (`regge_heads.py`). The heads are rule-independent through $n=8$; the max- and min-height rules first differ at $n=9$.
+- $E_3=16$ and $E_4=45$.
+- $E_5=1+120+144$, and it contains $\Lambda^216=120$.
+- $E_6=16+126+144+320+560$, and it contains all of $16\otimes45=16+144+560$.
+- $E_7$ contains $\mathrm{Sym}^245=1+54+210+770$ *except the singlet*, which acts like a relation "$w\cdot w=0$".
+
+So products of earlier heads reappear as heads, consistent with an algebra $A$ with $H=A/(y)$.
+
+**(ii) But not a small algebra** (`head_pl.py`). This is the SO(10) super-PL of the head series. Chiralities are fixed degree by degree to match predicted products; the naive "all spinors are 16" convention creates spurious $\pm$ pairs.
+- Generators: $16$ (level 3); $45$ (level 4); $1+144$ (level 5); $126+320$ (level 6).
+- From level 7: mixtures of new generators and relations ($-1$ from $w\cdot w$, $-45$, $-54$, $-210$, $-1050$, …), with no termination.
+
+There is no finite superparticle-type presentation.
+
+**(iii) A second Regge direction** (`regge_heads.py`, `regge_modes.py`). The second-wave generators $144=[1,0,0,0,1]$ (level 5) and $320=[1,1,0,0,0]$ (level 6) are θ and $w$ shifted by $+e_1$ at level $+2$.
+- With $T_2$ = (spin $+e_1$, level $+2$) on Cartan labels, $E_n\supseteq T_2(E_{n-2})$ holds exactly for all $n\le8$ (rule-independent), with the vacuum exempt: there is no $10$ at level 3, so no mode-2 vector state.
+- The max- and min-height rules lose this from $n=11$ and $n=9$ respectively.
+- **Double Regge induction** ($E_n=T_2(E_{n-2})+P_n$, $P_n\ge0$) **runs to $n=32$ for every rule.** So the uplift can always be chosen with two commuting Regge directions, $T$ (level $+1$) and $T_2$ (level $+2$).
+- The primary-head counts are rule-independent: 0, 1, 1, 2, 4, 7, 13, 26, 48, 89, 163, 301, 538, 972, 1734 for $n=2..16$, about 70% of $|E_n|$.
+
+**(iv) No third direction.** Also forcing $T_3$ (level $+3$), or all $T_k$ with $k\ge2$, makes the induction **fail at $n=7$ for every rule**. So the structure is not a Cartan module over all string modes (an arc space). It has exactly two Regge directions.
+
+**Tentative reading (unproved).**
+- Two commuting first-row shifts at levels 1 and 2 are what the first-row highest-weight monomials $(y_0^+)^a(y_1^+)^b$ of *two* vector oscillators $y_0$ (degree 1) and $y_1$ (degree 2) would produce, in the spirit of $\mathfrak{so}(10)\times\mathfrak{sp}(4)$ Howe duality.
+- The $45$ at level 4 also fits $w=y_0\wedge y_1$ (degree 3), an angular-momentum-like $x\wedge p$.
+- But a bare $y_1$ (a $10$ at level 3) is absent, so any such model must suppress $y_1$ on the vacuum.
 
 ## Open / next ideas
 
