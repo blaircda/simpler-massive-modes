@@ -28,6 +28,7 @@ All scripts here only *read* `so10_uplift/data/*.json` and reuse `so10_uplift/up
 | `repair_levels.py` | S13: repair levels $K_L(n)$, $K_J(n)$ of $\rho_n$ (both rules) and minimal top-level repairs | `results/repair_levels*.txt` | ~25 min (n ≤ 40, both rules) |
 | `repair_asymptotics.py` | S13: column indicator $e_c(n,k)$ for $R^9_n$; asymptotic $D_4(\dim)$ | `results/repair_asymptotics*.txt` | ~1 min |
 | `repair_capacity.py` | S13: least vs largest number of repairs per level | `results/repair_capacity.txt` | ~6 min |
+| `transition_region.py` | S14: spectrum profile; negative region and excess band of the all-full lift; edges over $n$ | `results/transition_region*.txt` | ~1 min |
 | `super_pl.py` | S7: super-plethystic log of the SO(9) spectrum | `results/super_pl.txt` | ~5 s (degree 7) |
 | `regge_step2.py` | S5 step 2: optimal duals at low weights; singlet margins; Regge monotonicity; $W$ factorisation | `results/regge_step2_*.txt` | ~30 s total |
 
@@ -529,6 +530,37 @@ $$e_c(n,k)=-a(k,c,c,0)-\sum_{L\le c}a(k,c,c,L).$$
 - The repairs live in a transition region between two well-behaved regions: the stable range near the leading trajectory (exactly structured, $n$-independent) and fixed weights (asymptotically positive).
 - On the evidence, the needed repair level grows with $n$: level 2 from $n=31$–34, level 3 plausibly near $n\sim100$. So no finite repair pattern covers all $n$.
 - A proof of half (b), or of existence directly, will need uniform asymptotics in the transition region together with an exact treatment of the stable range.
+
+### S14. Locating the transition region (2026-10-12) (`transition_region.py`)
+
+Cumulative $R^9_n$, tensor sector. Data to $n=40$ (repo) and to $n=44$ (regenerated).
+
+**The spectrum is not dimension-proportional at these levels.**
+- Along the symmetric tensors $(k,0,0,0)$, $\ln(R^9_n/\dim)$ falls almost linearly in $k$. The slope over $k=4..12$ is $-1.15$ at $n=24$ and $-1.00$ at $n=44$; further out it is about $-0.8$. It shrinks only slowly with $n$.
+- Even at $k=1$, $R/\dim$ is $e^{-0.75}$ times its value at the singlet ($n=44$).
+- So the regime where the asymptotic positivity $D_4(\dim)\ge70$ applies (S13) is not reached for any weight at these $n$.
+- A heat-kernel fit $\ln(R/\dim)=A-\beta C_2$ over the bulk ($\nu_1\le0.9\sqrt n$) is only rough: $R^2=0.92$–$0.95$. The fitted $\beta\approx0.85/\sqrt n$, so the spin scale is about $n^{1/4}$, not $\sqrt n$.
+
+**The negative region (bottom level only).** For each column family $(j,i)$, the coefficients $a(k,j,i,0)<0$ form one contiguous range of $k$:
+- it starts near the dominance edge, at $k\approx\max(j,4)$;
+- it ends at a **fixed distance $d(j,i)$ below the top**, the same for every $n$ once the family appears.
+
+| $(j,i)$ | (0,0) | (1,1) | (2,2) | (3,2) | (3,3) | (1,0) | (2,1) | (4,4) | (5,5) | (6,6) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| $d(j,i)$ | 8 | 15 | 14 | 17 | 19 | 22 | 26 | 26 | 31 | 36 |
+
+So the negatives fill the bulk, and the stable range cuts them off.
+
+**The level-2 band.**
+- Only the family $(1,1)$, the classes $[k-1,0,1,0,0]$, ever has excess beyond its own levels.
+- It first appears at $n=35$ ($k=5,6$). For every $n\ge37$ it is exactly $k\in[4,\,n-30]$: a fixed lower edge and a fixed distance from the top.
+- So the band widens by one column per level and fills the middle.
+- Up to $n=44$, every family with $i\ge2$ is covered by its own levels.
+
+**Reading.**
+- The transition region is the whole middle band between a fixed-weight edge and the stable range: the Regge-scaling regime, where spin grows with the level ($k\approx xn$). It is not a thin shell at a thermal spin scale.
+- A uniform analysis has to work in that regime. There, GMSZ's shift relations and support costs control the structure: multiplicities depend on $n$ minus the cost of the weight.
+- Asymptotic positivity says the lower edge must eventually recede at fixed weights, but this has not started by $n=44$.
 
 ## Open / next ideas
 
