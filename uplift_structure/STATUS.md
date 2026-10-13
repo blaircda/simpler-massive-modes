@@ -617,11 +617,15 @@ because $8_v\to7+1$ and $8_s\to8$. So every Regge slice $\Phi_D=[q^D]Z_{\rm Regg
 - In SO(10) terms, the classes $(n-D,\lambda_8)$, $\lambda_8\in[q^D]Z_8$, restrict to the cumulative $R^9$ in the Regge limit.
 - This explicit lift uses non-full classes $(L,J)$ (S13's repair types): $(1,1)$ from $D=5$, $(2,1)$ from $D=12$ and $(2,2)$ from $D=13$, with rapidly growing counts (at $D=20$: 26 903, 1 912 and 280). So it is a valid but costly lift. The same-column count forces level 2 only from $D=30$, and the data's minimal lifts never skip two bottom levels ($K_J=1$, S13).
 
-**What this means for half (b)** (derived from the above, not computed separately).
+**What this means for half (b)** (derived from the above, not computed separately; corrected 2026-10-13).
 - In the Regge induction, $T$ keeps the top distance fixed. Also $\rho_n$ vanishes wherever $r^9_n$ equals the model and the slices of $A_{n-1}$ already restrict to it.
-- So the classes at a top distance $D$ are frozen once $D$ is in the wedge $\ell\ge w$, and their SO(8) parts restrict to $\Phi_D$.
-- Near the top, half (b) is therefore the $n$-independent problem of lifting each $\Phi_D$ to a non-negative SO(8) character, and $Z_8$ solves it.
-- The open part of half (b) is the ramp, $\ell<w$, roughly $D>n/2$, where the residuals live. There the data stay below the Regge values in a controlled way: monotone in $\ell$, and exactly saturating at $\ell=w$.
+- So the classes at a top distance $D$ are frozen once $D$ is in the wedge $\ell\ge w$, and their SO(8) parts restrict to $\Phi_D$. That is a necessary condition on the induction, and $Z_8$ shows it can be met for every $D$.
+- **Correction.** The first version said that near the top half (b) *is* the problem of lifting each $\Phi_D$, and that $Z_8$ solves it. That overstated it. The slice condition says nothing about *when* each class is created, and that is where the ramp enters.
+  - Think of the SO(9) multiplicities at fixed (shape, top distance) as counting trajectories. Each trajectory starts at some spin and continues forever (Regge monotonicity), and the ramp is the distribution of starting spins.
+  - A class created at the first level where it fits ($l_1=l_2$) starts all its trajectories at spin $l_2$. One of them has a shape $(l_2,\mu_3,\mu_4)$ and starts at its own dominance edge, and every such shape costs at least $3l_2+1$ levels (cheapest $[0,l_2,0,0]$). So these classes start trajectories only at spin $N\le(D-1)/2$.
+  - The data have later starts: up to $N=D-2$ for the singlet (at $w=20$ the starts are $1,1,2,5,\dots$ at $\ell=19,18,17,16,\dots$). They must come from classes created after their first fit, which at their creation level fill a whole column segment $x_1\in[l_2,l_1]$ of $r^9_n$.
+  - In particular, $Z_8$'s classes carried to finite $n$ from their first fit saturate by spin about $D/2$, while the data saturate only at $\ell=w$. So they overshoot $R^9_n$ in the ramp, and $Z_8$ is not by itself a finite-$n$ lift.
+- The open part of half (b) is therefore the creation schedule. It lives in the ramp, $\ell<w$, roughly $D>n/2$, which is also where the residuals are. There the data stay below the Regge values in a controlled way: monotone in $\ell$, and exactly saturating at $\ell=w$.
 
 ## Open / next ideas
 
@@ -631,5 +635,5 @@ because $8_v\to7+1$ and $8_s\to8$. So every Regge slice $\Phi_D=[q^D]Z_{\rm Regg
 - **Prove the Regge continuation conjecture (S5).** This is the current main line; the plan is in the root STATUS.
 - **Existence in move coordinates.** The uplift set is $\{t\in\mathbb Z^K: R_{\rm can}+\sum t_\nu h_\nu\ge0\}$. Since the moves are multiples of $e$, an all-orders argument might construct one explicit uplift and control the $h_\nu$ algebraically.
 - **Transport formulation (from S2).** Split each $m_n(\mu)$ among the fibres whose box contains $\mu$, so that every fibre's finite-difference inverse is non-negative.
-- **Generating-function routes to an explicit uplift.** $\sum_n R^9_n q^n=(1-q)^{-1}\sum_n r^9_n q^n$; an SO(10)-covariant formula for $(1-q)^{-1}\times$(light-cone character). In the Regge limit this is realised (S15): the SO(8) Fock space $Z_8$ gives the uplift near the top.
+- **Generating-function routes to an explicit uplift.** $\sum_n R^9_n q^n=(1-q)^{-1}\sum_n r^9_n q^n$; an SO(10)-covariant formula for $(1-q)^{-1}\times$(light-cone character). In the Regge limit this is realised (S15): the SO(8) Fock space $Z_8$ gives the uplift there, but not at finite $n$ (see the S15 correction).
 - Write the explicit per-fibre finite-difference inverse, and check what non-negativity means in those terms.
