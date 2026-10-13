@@ -1,0 +1,22 @@
+Ohat (residue of (1 - qy) Q at the alpha^+_(-3) pole) for h = D - 2N <= 22; compared with q_spin_D22.json
+(1) Ohat multiplicities from the first non-zero h:
+    singlet: from h = 1.0: [1, 0, 3, 4, 13, 18, 47, 77, 164, 280, 548, 943, 1750, 3000, 5352, 9113, 15815, 26623, 45241, 75300, 125744, 206943]
+    vector: from h = 2.0: [2, 3, 8, 17, 41, 79, 167, 323, 635, 1188, 2242, 4086, 7458, 13298, 23623, 41300, 71824, 123340, 210601, 356024, 598306]
+    (1,1,0): from h = 2.0: [1, 1, 8, 13, 37, 75, 175, 339, 717, 1369, 2700, 5040, 9505, 17315, 31606, 56341, 100152, 175111, 304648, 523355, 894021]
+    spinor: from h = 1.5: [1, 2, 6, 14, 30, 64, 135, 269, 529, 1015, 1915, 3552, 6503, 11731, 20929, 36912, 64450, 111452, 191066, 324788, 547876, 917374]
+    Ohat non-negative for h <= 22.5, all shapes: True
+    dimensions by h: {1.0: 1, 1.5: 8, 2.0: 35, 2.5: 112, 3.0: 301, 3.5: 736, 4.0: 1695, 4.5: 3712, 5.0: 7773, 5.5: 15696, 6.0: 30795, 6.5: 58928}
+    positive Fock guess q det_8(1+q^(1/2)g)/(det_7(1-qg)det_7(1-q^2g)) prod_(j>=4) [(1-q^j)det_7(1-q^jg)]^-1 prod_(m>=5/2) det_8(1+q^m g): dimensions agree True; agrees for all h
+(2) 9307 points (D <= 22, all shapes, spins from the edge to two past the last start)
+    O(D, N) = Ohat_(D-2N): fails at 1484 points, the largest 3N - D among them 9 (e.g. D, N, mu = [(22.0, 10.0, (10.0, 0.0, 0.0)), (22.0, 10.0, (10.0, 1.0, 0.0)), (21.0, 10.0, (10.0, 0.0, 0.0))]); so it holds whenever 3N - D >= 10
+      at interior points (N > mu_1) only: fails at 656, largest 3N - D 1 (e.g. [(22.0, 7.0, (0.0, 0.0, 0.0)), (22.0, 7.0, (1.0, 0.0, 0.0)), (2.0, 1.0, (0.0, 0.0, 0.0))]); holds whenever 3N - D >= 2
+    two-pole formula s(D, N) = Qhat_(D-N) - sum_(j>=1) Ohat_(D-2N-j), N > mu_1: fails at 451 points, the largest 3N - D among them -3 (e.g. [(19.5, 5.5, (0.5, 0.5, 0.5)), (21.0, 6.0, (0.0, 0.0, 0.0)), (21.0, 6.0, (1.0, 0.0, 0.0))]); so it holds whenever 3N - D >= -2
+(3) T_2-differences of the starts O(D, N) = s(D, N) - s(D-1, N-1), N > mu_1, D <= 22: 1446 non-zero, 1 negative, e.g. [(2.0, 1.0, (0.0, 0.0, 0.0), -1)]
+    T_3-differences L3(D, N) = O(D, N) - O(D-2, N-1): 1070 non-zero, 389 negative, e.g. [(21.5, 4.5, (3.5, 0.5, 0.5), -2343), (22.0, 5.0, (4.0, 1.0, 0.0), -2163), (22.0, 5.0, (4.0, 1.0, 1.0), -2138), (21.5, 4.5, (3.5, 1.5, 0.5), -1859)]
+(4) residue R_k at the alpha^+_(-k) pole (grade g = D - (k-1)N) against its predicted Fock form, g <= 12:
+    k=1: lowest grade g = 1.0; equals the Fock form for all g <= 12; non-negative: True
+    k=2: lowest grade g = 2.0; equals the Fock form for all g <= 12; non-negative: True
+    k=3: lowest grade g = 1.0; equals the Fock form for all g <= 12; non-negative: True
+    k=4: lowest grade g = 0.0; equals the Fock form for all g <= 12; non-negative: True
+    k=5: lowest grade g = -3.0; equals the Fock form for all g <= 12; non-negative: True
+    k=2 at full depth: Qhat = q^2 (1+7+8) det_7(1-qg)^-1 prod_(j>=3) [(1-q^j)det_7(1-q^jg)]^-1 prod_(j>=2) det_8(1+q^jg) for all g <= 22: yes

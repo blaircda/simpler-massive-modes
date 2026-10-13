@@ -671,7 +671,7 @@ So $c(D,N;\mu)$ is the start at spin $N$ (for $N>\mu_1$), the sum over $e$ is th
   - $(1,1,0)$: $1,1,5,10,24,50,108,\dots$;
   - spinor: $1,1,3,8,16,33,68,\dots$
 - $\hat Q$ is non-negative for all shapes and $g\le23$.
-- **$\hat Q$ is not the obvious Fock space.** Its dimension series factorises like one, $16\,u^2(1+u)^7\prod_{j\ge2}(1+u^j)^8/\big(\prod_{j\ge2}(1-u^j)^7\prod_{j\ge3}(1-u^j)\big)$, starting with $1+7+8$ (the ground states). But the Fock space $q^2(1+7+8)\det_7(1+qg)\prod_{j\ge2}\det_8(1+q^jg)/\det_7(1-q^jg)\prod_{j\ge3}(1-q^j)^{-1}$, which has those dimensions, differs from $\hat Q$ at $g=4$. A positive formula for $\hat Q$ is open.
+- **$\hat Q$ is not the obvious Fock space.** Its dimension series factorises like one, $16\,u^2(1+u)^7\prod_{j\ge2}(1+u^j)^8/\big(\prod_{j\ge2}(1-u^j)^7\prod_{j\ge3}(1-u^j)\big)$, starting with $1+7+8$ (the ground states). But the Fock space $q^2(1+7+8)\det_7(1+qg)\prod_{j\ge2}\det_8(1+q^jg)/\det_7(1-q^jg)\prod_{j\ge3}(1-q^j)^{-1}$, which has those dimensions, differs from $\hat Q$ at $g=4$. **S17 finds the positive formula:** this guess had the right dimensions but the wrong split.
 
 **Reading.**
 - The ramp is no longer a black box.
@@ -681,9 +681,53 @@ So $c(D,N;\mu)$ is the start at spin $N$ (for $N>\mu_1$), the sum over $e$ is th
 - Half (a) at all orders is now a positivity statement about one explicit generating function, $c(D,e;\mu)\ge0$ for $e>\mu_1$. It holds for $D\le22$ at every level.
 - On the upper half of each ramp it reduces further to $\hat Q\ge0$, a one-variable statement. $\hat Q$ is cheap to extend, but only to $g\le23$ so far.
 
+### S17. The Regge directions $T_k$ and their residues (2026-10-13) (`q_multi_regge.py`)
+
+`q_multi_regge.py` derives the residues from the light-cone Fock space and reads no spectrum data. It compares them with $Q$ (S16, also first-principles). Results: `results/q_multi_regge.txt`.
+
+**The hierarchy.** Write $T_k$ for the shift (spin $+1$, level $+k$). In top-distance coordinates it is $(D,N)\mapsto(D+k-1,N+1)$, i.e. multiplication by $q^{k-1}y$, the monomial of the light-cone oscillator $\alpha^+_{-k}$. For each shape $\mu$ and dominant spin $N$, define:
+- $s(D,N)=r^9(D,N)-r^9(D,N-1)$: the starts ($T_1$-differences, S16);
+- $O(D,N)=s(D,N)-s(D-1,N-1)$: the $T_2$-differences of the starts;
+- $L_3(D,N)=O(D,N)-O(D-2,N-1)$: the $T_3$-differences.
+
+The stable total along $T_k$ is the residue $R_k$ of the light-cone generating function at the $\alpha^+_{-k}$ pole $y=q^{-(k-1)}$, graded by $g=D-(k-1)N$. So $R_1=Z_{\rm Regge}$ (S15), $R_2=\hat Q$ (S16), and $R_3=\hat O$ (here).
+
+**Every residue is a positive Fock space.** This is derived below, and checked against the residue computed directly from the light cone: for $k=1,\dots,5$ (all shapes, $g\le12$), for $k=2$ to $g\le22$, and for $k=3$ to $h\le22.5$.
+
+$$R_k=q^{p_k}\prod_{1\le m<k/2}\det_8\big(1+q^{k/2-m}g\big)\,\Big[\prod_{w\in4}(1+x^w)\Big]_{k\ \mathrm{even}}\prod_{j=1}^{k-1}\frac{1}{\det_7(1-q^jg)}\prod_{j\ge k+1}\frac{1}{(1-q^j)\det_7(1-q^jg)}\prod_{j\ge k/2+1}\det_8\big(1+q^jg\big)$$
+
+- The exponent is $p_k=k-4\sum_{1\le m<k/2}(k/2-m)$, so $p_k=1,2,1,0,-3$ for $k=1,\dots,5$, matching the lowest grades found.
+- The fermion grades in the last product run in steps of 1 from $k/2+1$.
+- $\prod_{w\in4}(1+x^w)=1+7+8$ as an SO(7) character: the ground states.
+- *Derivation.*
+  - At $y=q^{-(k-1)}$ (so $z=q^{-k}$), the identity of S15 applies to the level-$k$ fermions: ground states $\times$ one level of charge-$\tfrac12$ fermions $=z^{-1}\,256(z)$. So the 256 cancels exactly.
+  - The Koszul factor $\det_7(1-q^kg)$ removes the grade-$k$ bosons.
+  - The charge-$\tfrac12$ fermions of levels $m<k/2$ have negative grade. Flipped, they become $\bar 4$'s and pair with level $k-m$ into SO(7) spinors.
+- $R_2=\hat Q=q^2(1+7+8)\det_7(1-qg)^{-1}\prod_{j\ge3}[(1-q^j)\det_7(1-q^jg)]^{-1}\prod_{j\ge2}\det_8(1+q^jg)$.
+  - This corrects S16. The guess there had the right dimensions, but put a fermionic 7 at $g=1$ where there is a bosonic one, and missed the boson gap at $g=2$.
+- $R_3=\hat O=q\det_8(1+q^{1/2}g)\,[\det_7(1-qg)\det_7(1-q^2g)]^{-1}\prod_{j\ge4}[(1-q^j)\det_7(1-q^jg)]^{-1}\prod_{m\ge5/2}\det_8(1+q^mg)$.
+- So every stable total in the hierarchy is manifestly non-negative. For $k\ge2$, though, $R_k$ contains lone 7's (bosons at grades $1,\dots,k-1$), so it is not obviously the restriction of an SO(8) character, unlike $R_1$.
+
+**Exact ranges** (all shapes, $D\le22$).
+- $s(D,N)=\hat Q_{D-N}$ for $2N-D\ge-1$ (S16).
+- $O(D,N)=\hat O_{D-2N}$ at every interior point ($N>\mu_1$) with $3N-D\ge2$. Edge points of large shapes need more.
+- The two-pole formula $s(D,N)=\hat Q_{D-N}-\sum_{j\ge1}\hat O_{D-2N-j}$ holds for every start with $3N-D\ge-2$.
+- So successive poles govern successive bands of spin: $N\gtrsim D/2$ by $\alpha^+_{-2}$ alone, $D/3\lesssim N\lesssim D/2$ by $\alpha^+_{-2}$ and $\alpha^+_{-3}$, and so on.
+
+**Higher Regge monotonicity** (all shapes, $D\le22$, every level).
+- **The starts are $T_2$-monotone.** Of 1 446 non-zero $T_2$-differences, exactly one is negative: $O(2,1)=-1$ for the singlet. That is the vacuum line. The leading trajectory starts at $(D,N)=(1,0)$, but GMSZ's gap leaves nothing at $(2,1)$. This is S8's vacuum exemption for $T_2$.
+- **$T_3$ is not a monotone direction.** 389 of 1 070 non-zero $T_3$-differences are negative, matching S8's failed level-3 direction.
+- So the SO(9) spectrum is $T_1$- and $T_2$-monotone (with the vacuum exemption) but not $T_3$-monotone. S8 found the same for the SO(10) heads.
+
+**Reading for half (a).**
+- Regge monotonicity follows from $T_2$-monotonicity of the starts. Along each $T_2$ line the starts are partial sums of $O$, beginning at a non-negative edge value. The vacuum line is fine directly: $s=1,0,0,\dots$
+- On the upper half of every ramp ($2N-D\ge-1$) the starts equal $\hat Q$, a positive Fock space. If the exactness range is proved, this gives Regge monotonicity there at every level. The proof would be a bound on the $y$-degree; so far it is checked to $D=22$.
+- Below that, the formulas are differences of positive Fock spaces. Since $T_3$-monotonicity fails, positivity there cannot come from iterating the residues. It needs a reason for $O\ge0$.
+
 ## Open / next ideas
 
-- **Multi-Regge structure of $Q$ (from S16).** Test whether the residues at the $\alpha^+_{-3},\alpha^+_{-4},\dots$ poles give the lower bands of every ramp, as the $\alpha^+_{-2}$ residue gives the upper half. If they do, find positive formulas for the residues. That would prove Regge monotonicity, half (a), at all orders.
+- **Prove the exactness ranges (from S17).** Bound the $y$-degree of $(1-qy)Q$ at fixed $D-N$, to show $s=\hat Q_{D-N}$ for $2N-D\ge-1$ at all depths. Since $\hat Q$ is a positive Fock space, this proves Regge monotonicity on the upper half of every ramp, at every level.
+- **Why are the starts $T_2$-monotone? (from S17)** $O\ge0$ (vacuum aside) would give half (a) at all orders. $O$ tends to $\hat O\ge0$ along $T_3$, but not monotonically. So a different structure is needed, possibly an algebra on which $\alpha^+_{-1}$ and $\alpha^+_{-2}$ (S8's $T$ and $T_2$) act injectively.
 - **The band beyond the data.** The all-full lift at level $n$ needs $Q$ to depth about $n$, while the direct computation reaches $D\approx22$–24 on this machine. Going beyond the data needs the multi-Regge structure above, not more brute force.
 - **Minimal repair levels for the Regge problem.** An ILP per $D$ on $\Phi_D$ alone is $n$-independent; compare it with $K_L(n)$ of S13.
 
