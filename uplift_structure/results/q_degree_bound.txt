@@ -1,0 +1,7 @@
+O = (1 - qy) Q built exactly to depth D = 18, weight by weight; excess eps = 2e - D
+    P built (16s)
+    Q built mod 2147483647 (51s, boundary empty)
+  mod 2147483647: slices with eps >= 0 other than the vacuum term: 0; vacuum term (D, e) = (2, 1) is exactly -1 at weight 0: True; largest eps attained: tensor -1.0, spinor -1.5
+    P built (16s)
+    Q built mod 2147483629 (55s, boundary empty)
+  mod 2147483629: slices with eps >= 0 other than the vacuum term: 0; vacuum term (D, e) = (2, 1) is exactly -1 at weight 0: True; largest eps attained: tensor -1.0, spinor -1.5

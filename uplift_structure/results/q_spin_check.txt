@@ -1,3 +1,4 @@
 data r9_to40.json (n <= 40) against q_spin_D22.json (D <= 22, mu_1 <= 22)
 (1) r9_n(N, mu) = sum_(e <= N) c(D, e; mu): 1224614 equal, 0 different (17750 of the compared multiplicities are non-zero)
 (2) starts r9_n(N, mu) - r9_(n-1)(N-1, mu) = c(D, N; mu): 1135476 equal, 0 different
+(3) upper-half theorem on the raw data (3N >= n - 1, N > mu_1, n <= 40): start = mult of mu in [q^(n-2N)] Qhat (Fock form): 16683 equal, 0 different (2974 non-zero starts)

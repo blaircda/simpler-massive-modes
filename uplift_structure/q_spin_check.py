@@ -4,7 +4,10 @@ its output data/q_spin_D<Dmax>.json is loaded here).
 
   (1) every r9_n(N, mu) with mu_1 <= LM and 1 <= D = n - N <= Dmax, n <= N_data (all dominant
       (N, mu), zeros included) against sum_{e <= N} c(D, e; mu);
-  (2) every start r9_n(N, mu) - r9_{n-1}(N-1, mu) (N > mu_1) against c(D, N; mu).
+  (2) every start r9_n(N, mu) - r9_{n-1}(N-1, mu) (N > mu_1) against c(D, N; mu);
+  (3) the upper-half theorem (S18) on the raw data, independently of Q: for every level n and every
+      weight (N, mu) with 3N >= n - 1 and N > mu_1, the start equals the multiplicity of mu in
+      [q^(n-2N)] of the positive Fock space Qhat (q_top_end.qhat_fock).
 
 Usage: q_spin_check.py [--data path] [--q path]   Output: results/q_spin_check[_<N>].txt
 """
@@ -17,6 +20,7 @@ from collections import Counter
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import RESULTS
+import q_top_end
 from regge_stress import load_R9
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -25,7 +29,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", default=os.path.join(HERE, "data", "r9_to40.json"))
-    ap.add_argument("--q", default=os.path.join(HERE, "data", "q_spin_D24.json"))
+    ap.add_argument("--q", default=os.path.join(HERE, "data", "q_spin_D22.json"))
     args = ap.parse_args()
     N, r9, _ = load_R9(args.data)
     Qd = json.load(open(args.q))
@@ -64,6 +68,42 @@ def main():
         f"({nz} of the compared multiplicities are non-zero)" + (f"; e.g. {bad[:4]}" if bad else ""))
     log(f"(2) starts r9_n(N, mu) - r9_(n-1)(N-1, mu) = c(D, N; mu): {scnt[True]} equal, {scnt[False]} different"
         + (f"; e.g. {sbad[:4]}" if sbad else ""))
+    # (3) the upper-half theorem on the raw data
+    G = (N + 2) // 3 + 1
+    Hf = q_top_end.qhat_fock(G, 2 * G + 8)
+    pred = {}
+    for g in range(2, G + 1):
+        for par in (0, 1):
+            for A in range(par, 2 * g + 5, 2):
+                for B in range(par, A + 1, 2):
+                    for C in range(par, B + 1, 2):
+                        m = Hf.mult(g, (A, B, C))
+                        if m:
+                            pred[(g, (A, B, C))] = m
+    pts = set()
+    for n in range(1, N + 1):
+        for nu in r9[n]:
+            pts.add((n, nu))
+            if n < N:
+                pts.add((n + 1, (nu[0] + 2,) + nu[1:]))
+        for (g, l) in pred:
+            X = n - g                                            # doubled spin X = 2N, g = n - 2N
+            pts.add((n, (X,) + l))
+    cnt3, bad3, nz3 = Counter(), [], 0
+    for n, nu in pts:
+        X, l = nu[0], nu[1:]
+        if 3 * X < 2 * (n - 1) or X <= l[0] or X % 2 != l[0] % 2 or n > N:
+            continue
+        start = r9[n].get(nu, 0) - (r9[n - 1].get((X - 2,) + l, 0) if n > 1 else 0)
+        g2 = 2 * n - 2 * X                                       # 2g = 2(n - 2N)
+        pr = pred.get((g2 // 2, l), 0) if g2 % 2 == 0 else None
+        nz3 += start != 0
+        cnt3[start == pr] += 1
+        if start != pr:
+            bad3.append((n, X / 2, tuple(x / 2 for x in l), start, pr))
+    log(f"(3) upper-half theorem on the raw data (3N >= n - 1, N > mu_1, n <= {N}): start = mult of mu in "
+        f"[q^(n-2N)] Qhat (Fock form): {cnt3[True]} equal, {cnt3[False]} different ({nz3} non-zero starts)"
+        + (f"; e.g. {bad3[:4]}" if bad3 else ""))
     os.makedirs(RESULTS, exist_ok=True)
     name = "q_spin_check.txt" if N == 40 else f"q_spin_check_{N}.txt"
     with open(os.path.join(RESULTS, name), "w") as f:

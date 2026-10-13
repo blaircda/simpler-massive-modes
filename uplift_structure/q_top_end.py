@@ -127,6 +127,24 @@ def qhat(gmax, Bd):
     return S
 
 
+def qhat_fock(gmax, Bd):
+    """The positive Fock form of Qhat derived in S17:
+    q^2 prod_{w in 4} (1 + x^w) det_7(1 - qg)^-1 prod_{j>=3} [(1 - q^j) det_7(1 - q^j g)]^-1 prod_{j>=2} det_8(1 + q^j g)."""
+    G = GSeries(2, gmax, Bd)
+    G.Z[0][Bd, Bd, Bd] = 1
+    for w in FOUR:
+        G.binom(0, w, 1)                                      # 1 + 7 + 8
+    for w in [ZERO] + SIX:
+        G.geom(1, w)
+    for j in range(3, gmax + 1):
+        for w in [ZERO, ZERO] + SIX:
+            G.geom(j, w)
+    for j in range(2, gmax + 1):
+        for w in SPIN8:
+            G.binom(j, w, 1)
+    return G
+
+
 def fock_guess(gmax, Bd):
     S = GSeries(2, gmax, Bd)
     for w in [ZERO, ZERO] + SIX + SPIN8:

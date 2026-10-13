@@ -724,9 +724,65 @@ $$R_k=q^{p_k}\prod_{1\le m<k/2}\det_8\big(1+q^{k/2-m}g\big)\,\Big[\prod_{w\in4}(
 - On the upper half of every ramp ($2N-D\ge-1$) the starts equal $\hat Q$, a positive Fock space. If the exactness range is proved, this gives Regge monotonicity there at every level. The proof would be a bound on the $y$-degree; so far it is checked to $D=22$.
 - Below that, the formulas are differences of positive Fock spaces. Since $T_3$-monotonicity fails, positivity there cannot come from iterating the residues. It needs a reason for $O\ge0$.
 
+### S18. Theorem: Regge monotonicity for every weight with spin at least a third of the level (2026-10-13) (`q_degree_bound.py`, `q_spin_check.py` (3))
+
+**Theorem.** For every level $n\ge1$ and every SO(9) weight $\nu=(N,\mu)$ ($N=\nu_1$, $\mu$ the SO(7) part) with $N>\mu_1$ and $3N\ge n-1$:
+
+$$r^9_n(\nu)-r^9_{n-1}(\nu-e_1)=\mathrm{mult}_\mu\,[q^{\,n-2N}]\,\hat Q\ \ge\ 0,$$
+
+$$\hat Q=q^2\prod_{w\in4}(1+x^w)\,\frac{1}{\det_7(1-qg)}\prod_{j\ge3}\frac{1}{(1-q^j)\det_7(1-q^jg)}\prod_{j\ge2}\det_8\big(1+q^jg\big).$$
+
+Here $\prod_{w\in4}(1+x^w)=1+7+8$, so $\hat Q$ is a product of characters of genuine SO(7) representations.
+- So Regge monotonicity, the input to half (a) (S6), holds at every level for all weights whose spin is at least $(n-1)/3$.
+- Moreover the number of new trajectories there depends only on $n-2N$ and the shape.
+
+**Proof.**
+1. *Setup (S15, S16).* Let $Q(q,y)=(1-y)\sum_{n\ge1}q^nK(r^9_n)|_{z=y/q}$, with $K=\det_7(1-z^{-1}g)\,\cdot$ and $c(D,e;\mu)=\mathrm{mult}_\mu[q^Dy^e]Q$. By the parabolic BGG resolution, $r^9_{N+D}(N,\mu)=\sum_{e\le N}c(D,e;\mu)$ at every dominant $(N,\mu)$. So for $N>\mu_1$ the start equals $c(n-N,N;\mu)$.
+2. *Factorization.* Since $F_n=256\otimes r^9_n$ and $K$ is multiplicative:
+
+   $$Q=q^2y^{-2}\,(8_v+8_c)(y/q)\,\det_7\big(1-\tfrac qy g\big)\,\frac{P-1+y}{1+R},\qquad (y/q)^2(1+R)=256(y/q).$$
+
+   Here $P$ is the light-cone oscillator Fock space without $\alpha^+_{-1}$, and $-1+y$ removes level 0. Write $P=P'/(1-qy)$, where $1/(1-qy)$ is $\alpha^+_{-2}$.
+3. *$T_2$-differences.* $O:=(1-qy)Q$ has coefficients $O(D,e)=c(D,e)-c(D-1,e-1)$, and
+
+   $$O=q^2y^{-2}\,(8_v+8_c)(y/q)\,\det_7\big(1-\tfrac qy g\big)\,\frac{P'-1+qy+y-qy^2}{1+R}.$$
+
+4. *Excess bound.* Give $q^Dy^e$ (any weight) the excess $\varepsilon=2e-D$, which is additive. The largest excess in each factor:
+   - $q^2y^{-2}$: $-6$.
+   - The ground states $y/q,\ q/y,\ 6,\ (y/q)^{1/2}\bar 4,\ (q/y)^{1/2}4$ have $\varepsilon=3,-3,0,\tfrac32,-\tfrac32$: maximum 3, attained only by $y/q$.
+   - $\det_7(1-\tfrac qyg)$: each power of $q/y$ has $\varepsilon=-3$, so the maximum is 0.
+   - $1/(1+R)=\sum_j(-R)^j$: $R$ consists of $(q/y)^{2-x_1}x^\mu$ with $x_1\le\tfrac32$, so $\varepsilon\le-\tfrac32$ there and the maximum is 0.
+   - The bracket. In $P'$ the oscillator monomials have $\varepsilon=3-k\le0$ ($\alpha^+_{-k}$, $k\ge3$), $-k-3$ ($\alpha^-_{-k}$), $-k$ (transverse), $\tfrac32-k$ (charge-$+\tfrac12$ fermions) and $-k-\tfrac32$ (charge-$-\tfrac12$ fermions). The only positive ones are the four level-1 charge-$+\tfrac12$ fermions, each $\tfrac12$, so $\varepsilon(P')\le2$. The other terms $-1,qy,y,-qy^2$ have $\varepsilon=0,1,2,3$. So the maximum is 3, attained only by $-qy^2$, and everything else has $\varepsilon\le2$.
+
+   The total is $\le0$. Equality holds only for $q^2y^{-2}\cdot(y/q)\cdot(-qy^2)=-q^2y$ at weight 0, the vacuum line's $T_2$-difference (S17). Changing any factor to a non-maximal term lowers $\varepsilon$ by at least 1, so every other monomial has $\varepsilon\le-1$.
+5. *Conclusion.* Fix $g=D-e$. Then $c(g+e,e)=\sum_{e'\le e}O(g+e',e')$, and $\hat Q_g:=\sum_{e'}O(g+e',e')$ is a finite sum and the stable value along $T_2$. So
+
+   $$c(D,e)=\hat Q_{D-e}-\sum_{e'>e}O(g+e',e').$$
+
+   If $2e-D\ge-1$, i.e. $e\ge g-1$, every $e'>e$ has $\varepsilon=e'-g\ge0$. So the tail vanishes, except the vacuum term, which enters only at $(D,e)=(1,0)$. With $D=n-N$, the condition $2N-D\ge-1$ is $3N\ge n-1$, and $D-N=n-2N$.
+6. *$\hat Q$ is a positive Fock space (S17).* Set $qy=1$, so $z=q^{-2}$. The identity of S15,
+
+   $$(8_v+8_c)(z)\prod_{w\in4}(1+z^{-1/2}x^w)=z^{-1}\,256(z),$$
+
+   holds as Laurent polynomials in $z^{1/2}$ (checked on weights). Applied to the level-2 charge-$\tfrac12$ fermions (weight $q=z^{-1/2}$), it cancels the 256. Then $\det_7(1-q^2g)$ removes the grade-2 bosons, and the level-1 fermions give $\prod_{w\in4}(1+x^w)$. What remains is the product above. $\square$
+
+The proof rests on standard facts: the light-cone character, $F_n=256\otimes r^9_n$, and the parabolic BGG resolution. Beyond those, only explicit algebra is used.
+
+**Checks.**
+- The excess lemma holds weight by weight, exactly (mod two primes), to $D=18$ (`q_degree_bound.py`). Apart from the vacuum term, which is exactly $-1$ at weight 0, no slice of $O$ with $\varepsilon\ge0$ is non-zero. The largest excess attained is $-1$ (tensor) and $-\tfrac32$ (spinor), so the bound is sharp.
+- The conclusion holds on the raw data, independently of $Q$ (`q_spin_check.py` (3)): for $n\le40$, all 16 683 starts with $3N\ge n-1$ (2 974 of them non-zero) equal the multiplicities of the Fock form of $\hat Q$.
+- It also agrees with S16 (2): every start of $Q$ with $2e-D\ge-1$ equals $\hat Q$ ($D\le22$).
+
+**Status of half (a).** Regge monotonicity, $r^9_n(\nu+e_1)\ge r^9_{n-1}(\nu)$, now holds:
+- at every level for spin $\nu_1\ge(n-1)/3$ (this theorem);
+- at every level within 22 of the top (S16);
+- everywhere for $n\le40$ (data).
+
+What remains is low spin, $\nu_1<(n-1)/3$, at $n>40$. In the next band, $(n-2)/4\le\nu_1<(n-1)/3$, the starts are $\hat Q_{n-2N}-\sum_{j\ge1}\hat O_{n-3N-j}$ (S17, exact for $D\le22$). There positivity is an inequality between two explicit positive Fock spaces.
+
 ## Open / next ideas
 
-- **Prove the exactness ranges (from S17).** Bound the $y$-degree of $(1-qy)Q$ at fixed $D-N$, to show $s=\hat Q_{D-N}$ for $2N-D\ge-1$ at all depths. Since $\hat Q$ is a positive Fock space, this proves Regge monotonicity on the upper half of every ramp, at every level.
+- **The next band (from S18).** For $(n-2)/4\le\nu_1<(n-1)/3$, prove the exactness of the two-pole formula by a second excess bound (on $(1-q^2y)O$, with excess $3e-D$; edge points of large shapes need care). Then prove the inequality $\hat Q_{g}(\mu)\ge\sum_{h<g-N}\hat O_h(\mu)$ between the two explicit Fock spaces, by an injection or by bounds.
 - **Why are the starts $T_2$-monotone? (from S17)** $O\ge0$ (vacuum aside) would give half (a) at all orders. $O$ tends to $\hat O\ge0$ along $T_3$, but not monotonically. So a different structure is needed, possibly an algebra on which $\alpha^+_{-1}$ and $\alpha^+_{-2}$ (S8's $T$ and $T_2$) act injectively.
 - **The band beyond the data.** The all-full lift at level $n$ needs $Q$ to depth about $n$, while the direct computation reaches $D\approx22$–24 on this machine. Going beyond the data needs the multi-Regge structure above, not more brute force.
 - **Minimal repair levels for the Regge problem.** An ILP per $D$ on $\Phi_D$ alone is $n$-independent; compare it with $K_L(n)$ of S13.
