@@ -1,0 +1,11 @@
+Qhat (residue of Q at the alpha^+_(-2) pole) for g = D - e <= 22; compared with q_spin_D22.json
+(1) Qhat multiplicities from the first non-zero g:
+    singlet: from g = 2: [1, 1, 2, 5, 9, 18, 34, 63, 116, 211, 376, 667, 1169, 2027, 3486, 5951, 10067, 16921, 28234, 46809, 77116, 126317]
+    vector: from g = 2: [1, 1, 3, 6, 15, 28, 60, 113, 222, 414, 776, 1411, 2568, 4569, 8100, 14152, 24572, 42189, 71989, 121709, 204505, 340999]
+    (1,1,0): from g = 3: [1, 1, 5, 10, 24, 50, 108, 213, 429, 824, 1576, 2937, 5433, 9857, 17743, 31484, 55395, 96394, 166398, 284576, 483135]
+    spinor: from g = 2: [1, 1, 3, 8, 16, 33, 68, 133, 257, 488, 908, 1667, 3026, 5413, 9588, 16809, 29178, 50207, 85689, 145073, 243837, 406983]
+(2) 749 rows of starts (all shapes, D <= 22).  First 2e - D from which every later start equals Qhat: {-14: 1, -13: 1, -12: 6, -11: 15, -10: 21, -9: 36, -8: 58, -7: 69, -6: 87, -5: 96, -4: 94, -3: 93, -2: 89, -1: 63, 0: 20}
+    largest 2e - D at which a start differs from Qhat: -2 (e.g. D, mu = [(18.0, (0.0, 0.0, 0.0)), (20.0, (0.0, 0.0, 0.0)), (22.0, (0.0, 0.0, 0.0))]).  So c(D, e; mu) = mult_mu [q^(D-e)] Qhat whenever 2e - D >= -1.
+(3) dimensions of Qhat, g = 2..: [16, 112, 576, 2496, 9440, 32544, 104256, 314304, 901008, 2473712, 6540544, 16729344]
+    Fock guess with the same dimensions: first differs at g = 4 (dimensions agree: True)
+(4) Qhat non-negative for g <= 23, all shapes: True

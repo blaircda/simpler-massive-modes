@@ -627,9 +627,64 @@ because $8_v\to7+1$ and $8_s\to8$. So every Regge slice $\Phi_D=[q^D]Z_{\rm Regg
   - In particular, $Z_8$'s classes carried to finite $n$ from their first fit saturate by spin about $D/2$, while the data saturate only at $\ell=w$. So they overshoot $R^9_n$ in the ramp, and $Z_8$ is not by itself a finite-$n$ lift.
 - The open part of half (b) is therefore the creation schedule. It lives in the ramp, $\ell<w$, roughly $D>n/2$, which is also where the residuals are. There the data stay below the Regge values in a controlled way: monotone in $\ell$, and exactly saturating at $\ell=w$.
 
+### S16. The ramp: the spin-resolved function $Q(q,y)$ (2026-10-13) (`q_spin.py`, `q_spin_check.py`, `q_top_end.py`)
+
+`q_spin.py` and `q_top_end.py` derive everything from the light-cone Fock space and read no spectrum data. `q_spin_check.py` compares with the data. Results: `results/q_spin.txt`, `results/q_spin_check.txt`, `results/q_top_end.txt`; data `data/q_spin_D22.json`.
+
+**Trajectories and starts.** Fix a shape $\mu$ (the SO(7) part) and a top distance $D=n-x_1$. Along a Regge trajectory (spin $N$ and level both $+1$) the multiplicity counts the trajectories that have started by spin $N$. The *start* at spin $N$ is $r^9_n(N,\mu)-r^9_{n-1}(N-1,\mu)$, the number of new trajectories. Regge monotonicity (half (a)) is non-negativity of every start. The plateau of S15 is the total number of trajectories, and the ramp is their cumulative count.
+
+**The function.** Let $z$ be the $x_1$-charge and $K(\chi)=\det_7(1-z^{-1}g)\,\chi$ the Koszul transform of S15, and define
+
+$$Q(q,y)=(1-y)\sum_{n\ge1}q^n\,K(r^9_n)\big|_{z=y/q}.$$
+
+By the parabolic BGG argument of S15 (exact at every dominant weight, not only at large spin), with $c(D,e;\mu)$ the multiplicity of $\mu$ in $[q^Dy^e]Q$:
+
+$$r^9_{N+D}(N,\mu)=\sum_{e\le N}c(D,e;\mu).$$
+
+So $c(D,N;\mu)$ is the start at spin $N$ (for $N>\mu_1$), the sum over $e$ is the plateau ($Q(q,1)=Z_{\rm Regge}$), and $Q$ to depth $D_{\max}$ gives the top $D_{\max}$ units of *every* level.
+
+**Construction.**
+- Put $z=y/q$ in the light-cone character. The $\alpha^+_{-1}$ tower becomes $1/(1-y)$.
+- Every other oscillator carries its charge as a power of $y$: $\alpha^+_{-k}\to q^{k-1}y$, $\alpha^-_{-k}\to q^{k+1}/y$, transverse $\alpha^i_{-k}\to q^k$, fermions $\to q^{k\mp1/2}y^{\pm1/2}$.
+- Level 0 is removed, since it is not SO(9)-covariant.
+- Divide by $256(z=y/q)$. Unlike at $y=1$, this division is not a clean cancellation.
+- Arithmetic is exact modulo two primes, combined by CRT. It is a 5-index computation (depth, charge, SO(7) weight); depth 22 took about 12 min and 482 MB per prime.
+
+**Checks (depth $D\le22$, every shape).**
+- Every $(D,e)$ slice of $Q$ is $W(B_3)$-invariant, as it must be. The intermediate factors are only SO(6)-covariant, so this is a real test.
+- $\sum_e c(D,e;\mu)$ equals S15's $Z_{\rm Regge}$ for all $D\le22$ and every shape.
+- Against the data ($n\le40$): all 1 224 614 multiplicities $r^9_n(N,\mu)$ with $D\le22$ (17 750 of them non-zero) and all 1 135 476 starts agree, with zero exceptions. The $n\le44$ data were in scratch and were lost in a reboot; they were not re-checked.
+- Example: the singlet at $D=21$ ($w=20$) has edge value 544 and starts $2241,4122,4730,4057,2898,1865,1130,659,375,211,116,63,34,18,9,5,2,1,1$. Its plateau is 23 081, exactly the ramp of S15.
+
+**Results valid at every level $n$ (top distance $D\le22$).**
+- **Regge monotonicity holds:** all 4 382 non-zero starts are positive, and all 858 edge values are non-negative. So half (a)'s input, $r^9_n(\nu+e_1)\ge r^9_{n-1}(\nu)$, holds for every $n$ at every weight within 22 of the top. This is a finite computation, but the statement covers infinitely many levels.
+- **GMSZ's shift relation (3.32) is exactly saturation:** for all 863 (depth, shape) pairs, the last start is at $\ell=w$ (843 pairs) or $\ell=w-1$ (20), with no exception at any level.
+- **Shape of the starts:** a hump at low spin (peak at $\ell\approx2$–$4$), then a tail that ends in a sequence independent of $D$.
+
+**The top end of the ramp is the residue at the $\alpha^+_{-2}$ pole** (`q_top_end.py`).
+- Put $y=v/q$ and grade by $g=D-e$. The $\alpha^+_{-2}$ factor becomes $1/(1-v)$, so at fixed $g$ the starts converge to a residue $\hat Q(q)$. It is computed like S15 (one variable plus SO(7) weights).
+- $\alpha^+_{-2}$ has weight $e_1$ at level 2: the shift of S8's secondary direction $T_2$.
+- **Exact range:** $c(D,e;\mu)=\mathrm{mult}_\mu[q^{D-e}]\hat Q$ for every start with $2e-D\ge-1$, i.e. spin at least $(D-1)/2$. This holds in all 749 rows. The last disagreement is at $2e-D=-2$ (singlet, $D=18,20,22$). So the upper half of every ramp is closed-form.
+- $\hat Q$ multiplicities from the first non-zero $g$:
+  - singlet: $1,1,2,5,9,18,34,63,116,211,376,667,\dots$;
+  - vector: $1,1,3,6,15,28,60,\dots$;
+  - $(1,1,0)$: $1,1,5,10,24,50,108,\dots$;
+  - spinor: $1,1,3,8,16,33,68,\dots$
+- $\hat Q$ is non-negative for all shapes and $g\le23$.
+- **$\hat Q$ is not the obvious Fock space.** Its dimension series factorises like one, $16\,u^2(1+u)^7\prod_{j\ge2}(1+u^j)^8/\big(\prod_{j\ge2}(1-u^j)^7\prod_{j\ge3}(1-u^j)\big)$, starting with $1+7+8$ (the ground states). But the Fock space $q^2(1+7+8)\det_7(1+qg)\prod_{j\ge2}\det_8(1+q^jg)/\det_7(1-q^jg)\prod_{j\ge3}(1-q^j)^{-1}$, which has those dimensions, differs from $\hat Q$ at $g=4$. A positive formula for $\hat Q$ is open.
+
+**Reading.**
+- The ramp is no longer a black box.
+  - Its total is S15's positive Fock space (residue at $y=1$, the $\alpha^+_{-1}$ tower).
+  - Its upper half is a second closed form ($\alpha^+_{-2}$).
+  - Each $\alpha^+_{-(j+1)}$ has depth $j$ per unit of spin. So the next poles should govern successively lower bands of spin, roughly $e\approx D/j$: a multi-Regge structure. Only the first two are confirmed.
+- Half (a) at all orders is now a positivity statement about one explicit generating function, $c(D,e;\mu)\ge0$ for $e>\mu_1$. It holds for $D\le22$ at every level.
+- On the upper half of each ramp it reduces further to $\hat Q\ge0$, a one-variable statement. $\hat Q$ is cheap to extend, but only to $g\le23$ so far.
+
 ## Open / next ideas
 
-- **The ramp in closed form (from S15).** At fixed $q$-order, the coefficient of $y^N$ is a partial sum of the Laurent polynomial $P_D(y)$. So the finite-$\ell$ multiplicities are the Regge Fock space with a second grading (charge), truncated. Dividing by the charge-graded $256(y/q)$ is no longer the clean cancellation of the Regge limit. This would give the ramp, and so the lower part of the band, from first principles.
+- **Multi-Regge structure of $Q$ (from S16).** Test whether the residues at the $\alpha^+_{-3},\alpha^+_{-4},\dots$ poles give the lower bands of every ramp, as the $\alpha^+_{-2}$ residue gives the upper half. If they do, find positive formulas for the residues. That would prove Regge monotonicity, half (a), at all orders.
+- **The band beyond the data.** The all-full lift at level $n$ needs $Q$ to depth about $n$, while the direct computation reaches $D\approx22$–24 on this machine. Going beyond the data needs the multi-Regge structure above, not more brute force.
 - **Minimal repair levels for the Regge problem.** An ILP per $D$ on $\Phi_D$ alone is $n$-independent; compare it with $K_L(n)$ of S13.
 
 - **Prove the Regge continuation conjecture (S5).** This is the current main line; the plan is in the root STATUS.
