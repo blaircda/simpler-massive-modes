@@ -1,4 +1,4 @@
-# Preliminary AI investigations into massive modes in M-theory: a method write-Up
+# Preliminary AI investigations into massive modes in M-theory: a method write-up
 
 ## 1. Summary
 
@@ -17,7 +17,6 @@ The starting point was the following prompt given to Gemini 3.7 running in the A
 The paper cited is due to Bars, and contains two conjectures about extra M-theory states which would complete the massive string states (of the type IIA string) into consistent M-theoretic states. Bars checked these conjectures up to level 5, out of infinity. 
 
 The principal success of my preliminary investigations has been to push the check up to level 40 (with Claude Code) and in doing so identify ambiguities which appear beyond level 5. These higher-level checks have been carried out independently by different models, and all overlaps agree. Some analytic avenues to an all-levels proof have been explored, but the status of these remains unresolved and largely unverified.
-
 
 ## 2. Setup and workflow evolution
 
@@ -63,7 +62,7 @@ Faced with the complexity of the proof effort here, and feeling that the key fea
 - **Setup:** new project repository with protected files and agent instructions/skills as before.
     - I decided to work solely with Claude Opus 5.5 in Claude Code in order to test the capabilities of this line of models and gain an independent analysis
     - Initially I did not reveal any previous results to the model other than the existence of the baseline results up to level 10, which I emphasised may not be unique
-- **Complementary progress**
+- **Complementary progress:**
     - Earlier computational results were quickly reproduced and extended to higher levels: ultimately up to level 40
     - I checked that the model's initial results and proposed proof directions were in line with what had appeared in previous phases
     - I introduced a write-up (previous_efforts.md) with key comments about previously-tried methods, warning against pitfalls encountered, allowing the model to refine its approach
