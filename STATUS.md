@@ -16,7 +16,7 @@ Pipeline `baseline_SO8_to_SO10.py` (runtime ~55 s, passes):
 
 ## Research directions
 
-- [`so10_uplift/`](so10_uplift/STATUS.md): independent Sage-based pipeline Fock → $r^9_n$ → SO(10) uplifts, through level 24. This is the hard computational evidence. Stored data: `so10_uplift/data/{r9,R10,R10_all_uplifts}.json`; loader `so10_uplift/repdata.py`.
+- [`so10_uplift/`](so10_uplift/STATUS.md): independent Sage-based pipeline Fock → $r^9_n$ → SO(10) uplifts, with stored uplifts through level 24 ($r^9_n$ derived to $n=40$; existence to $n=40$ is in `uplift_structure/` S12). This is the hard computational evidence. Stored data: `so10_uplift/data/{r9,R10,R10_all_uplifts}.json`; loader `so10_uplift/repdata.py`.
   - A non-negative uplift exists for all $n\le24$ (extended to $n\le40$ by the Regge induction, `uplift_structure/` S12).
   - The uplift is unique for $n\le6$, then has rapidly growing multiplicity (6 722 076 at $n=11$).
   - The baseline $R^{10}_n$ ($n\le10$) is the unique "max-height" uplift. That uplift stays unique through $n=11$ but not from $n=12$; the stored canonical choice adds a lex tie-break.

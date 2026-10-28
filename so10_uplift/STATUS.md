@@ -24,6 +24,8 @@ Derivation scripts never import baseline files; comparisons live only in the `ve
 
 1. $r^8_n$ and $r^9_n$ agree with the baseline for $n\le10$.
 2. **A non-negative SO(10) uplift of $R^9_n$ exists for every $n\le 24$.** No obstruction was found.
+
+   > **Update (2026-10-12): existence now holds for every $n\le40$.** This is shown by the Regge induction in [`../uplift_structure/`](../uplift_structure/STATUS.md) (S12, `beyond32.py`), under both the max-height and min-height rules, with every $A_n$ verified by restriction. Its input is `derive_r9.py --max-level 40`, stored as `uplift_structure/data/r9_to40.json`. The uplifts for $n>24$ are recomputed (~2.5 min), not stored here. The $n\le24$ figure above is the range of this directory's stored uplifts.
 3. **Non-uniqueness.** The number of non-negative uplifts (conjugation classes, before chirality splits) is exactly:
 
    | n | 1–6 | 7 | 8 | 9 | 10 | 11 |
@@ -44,5 +46,5 @@ Structural explorations of this output (invariants, fibres, kernel moves) live s
 
 ## Open / next (computational)
 
-- Push beyond level 24. Fock + SO(9) is cheap. The canonical-uplift sequential ILP is the bottleneck (~110 s at n=24, growing ×1.5/level). Existence alone (single ILP) is much cheaper.
+- Push the stored uplifts beyond level 24. (Existence alone is done to $n=40$; see the update under item 2.) Fock + SO(9) is cheap. The canonical-uplift sequential ILP is the bottleneck (~110 s at n=24, growing ×1.5/level). Existence alone (single ILP) is much cheaper.
 - A smarter greedy with provable success (item 5 rules out the naive ones).
