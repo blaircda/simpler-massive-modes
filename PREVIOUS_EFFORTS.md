@@ -14,7 +14,7 @@ The plethystic log (both bosonic and fermionic) was computed for the baseline up
 2) Graded uplifts
 Inpsired by the paper https://arxiv.org/abs/hep-th/0310292 by Beisert, Bianchi, Morales, Samtleben (BBMS), we considered whether the additional SO(2) grading selected a preferred uplift. We found that the uplift selected is not the baseline uplift. Note the BBMS approach is linked directly to type IIB rather than type IIA. We also experimented with some more IIA-style gradings, but did not establish a clear link to the baseline uplift. This led to us refocusing usefully on the non-uniqueness of the uplifts, but perhaps we did not exploit the grading approach as fully as we could have.
 
-More details supplied by my collaborator:
+More details supplied by my AI collaborator:
 BBMS does provide a selection criterion, but only within its own \(SO(10)\times SO(2)_\Delta\)-graded, type-IIB/\(AdS_5\times S^5\) problem. We found no reason to regard that grading as physically preferred for Bars’s type-IIA/M-theory proposal.
 The final status was:
 - We independently reconstructed the BBMS oscillator grading through level 7, retaining oscillator number \(\nu\) and imposing
