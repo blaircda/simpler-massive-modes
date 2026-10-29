@@ -1,4 +1,5 @@
 # Preliminary AI investigations into massive modes in M-theory: a method write-up
+## Chris Blair
 
 ## 1. Summary
 
@@ -14,7 +15,7 @@ The starting point was the following prompt given to Gemini 3.7 running in the A
 
 > The goal here is to study the paper https://arxiv.org/abs/hep-th/9503228v1 and test whether the proposals in III.B and III.C work to all levels
 
-The paper cited is due to Bars, and contains two conjectures about extra M-theory states which would complete the massive string states (of the type IIA string) into consistent M-theoretic states. Bars checked these conjectures up to level 5, out of infinity. 
+The paper cited is due to Bars, and conjectures the form of extra M-theory structure which would complete the massive string states (of the type IIA string) into consistent M-theoretic states. Bars checked this structure works up to level 5, out of infinity. 
 
 The principal success of my preliminary investigations has been to push the check up to level 40 (with Claude Code) and in doing so identify ambiguities which appear beyond level 5. These higher-level checks have been carried out independently by different models, and all overlaps agree. Some analytic avenues to an all-levels proof have been explored, but the status of these remains unresolved and largely unverified.
 
@@ -43,19 +44,19 @@ I decided to go for a clean restart.
 - **Setup:** new project repository, with more refined initial guidance:
     - I added a protected baseline of human-verified scripts containing the level 10 results in SageMath, declared as read-only to agents
     - I wrote an agent skill file for carrying out literature searches using arXiv/Inspire
-    - I replaced browser ChatGPT sessions with Codex and GPT 5.6 Terra/Sol agentic approach
+    - I replaced browser ChatGPT sessions with GPT 5.6 Terra/Sol in Codex
     - I enforced a structured workflow with a central STATUS.md report file and subdirectories for independent research directions, each containing their own local STATUS.md report, with instructions that each agent run finish by updating these files
 - **Initial work :**
     - Following a literature search (combined human and AI), I began efforts to understand possible analytic structures which could be exploited for an all-levels proof 
-    - Tasking Gemini with more advanced work led to erratic output. In status reports it over-confidently reported successes and definite conclusions based only on tenuous evidence. When tasked with rederiving known results from an alternative starting point, its code led to an infinite loop and to circumvent this and achieve its task, it imported the known results, checked they equalled themselves, and then reported success.
+    - Tasking Gemini with more advanced work led to erratic output. In status reports it over-confidently reported successes and definite conclusions based only on tenuous evidence. When tasked with rederiving known results from an alternative starting point, its code led to an infinite loop. To circumvent this, it imported the known results, checked they equalled themselves, and then reported success.
 - **Audit and switch to GPT model:**
     - An audit by the GPT model highlighted the errors and unfounded claims in Gemini's codes and reports - these were archived and clearly labelled with correction notices
     - I modified the global agent instructions, adding key rules mandating that i) baseline results are kept separate from new derivations, ii) failures must be reported as obstacles rather than viewed as something to circumvent, iii) all claimed computations must actually be run.  
     - I switched to GPT as the main driver of the project, relegating Gemini agents to code audits, leading to consistent higher-quality and more scientifically rigourous outputs
-    - Initial efforts of the GPT model towards an analytical proof (aided by computational checks) led to a rapid proliferation of code, dead-end directions, and increasingly baroque status reports. This was in part due to chasing transient patterns in low-level data. 
-    - I realised that the model (and myself) was placing too much emphasis on the status of the protected baseline level 10 results, causing us to initially overlook and later fail to properly appreciate the fact that beyond level 6 ambiguities appear leading to alternative solutions.
+    - Initial efforts of the GPT model towards an analytical proof (aided by computational checks) were not unpromising, but led to a rapid proliferation of code, dead-end directions, and increasingly baroque status reports. This was in part due to chasing transient patterns in low-level data. 
+    - I realised that the model (and myself) was placing too much emphasis on the status of the protected baseline level 10 results, causing us to initially overlook and later fail to properly appreciate the fact that beyond level 5 ambiguities appear leading to alternative solutions.
 
-Faced with the complexity of the proof effort here, and feeling that the key features of the initial computational evidence had been overlooked, I decided that it would be useful to start a competing investigation using an alternative model.
+Faced with the complexity of the proof effort here, and feeling that some key features of the initial computational evidence had been overlooked, I decided that it would be useful to start a competing investigation using an alternative model.
     
 ### Phase 3. A complementary restart 
 
@@ -65,7 +66,7 @@ Faced with the complexity of the proof effort here, and feeling that the key fea
 - **Complementary progress:**
     - Earlier computational results were quickly reproduced and extended to higher levels: ultimately up to level 40
     - I checked that the model's initial results and proposed proof directions were in line with what had appeared in previous phases
-    - I introduced a write-up (previous_efforts.md) with key comments about previously-tried methods, warning against pitfalls encountered, allowing the model to refine its approach
+    - I introduced a write-up (PREVIOUS_EFFORTS.md) with key comments about previously-tried methods, warning against pitfalls encountered, allowing the model to refine its approach
     - The model investigated some possible avenues for analytic progress, the efforts so far appear somewhat cleaner than the approach of the GPT model in phase 2, however I have not pushed this program very far nor verified the methods
     
 ## Usage level
